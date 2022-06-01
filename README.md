@@ -1,1 +1,3 @@
-This is a starter template for [Learn Next.js](https://nextjs.org/learn).
+# Budget Proposal Generator
+
+This is a real cool project built for AMD Gesso 🚀
