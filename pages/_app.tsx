@@ -3,10 +3,12 @@ import Script from "next/script";
 import { useRouter } from "next/router";
 import * as gtag from "../lib/gtag";
 import { AppProps } from "next/app";
+
 import "../styles/globals.css";
 
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
+
   useEffect(() => {
     const handleRouteChange = (url) => {
       gtag.pageview(url);
@@ -18,6 +20,7 @@ function App({ Component, pageProps }: AppProps) {
       router.events.off("hashChangeComplete", handleRouteChange);
     };
   }, [router.events]);
+
   return (
     <>
       {/* Global Site Tag (gtag.js) - Google Analytics */}

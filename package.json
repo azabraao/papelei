@@ -10,6 +10,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "faunadb": "^4.5.4",
     "next": "latest",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
