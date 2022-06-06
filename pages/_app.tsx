@@ -6,7 +6,7 @@ import { AppProps } from "next/app";
 
 import "../styles/globals.css";
 
-function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
 
   useEffect(() => {
@@ -45,6 +45,6 @@ function App({ Component, pageProps }: AppProps) {
       <Component {...pageProps} />
     </>
   );
-}
+};
 
 export default App;
