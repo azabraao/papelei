@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { AppCopyTitle } from "../src/atoms";
 import { Navbar } from "../src/molecules";
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
       </Head>
       <main>
         <Navbar />
+        <AppCopyTitle />
       </main>
     </div>
   );
