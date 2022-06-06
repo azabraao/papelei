@@ -26,8 +26,6 @@ describe("API", () => {
   it("should stablish a proper connection with Fauna DB", () => {
     jest.unmock("../../services/fauna");
 
-    console.log("fauna.query>>>", fauna.query);
-
     expect(fauna.query).toBeDefined();
   });
 });

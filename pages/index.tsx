@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { Navbar } from "../src/molecules";
 
 export default function Home() {
   return (
@@ -8,7 +9,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1 className="font-bold w-full text-center">Criar orçamento</h1>
+        <Navbar />
       </main>
     </div>
   );
