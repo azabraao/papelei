@@ -2,7 +2,36 @@
 module.exports = {
   content: ["./pages/**/*.{js,ts,jsx,tsx}", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    fontSize: {
+      xs: ".75rem",
+      sm: ".875rem",
+      tiny: ".875rem",
+      base: "1rem",
+      lg: "1.125rem",
+      xl: "1.25rem",
+      "1xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem",
+      "5xl": "3rem",
+      "6xl": "4rem",
+      "7xl": "5rem",
+    },
     extend: {
+      boxShadow: {
+        "elevation-1": "0px 0px 4px rgba(0, 0, 0, 0.24);",
+        "elevation-2": "0px 0px 8px rgba(0, 0, 0, 0.16);",
+        "elevation-3": "0px 0px 16px rgba(0, 0, 0, 0.12);",
+        "elevation-4": "0px 0px 24px rgba(0, 0, 0, 0.12);",
+        "card-effect-hard":
+          "inset 0px 0px 16px rgba(0, 0, 0, 0.12), 0px 0px 8px rgba(0, 0, 0, 0.25);",
+        "card-effect-soft":
+          "inset 0px 0px 8px rgba(0, 0, 0, 0.12), 0px 0px 4px rgba(0, 0, 0, 0.25);",
+        "card-effect-medium":
+          "inset 0px 0px 8px rgba(0, 0, 0, 0.12), 0px 0px 8px rgba(0, 0, 0, 0.25);",
+        "on-hover-shadow": "0px 0px 1px rgba(210, 209, 210, 0.24);",
+        "focus-shadow": "0px 0px 1px rgba(120, 169, 237, 0.24);",
+      },
       colors: {
         "white-100": "#fefefeff",
         "white-70": "#fefefeb2",
@@ -39,6 +68,9 @@ module.exports = {
         "background-white": "#ffffffff",
         "background-yellow": "#fff9dfff",
         "background-beige": "#fffaf5ff",
+      },
+      fontFamily: {
+        sans: ["Helvetica Neue", "sans-serif"],
       },
     },
   },
