@@ -1,6 +1,6 @@
-import { memo, ReactNode } from 'react';
+import { memo } from "react";
 
-const [FTName]: React.FC<ReactNode> = () => {
+const [FTName] = () => {
   return <div className="" />;
 };
 
