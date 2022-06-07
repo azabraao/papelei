@@ -4,7 +4,7 @@ import CheckIcon from "../../assets/icons/success/check.svg";
 import XIcon from "../../assets/icons/danger/x.svg";
 import TextareaAutosize from "react-textarea-autosize";
 
-interface Props {
+interface TextAreaProps {
   label: string;
   placeholder: string;
   name: string;
@@ -20,7 +20,7 @@ const TextArea = ({
   label,
   placeholder,
   onChange,
-}: Props) => {
+}: TextAreaProps) => {
   return (
     <div className="flex gap-2 flex-col">
       <label htmlFor={name} className="text-black-70">
