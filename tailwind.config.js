@@ -19,18 +19,18 @@ module.exports = {
     },
     extend: {
       boxShadow: {
-        "elevation-1": "0px 0px 4px rgba(0, 0, 0, 0.24);",
-        "elevation-2": "0px 0px 8px rgba(0, 0, 0, 0.16);",
-        "elevation-3": "0px 0px 16px rgba(0, 0, 0, 0.12);",
-        "elevation-4": "0px 0px 24px rgba(0, 0, 0, 0.12);",
+        "elevation-1": "0px 0px 4px rgba(0, 0, 0, 0.24)",
+        "elevation-2": "0px 0px 8px rgba(0, 0, 0, 0.16)",
+        "elevation-3": "0px 0px 16px rgba(0, 0, 0, 0.12)",
+        "elevation-4": "0px 0px 24px rgba(0, 0, 0, 0.12)",
         "card-effect-hard":
-          "inset 0px 0px 16px rgba(0, 0, 0, 0.12), 0px 0px 8px rgba(0, 0, 0, 0.25);",
+          "inset 0px 0px 16px rgba(0, 0, 0, 0.12), 0px 0px 8px rgba(0, 0, 0, 0.25)",
         "card-effect-soft":
-          "inset 0px 0px 8px rgba(0, 0, 0, 0.12), 0px 0px 4px rgba(0, 0, 0, 0.25);",
+          "inset 0px 0px 8px rgba(0, 0, 0, 0.12), 0px 0px 4px rgba(0, 0, 0, 0.25)",
         "card-effect-medium":
-          "inset 0px 0px 8px rgba(0, 0, 0, 0.12), 0px 0px 8px rgba(0, 0, 0, 0.25);",
-        "on-hover-shadow": "0px 0px 1px rgba(210, 209, 210, 0.24);",
-        "focus-shadow": "0px 0px 1px rgba(120, 169, 237, 0.24);",
+          "inset 0px 0px 8px rgba(0, 0, 0, 0.12), 0px 0px 8px rgba(0, 0, 0, 0.25)",
+        "on-hover-shadow": "0px 0px 1px 2px rgba(210, 209, 210, 0.24);",
+        "focus-shadow": "0px 0px 1px 2px rgba(120, 169, 237, 0.24)",
       },
       colors: {
         "white-100": "#fefefeff",

@@ -1,0 +1,64 @@
+import { memo } from "react";
+import clsx from "clsx";
+import CheckIcon from "../../assets/icons/success/check.svg";
+import XIcon from "../../assets/icons/danger/x.svg";
+
+interface Props {
+  label: string;
+  placeholder: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
+  isSuccess?: boolean;
+}
+
+const TextInput = ({
+  error,
+  isSuccess,
+  label,
+  placeholder,
+  onChange,
+}: Props) => {
+  return (
+    <div className="flex gap-2 flex-col">
+      <label htmlFor="input" className="text-black-70">
+        {label}
+      </label>
+      <div
+        className={clsx(
+          "flex items-center px-4 py-2 justify-between bg-white border-black-20 rounded-lg border hover:shadow-on-hover-shadow focus-within:shadow-focus-shadow focus-within:border-info-light placeholder-black-40 w-full overflow-hidden",
+          error &&
+            "border-danger focus-within:border-danger focus-within:shadow-none",
+          isSuccess &&
+            "border-success focus-within:border-success focus-within:shadow-none"
+        )}
+        data-testid={clsx(
+          error && "error-state",
+          isSuccess && "success-state",
+          !error && !isSuccess && "input"
+        )}
+      >
+        <input
+          type="text"
+          className="outline-none w-full text-black-70 h-6"
+          placeholder={placeholder}
+          onChange={onChange}
+        />
+
+        {error && <XIcon className="transition-transform" />}
+        {isSuccess && <CheckIcon />}
+      </div>
+      {error && (
+        <div className="text-danger text-xs">
+          <span>{error}</span>
+        </div>
+      )}
+    </div>
+  );
+};
+
+TextInput.defaultProps = {
+  error: "",
+  isSuccess: false,
+};
+
+export default memo(TextInput);
