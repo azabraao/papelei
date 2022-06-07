@@ -16,6 +16,7 @@ const defaultProps = {
   label: "Name",
   placeholder: "Enter your name",
   onChange: jest.fn(),
+  name: "fake-name",
 };
 
 describe("TextInput", () => {

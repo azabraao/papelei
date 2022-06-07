@@ -5,6 +5,7 @@ import XIcon from "../../assets/icons/danger/x.svg";
 
 interface Props {
   label: string;
+  name: string;
   placeholder: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const TextInput = ({
+  name,
   error,
   isSuccess,
   label,
@@ -20,7 +22,7 @@ const TextInput = ({
 }: Props) => {
   return (
     <div className="flex gap-2 flex-col">
-      <label htmlFor="input" className="text-black-70">
+      <label htmlFor={name} className="text-black-70">
         {label}
       </label>
       <div
@@ -42,6 +44,8 @@ const TextInput = ({
           className="outline-none w-full text-black-70 h-6"
           placeholder={placeholder}
           onChange={onChange}
+          name={name}
+          id={name}
         />
 
         {error && <XIcon className="transition-transform" />}
