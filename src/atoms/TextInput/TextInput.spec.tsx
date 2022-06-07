@@ -1,15 +1,15 @@
 import "@testing-library/jest-dom";
-import { screen, render, waitFor } from "@testing-library/react";
+import { screen, render } from "@testing-library/react";
 import TextInput from "./index";
 
 jest.mock("../../assets/icons/success/check.svg", () => {
-  const ComponentToMock = () => <div />;
-  return ComponentToMock;
+  const SVGMock = () => <div />;
+  return SVGMock;
 });
 
 jest.mock("../../assets/icons/danger/x.svg", () => {
-  const ComponentToMock = () => <div />;
-  return ComponentToMock;
+  const SVGMock = () => <div />;
+  return SVGMock;
 });
 
 const defaultProps = {

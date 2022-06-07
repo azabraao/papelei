@@ -5,6 +5,7 @@
     "build": "next build",
     "start": "next start",
     "test": "jest",
+    "test:watch": "jest --watchAll",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "prepare": "husky install"
@@ -14,7 +15,8 @@
     "faunadb": "^4.5.4",
     "next": "latest",
     "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "react-textarea-autosize": "^8.3.4"
   },
   "devDependencies": {
     "@babel/core": "^7.18.2",
