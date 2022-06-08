@@ -3,7 +3,7 @@ import clsx from "clsx";
 import InputWrap from "../InputWrap";
 
 interface QuantitySelectorProps {
-  label: string;
+  label?: string;
   placeholder: string;
   name: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -44,7 +44,7 @@ const QuantitySelector = ({
     <InputWrap name={name} error={error} label={label}>
       <div
         className={clsx(
-          "max-w-[180px] flex items-center justify-between bg-white rounded-lg border hover:shadow-on-hover-shadow focus-within:shadow-focus-shadow-info focus-within:border-info-light placeholder-black-40 w-full overflow-hidden",
+          "max-w-[180px] flex items-center justify-between rounded-lg border hover:shadow-on-hover-shadow focus-within:shadow-focus-shadow-info focus-within:border-info-light placeholder-black-40 w-full overflow-hidden",
           error &&
             "border-danger focus-within:border-danger focus-within:shadow-none",
           isSuccess &&
@@ -72,7 +72,7 @@ const QuantitySelector = ({
           name={name}
           value={inputValue}
           data-testid="number-input"
-          className="outline-none w-full text-black-70 h-auto py-2 px-4 text-center"
+          className="outline-none w-full text-black-70 h-auto py-2 px-4 text-center bg-transparent"
         />
         <button
           data-testid="increase-button"
