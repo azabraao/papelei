@@ -32,7 +32,7 @@ const TextArea = ({
             "border-success focus-within:border-success focus-within:shadow-none",
           !error &&
             !isSuccess &&
-            "border-black-20 focus-within:shadow-focus-shadow focus-within:border-info-light"
+            "border-black-20 focus-within:shadow-focus-shadow-info focus-within:border-info-light"
         )}
         data-testid={clsx(
           error && "error-state",

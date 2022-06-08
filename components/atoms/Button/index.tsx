@@ -1,52 +1,46 @@
-import React from "react";
-import "./button.css";
+import clsx from "clsx";
+import React, { memo } from "react";
 
 interface ButtonProps {
-  /**
-   * Is this the principal call to action on the page?
-   */
-  primary?: boolean;
-  /**
-   * What background color to use
-   */
   backgroundColor?: string;
-  /**
-   * How large should the button be?
-   */
-  size?: "small" | "medium" | "large";
-  /**
-   * Button contents
-   */
   label: string;
-  /**
-   * Optional click handler
-   */
+  fullWidth?: boolean;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
-/**
- * Primary UI component for user interaction
- */
-export const Button = ({
-  primary = false,
-  size = "medium",
+const Button = ({
+  fullWidth,
+  onClick,
   backgroundColor,
   label,
+  disabled,
   ...props
 }: ButtonProps) => {
-  const mode = primary
-    ? "storybook-button--primary"
-    : "storybook-button--secondary";
   return (
     <button
-      type="button"
-      className={["storybook-button", `storybook-button--${size}`, mode].join(
-        " "
+      onClick={onClick}
+      className={clsx(
+        "py-2 px-4 rounded-lg text-sm text-center transition-color duration-200",
+        !disabled && "text-white",
+        {
+          "bg-success hover:bg-success-dark active:shadow-focus-shadow-success":
+            backgroundColor === "success" && !disabled,
+          "w-full": fullWidth,
+          "cursor-not-allowed": disabled,
+          "bg-black-20 text-black-70": disabled,
+        }
       )}
-      style={{ backgroundColor }}
+      disabled={disabled}
       {...props}
     >
       {label}
     </button>
   );
 };
+
+Button.defaultProps = {
+  backgroundColor: "success",
+};
+
+export default memo(Button);
