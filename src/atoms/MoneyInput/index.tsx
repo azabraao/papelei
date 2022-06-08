@@ -1,6 +1,7 @@
 import { memo, useState } from "react";
 import clsx from "clsx";
 import { maskMoney } from "../../../utils";
+import InputWrap from "../InputWrap";
 
 interface Props {
   label: string;
@@ -30,10 +31,7 @@ const MoneyInput = ({
   };
 
   return (
-    <div className="flex gap-2 flex-col">
-      <label htmlFor={name} className="text-black-70">
-        {label}
-      </label>
+    <InputWrap label={label} name={name} error={error}>
       <div
         className={clsx(
           "flex items-center justify-between max-w-[180px] bg-white rounded-lg border hover:shadow-on-hover-shadow focus-within:shadow-focus-shadow focus-within:border-info-light placeholder-black-40 w-full overflow-hidden",
@@ -62,12 +60,7 @@ const MoneyInput = ({
           value={inputValue}
         />
       </div>
-      {error && (
-        <div className="text-danger text-xs">
-          <span>{error}</span>
-        </div>
-      )}
-    </div>
+    </InputWrap>
   );
 };
 

@@ -4,7 +4,6 @@ interface InputWrapProps {
   label: string;
   name: string;
   error?: string;
-  isSuccess?: boolean;
   children: ReactNode;
 }
 
@@ -26,7 +25,6 @@ const InputWrap = ({ name, error, label, children }: InputWrapProps) => {
 
 InputWrap.defaultProps = {
   error: "",
-  isSuccess: false,
 };
 
 export default memo(InputWrap);

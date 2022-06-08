@@ -3,6 +3,7 @@ import clsx from "clsx";
 import CheckIcon from "../../assets/icons/success/check.svg";
 import XIcon from "../../assets/icons/danger/x.svg";
 import TextareaAutosize from "react-textarea-autosize";
+import InputWrap from "../InputWrap";
 
 interface TextAreaProps {
   label: string;
@@ -22,10 +23,7 @@ const TextArea = ({
   onChange,
 }: TextAreaProps) => {
   return (
-    <div className="flex gap-2 flex-col">
-      <label htmlFor={name} className="text-black-70">
-        {label}
-      </label>
+    <InputWrap name={name} error={error} label={label}>
       <div
         className={clsx(
           "flex items-start px-4 py-2 justify-between bg-white border-black-20 rounded-lg border hover:shadow-on-hover-shadow focus-within:shadow-focus-shadow focus-within:border-info-light placeholder-black-40 w-full overflow-hidden",
@@ -52,12 +50,7 @@ const TextArea = ({
         {error && <XIcon className="transition-transform" />}
         {isSuccess && <CheckIcon />}
       </div>
-      {error && (
-        <div className="text-danger text-xs">
-          <span>{error}</span>
-        </div>
-      )}
-    </div>
+    </InputWrap>
   );
 };
 
