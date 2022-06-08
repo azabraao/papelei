@@ -1,10 +1,9 @@
 import { memo } from "react";
 import clsx from "clsx";
-import CheckIcon from "../../assets/icons/success/check.svg";
-import XIcon from "../../assets/icons/danger/x.svg";
+import { CheckedIcon, XIcon } from "../../../atoms";
 import InputWrap from "../InputWrap";
 
-interface Props {
+interface TextInputProps {
   label: string;
   name: string;
   placeholder: string;
@@ -20,16 +19,19 @@ const TextInput = ({
   label,
   placeholder,
   onChange,
-}: Props) => {
+}: TextInputProps) => {
   return (
     <InputWrap name={name} error={error} label={label}>
       <div
         className={clsx(
-          "flex items-center px-4 py-2 justify-between bg-white border-black-20 rounded-lg border hover:shadow-on-hover-shadow focus-within:shadow-focus-shadow focus-within:border-info-light placeholder-black-40 w-full overflow-hidden",
+          "flex items-center px-4 py-2 justify-between bg-white rounded-lg border hover:shadow-on-hover-shadow placeholder-black-40 w-full overflow-hidden",
           error &&
             "border-danger focus-within:border-danger focus-within:shadow-none",
           isSuccess &&
-            "border-success focus-within:border-success focus-within:shadow-none"
+            "border-success focus-within:border-success focus-within:shadow-none",
+          !error &&
+            !isSuccess &&
+            "border-black-20 focus-within:shadow-focus-shadow focus-within:border-info-light"
         )}
         data-testid={clsx(
           error && "error-state",
@@ -46,8 +48,8 @@ const TextInput = ({
           id={name}
         />
 
-        {error && <XIcon className="transition-transform" />}
-        {isSuccess && <CheckIcon />}
+        {error && <XIcon color="danger" />}
+        {isSuccess && <CheckedIcon color="success" />}
       </div>
     </InputWrap>
   );

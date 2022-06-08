@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { memo, useCallback, useState } from "react";
-import CreditCardIcon from "../../assets/icons/CreditCardIcon";
-import MoneyIcon from "../../assets/icons/MoneyIcon";
+import { CreditCardIcon, MoneyIcon } from "../../atoms";
 
 interface PaymentMethodSelectorProps {
   label: string;

@@ -1,9 +1,9 @@
 import { memo } from "react";
 
-const MoneyIcon = () => {
+const MoneyIcon = ({ color }: IconProps) => {
   return (
     <svg
-      className="w-5 h-5 stroke-current"
+      className={`w-6 h-6 stroke-current text-${color}`}
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"

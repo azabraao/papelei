@@ -1,6 +1,6 @@
 import { memo, useState } from "react";
 import clsx from "clsx";
-import { maskMoney } from "../../../utils";
+import { maskMoney } from "../../../../utils";
 import InputWrap from "../InputWrap";
 
 interface Props {
