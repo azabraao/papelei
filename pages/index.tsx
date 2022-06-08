@@ -1,6 +1,5 @@
 import Head from "next/head";
-import { AppCopyTitle } from "../src/atoms";
-import { Navbar } from "../src/molecules";
+import { AppCopyTitle, Navbar } from "components/molecules";
 
 export default function Home() {
   return (

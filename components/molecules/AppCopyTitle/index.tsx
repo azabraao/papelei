@@ -1,5 +1,5 @@
 import { memo } from "react";
-import Container from "../Container";
+import { Container } from "components/atoms";
 
 const AppCopyTitle = () => {
   return (

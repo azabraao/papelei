@@ -1,4 +1,3 @@
-export { default as AppCopyTitle } from "./AppCopyTitle";
 export { default as Container } from "./Container";
 export { default as CheckedIcon } from "./Icon/Checked";
 export { default as CreditCardIcon } from "./Icon/CreditCard";

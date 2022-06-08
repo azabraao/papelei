@@ -1,6 +1,6 @@
 import { memo } from "react";
 import clsx from "clsx";
-import { CheckedIcon, XIcon } from "../../../atoms";
+import { CheckedIcon, XIcon } from "components/atoms";
 import InputWrap from "../InputWrap";
 
 interface TextInputProps {
