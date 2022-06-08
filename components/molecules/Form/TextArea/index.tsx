@@ -49,8 +49,8 @@ const TextArea = ({
           id={name}
         />
 
-        {error && <XIcon color="danger" />}
-        {isSuccess && <CheckedIcon color="success" />}
+        {error && <XIcon theme="danger" />}
+        {isSuccess && <CheckedIcon theme="success" />}
       </div>
     </InputWrap>
   );

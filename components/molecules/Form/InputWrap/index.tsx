@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { ReactNode, memo } from "react";
 
 interface InputWrapProps {
@@ -5,12 +6,28 @@ interface InputWrapProps {
   name: string;
   error?: string;
   children: ReactNode;
+  labelSize?: string;
+  labelCentered?: boolean;
 }
 
-const InputWrap = ({ name, error, label, children }: InputWrapProps) => {
+const InputWrap = ({
+  labelSize,
+  name,
+  error,
+  label,
+  children,
+  labelCentered,
+}: InputWrapProps) => {
   return (
     <div className="flex gap-2 flex-col">
-      <label htmlFor={name} className="text-black-70">
+      <label
+        htmlFor={name}
+        className={clsx("text-black-70", {
+          "text-base": labelSize === "base",
+          "text-lg": labelSize === "lg",
+          "text-center": labelCentered,
+        })}
+      >
         {label}
       </label>
       {children}
@@ -25,6 +42,7 @@ const InputWrap = ({ name, error, label, children }: InputWrapProps) => {
 
 InputWrap.defaultProps = {
   error: "",
+  labelSize: "base",
 };
 
 export default memo(InputWrap);

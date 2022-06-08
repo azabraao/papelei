@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, ReactNode } from "react";
 import clsx from "clsx";
 import { CheckedIcon, XIcon } from "components/atoms";
 import InputWrap from "../InputWrap";
@@ -10,6 +10,9 @@ interface TextInputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
   isSuccess?: boolean;
+  labelSize?: string;
+  Icon?: ReactNode;
+  labelCentered?: boolean;
 }
 
 const TextInput = ({
@@ -17,11 +20,20 @@ const TextInput = ({
   error,
   isSuccess,
   label,
+  Icon,
   placeholder,
+  labelSize,
+  labelCentered,
   onChange,
 }: TextInputProps) => {
   return (
-    <InputWrap name={name} error={error} label={label}>
+    <InputWrap
+      labelCentered={labelCentered}
+      labelSize={labelSize}
+      name={name}
+      error={error}
+      label={label}
+    >
       <div
         className={clsx(
           "flex items-center px-4 py-2 justify-between bg-white rounded-lg border hover:shadow-on-hover-shadow placeholder-black-40 w-full overflow-hidden",
@@ -48,8 +60,9 @@ const TextInput = ({
           id={name}
         />
 
-        {error && <XIcon color="danger" />}
-        {isSuccess && <CheckedIcon color="success" />}
+        {Icon && Icon}
+        {error && <XIcon theme="danger" />}
+        {isSuccess && <CheckedIcon theme="success" />}
       </div>
     </InputWrap>
   );
@@ -58,6 +71,8 @@ const TextInput = ({
 TextInput.defaultProps = {
   error: "",
   isSuccess: false,
+  labelCentered: false,
+  labelSize: "base",
 };
 
 export default memo(TextInput);

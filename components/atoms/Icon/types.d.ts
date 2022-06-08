@@ -1,3 +1,3 @@
 interface IconProps {
-  color?: string;
+  theme?: string;
 }

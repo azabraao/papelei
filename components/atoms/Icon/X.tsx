@@ -1,9 +1,14 @@
 import { memo } from "react";
+import clsx from "clsx";
 
-const XIcon = ({ color }: IconProps) => {
+const XIcon = ({ theme }: IconProps) => {
   return (
     <svg
-      className={`w-6 h-6 stroke-current text-${color}`}
+      className={clsx("w-6 h-6 stroke-current", {
+        "text-success": theme === "success",
+        "text-danger": theme === "danger",
+        "text-black-40": theme === "black-40",
+      })}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -1,7 +1,7 @@
 import { memo } from "react";
 import clsx from "clsx";
 
-const CheckedIcon = ({ theme }: IconProps) => {
+const SearchIcon = ({ theme }: IconProps) => {
   return (
     <svg
       className={clsx("w-6 h-6 stroke-current", {
@@ -9,18 +9,18 @@ const CheckedIcon = ({ theme }: IconProps) => {
         "text-danger": theme === "danger",
         "text-black-40": theme === "black-40",
       })}
-      viewBox="0 0 24 24"
+      viewBox="0 0 24 25"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M16.125 9.75L10.6219 15L7.875 12.375"
+        d="M10.875 19.1271C15.2242 19.1271 18.75 15.6014 18.75 11.2521C18.75 6.90289 15.2242 3.37714 10.875 3.37714C6.52576 3.37714 3 6.90289 3 11.2521C3 15.6014 6.52576 19.1271 10.875 19.1271Z"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
-        d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
+        d="M16.4437 16.8209L21 21.3771"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -29,4 +29,4 @@ const CheckedIcon = ({ theme }: IconProps) => {
   );
 };
 
-export default memo(CheckedIcon);
+export default memo(SearchIcon);
