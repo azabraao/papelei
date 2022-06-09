@@ -1,15 +1,10 @@
 import { useState, memo, useCallback } from "react";
 import clsx from "clsx";
-import InputWrap from "../InputWrap";
+import { withInputWrap } from "components/HOCs";
 
-interface QuantitySelectorProps {
-  label?: string;
-  placeholder: string;
-  name: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error?: string;
-  isSuccess?: boolean;
+interface QuantitySelectorProps extends InputProps {
   initialValue?: number;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const QuantitySelector = ({
@@ -17,7 +12,6 @@ const QuantitySelector = ({
   name,
   error,
   isSuccess,
-  label,
   onChange,
 }: QuantitySelectorProps) => {
   const [inputValue, setInputValue] = useState<number>(initialValue);
@@ -41,48 +35,46 @@ const QuantitySelector = ({
   }, []);
 
   return (
-    <InputWrap name={name} error={error} label={label}>
-      <div
-        className={clsx(
-          "max-w-[180px] flex items-center justify-between rounded-lg border hover:shadow-on-hover-shadow focus-within:shadow-focus-shadow-info focus-within:border-info-light placeholder-black-40 w-full overflow-hidden",
-          error &&
-            "border-danger focus-within:border-danger focus-within:shadow-none",
-          isSuccess &&
-            "border-success focus-within:border-success focus-within:shadow-none",
-          !error && !isSuccess && "border-black-20"
-        )}
-        data-testid={clsx(
-          error && "error-state",
-          isSuccess && "success-state",
-          !error && !isSuccess && "input"
-        )}
+    <div
+      className={clsx(
+        "max-w-[180px] flex items-center justify-between rounded-lg border hover:shadow-on-hover-shadow focus-within:shadow-focus-shadow-info focus-within:border-info-light placeholder-black-40 w-full overflow-hidden",
+        error &&
+          "border-danger focus-within:border-danger focus-within:shadow-none",
+        isSuccess &&
+          "border-success focus-within:border-success focus-within:shadow-none",
+        !error && !isSuccess && "border-black-20"
+      )}
+      data-testid={clsx(
+        error && "error-state",
+        isSuccess && "success-state",
+        !error && !isSuccess && "input"
+      )}
+    >
+      <button
+        className="py-2 px-4 outline-none"
+        data-testid="decrease-button"
+        onClick={decrease}
       >
-        <button
-          className="py-2 px-4 outline-none"
-          data-testid="decrease-button"
-          onClick={decrease}
-        >
-          -
-        </button>
-        <input
-          type="number"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          id={name}
-          name={name}
-          value={inputValue}
-          data-testid="number-input"
-          className="outline-none w-full text-black-70 h-auto py-2 px-4 text-center bg-transparent"
-        />
-        <button
-          data-testid="increase-button"
-          onClick={increase}
-          className="py-2 px-4 outline-none"
-        >
-          +
-        </button>
-      </div>
-    </InputWrap>
+        -
+      </button>
+      <input
+        type="number"
+        onChange={handleChange}
+        onBlur={handleBlur}
+        id={name}
+        name={name}
+        value={inputValue}
+        data-testid="number-input"
+        className="outline-none w-full text-black-70 h-auto py-2 px-4 text-center bg-transparent"
+      />
+      <button
+        data-testid="increase-button"
+        onClick={increase}
+        className="py-2 px-4 outline-none"
+      >
+        +
+      </button>
+    </div>
   );
 };
 
@@ -92,4 +84,4 @@ QuantitySelector.defaultProps = {
   initialValue: 1,
 };
 
-export default memo(QuantitySelector);
+export default memo(withInputWrap(QuantitySelector));

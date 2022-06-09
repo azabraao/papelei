@@ -5,7 +5,7 @@ import PaymentMethodSelector from "./index";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: "Form/PaymentMethodSelector",
+  title: "Molecules/PaymentMethodSelector",
   component: PaymentMethodSelector,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
