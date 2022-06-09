@@ -2,16 +2,6 @@ import "@testing-library/jest-dom";
 import { screen, render } from "@testing-library/react";
 import TextInput from "./index";
 
-jest.mock("../../assets/icons/success/check.svg", () => {
-  const SVGMock = () => <div />;
-  return SVGMock;
-});
-
-jest.mock("../../assets/icons/danger/x.svg", () => {
-  const SVGMock = () => <div />;
-  return SVGMock;
-});
-
 const defaultProps = {
   label: "Name",
   placeholder: "Enter your name",

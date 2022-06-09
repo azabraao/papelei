@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { query as q } from "faunadb";
 
-import { fauna } from "../../services/fauna";
+import { fauna } from "services/fauna";
 
 export const queryAllProducts = async () => {
   return fauna.query(

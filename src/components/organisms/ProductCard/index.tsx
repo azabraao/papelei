@@ -1,5 +1,5 @@
-import { QuantitySelector } from "components/molecules";
 import { memo } from "react";
+import { QuantitySelector } from "components/molecules";
 
 const placeHolderImage = "https://dummyimage.com/127x127";
 

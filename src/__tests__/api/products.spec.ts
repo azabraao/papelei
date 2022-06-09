@@ -1,7 +1,7 @@
-import { queryAllProducts } from "../../pages/api/products";
-import { fauna } from "../../services/fauna";
+import { queryAllProducts } from "pages/api/products";
+import { fauna } from "services/fauna";
 
-jest.mock("../../services/fauna");
+jest.mock("services/fauna");
 
 describe("API", () => {
   it("should bring products", async () => {
@@ -24,7 +24,7 @@ describe("API", () => {
   });
 
   it("should stablish a proper connection with Fauna DB", () => {
-    jest.unmock("../../services/fauna");
+    jest.unmock("services/fauna");
 
     expect(fauna.query).toBeDefined();
   });

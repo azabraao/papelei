@@ -2,16 +2,6 @@ import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import TextArea from "./index";
 
-jest.mock("../../assets/icons/success/check.svg", () => {
-  const SVGMock = () => <div />;
-  return SVGMock;
-});
-
-jest.mock("../../assets/icons/danger/x.svg", () => {
-  const SVGMock = () => <div />;
-  return SVGMock;
-});
-
 describe("TextArea", () => {
   it("should render with label", () => {
     render(
