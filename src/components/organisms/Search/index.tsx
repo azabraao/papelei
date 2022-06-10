@@ -2,9 +2,11 @@ import { memo, useCallback, useState } from "react";
 import clsx from "clsx";
 import { TextInput } from "components/molecules";
 import { SearchIcon } from "components/atoms";
+import { useProducts } from "hooks";
 
 const Search = () => {
   const [isFocused, setIsFocused] = useState(false);
+  const { data, isLoading, error } = useProducts();
 
   const handleFocus = useCallback(() => {
     setIsFocused(true);

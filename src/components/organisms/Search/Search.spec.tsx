@@ -1,14 +1,24 @@
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import Search from "./index";
+import { QueryClient, QueryClientProvider } from "react-query";
+const queryClient = new QueryClient();
+
+const SearchComponent = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Search />
+    </QueryClientProvider>
+  );
+};
 
 describe("Search", () => {
   it("should render", () => {
-    expect(render(<Search />)).toBeTruthy();
+    expect(render(<SearchComponent />)).toBeTruthy();
   });
 
   it("should float to the top on search input focus", () => {
-    render(<Search />);
+    render(<SearchComponent />);
     const input = screen.getByPlaceholderText("Escreva o nome do produto");
     const searchWrap = screen.getByTestId("search");
 

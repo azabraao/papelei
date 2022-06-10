@@ -5,6 +5,9 @@ import * as gtag from "lib/gtag";
 import { AppProps } from "next/app";
 
 import "../styles/globals.css";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -42,7 +45,9 @@ const App = ({ Component, pageProps }: AppProps) => {
       `,
         }}
       />
-      <Component {...pageProps} />
+      <QueryClientProvider client={queryClient}>
+        <Component {...pageProps} />
+      </QueryClientProvider>
     </>
   );
 };
