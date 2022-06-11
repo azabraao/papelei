@@ -5,3 +5,5 @@ export { default as XIcon } from "./Icon/X";
 export { default as SearchIcon } from "./Icon/Search";
 export { default as Container } from "./Container";
 export { default as Button } from "./Button";
+export { default as Portal } from "./Portal";
+export { default as Card } from "./Card";

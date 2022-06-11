@@ -11,12 +11,14 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "algoliasearch": "^4.13.1",
     "axios": "^0.27.2",
     "clsx": "^1.1.1",
     "faunadb": "^4.5.4",
     "next": "latest",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-loading-skeleton": "^3.1.0",
     "react-query": "^3.39.1",
     "react-textarea-autosize": "^8.3.4"
   },

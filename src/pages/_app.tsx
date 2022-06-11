@@ -3,11 +3,9 @@ import Script from "next/script";
 import { useRouter } from "next/router";
 import * as gtag from "lib/gtag";
 import { AppProps } from "next/app";
-
+import { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import "../styles/globals.css";
-import { QueryClient, QueryClientProvider } from "react-query";
-
-const queryClient = new QueryClient();
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -45,9 +43,13 @@ const App = ({ Component, pageProps }: AppProps) => {
       `,
         }}
       />
-      <QueryClientProvider client={queryClient}>
+      <SkeletonTheme
+      // baseColor="#A4A4A6"
+      // highlightColor="#E8E8E9"
+      // borderRadius={4}
+      >
         <Component {...pageProps} />
-      </QueryClientProvider>
+      </SkeletonTheme>
     </>
   );
 };

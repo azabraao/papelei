@@ -49,6 +49,7 @@ module.exports = {
         "black-20": "#d2d1d2ff",
         "black-10": "#e8e8e9ff",
         "black-05": "#f4f4f4ff",
+        "black-transparent": "rgba(28, 27, 32, 0.7)",
         info: "#3f84e5ff",
         "info-light": "#78a9edff",
         "info-lighter": "#d2e2f9ff",
