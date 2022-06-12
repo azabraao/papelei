@@ -1,70 +1,70 @@
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback } from "react";
 import clsx from "clsx";
 import { TextInput } from "components/molecules";
 import { Portal, SearchIcon } from "components/atoms";
 import LoadingState from "./components/LoadingState";
-import { algolia } from "utils";
 import ErrorState from "./components/ErrorState";
 import NoProductsState from "./components/NoProductsState";
 import ListProducts from "./components/ListProducts";
+import { useSearch } from "contexts/search";
 
 const Search = () => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [noProductsFound, setNoProductsFound] = useState(false);
-  const [searchResult, setSearchResult] = useState([]);
+  const {
+    performSearch,
+    closeSearch,
+    openSearch,
+    shouldSearch,
+    isLoading,
+    isError,
+    noProductsFound,
+    searchResult,
+  } = useSearch();
 
-  const handleFocus = useCallback(() => {
-    setIsFocused(true);
-  }, []);
-
-  const closeSearch = useCallback(() => {
-    setIsFocused(false);
+  const handleInputKeyDown = useCallback((event) => {
+    if (event.key === "Escape") {
+      closeSearch();
+      event.target.blur();
+    }
   }, []);
 
   const handleInputChange = useCallback(async (event) => {
-    setIsLoading(true);
-
     const value = event.target.value;
-    try {
-      const results = await algolia.search(value);
-      setNoProductsFound(results.hits.length === 0);
-      setSearchResult(results.hits);
-    } catch (error) {
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
+    performSearch(value);
   }, []);
 
   return (
     <>
-      {isFocused && <Portal onClick={closeSearch} />}
+      {shouldSearch && <Portal onClick={closeSearch} />}
       <div
         className={clsx(
-          isFocused ? "fixed top-0 left-0 right-0 z-10" : "relative top-11"
+          shouldSearch ? "fixed top-0 left-0 right-0 z-10" : "relative top-11"
         )}
-        onFocus={handleFocus}
+        onFocus={openSearch}
         data-testid="search"
       >
         <div
-          className={clsx(isFocused && "px-4 pt-11 pb-4 flex flex-col gap-1")}
+          className={clsx(
+            shouldSearch && "px-4 pt-11 pb-4 flex flex-col gap-1"
+          )}
         >
           <TextInput
-            label={!isFocused && "Do que você precisa?"}
+            label={!shouldSearch && "Do que você precisa?"}
             labelCentered
             name="search"
             onChange={handleInputChange}
+            onKeyDown={handleInputKeyDown}
             placeholder="Escreva o nome do produto"
             Icon={<SearchIcon theme="black-40" />}
           />
-          {isLoading && <LoadingState />}
-          {isError && <ErrorState />}
-          {noProductsFound && <NoProductsState />}
-          {searchResult.length && isFocused && (
+          {searchResult.length && shouldSearch ? (
             <ListProducts products={searchResult} />
-          )}
+          ) : isLoading ? (
+            <LoadingState />
+          ) : isError ? (
+            <ErrorState />
+          ) : noProductsFound ? (
+            <NoProductsState />
+          ) : null}
         </div>
       </div>
     </>

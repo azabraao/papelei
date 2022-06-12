@@ -6,6 +6,8 @@ import { AppProps } from "next/app";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "../styles/globals.css";
+import { CartProvider } from "contexts/cart";
+import { SearchProvider } from "contexts/search";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -44,11 +46,15 @@ const App = ({ Component, pageProps }: AppProps) => {
         }}
       />
       <SkeletonTheme
-      // baseColor="#A4A4A6"
-      // highlightColor="#E8E8E9"
-      // borderRadius={4}
+        baseColor="#A4A4A6"
+        highlightColor="#E8E8E9"
+        borderRadius={4}
       >
-        <Component {...pageProps} />
+        <CartProvider>
+          <SearchProvider>
+            <Component {...pageProps} />
+          </SearchProvider>
+        </CartProvider>
       </SkeletonTheme>
     </>
   );

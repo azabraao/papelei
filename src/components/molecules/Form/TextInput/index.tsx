@@ -5,6 +5,7 @@ import { withInputWrap } from "components/HOCs";
 
 interface TextInputProps extends InputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   Icon?: ReactNode;
 }
 
@@ -14,6 +15,7 @@ const TextInput = ({
   isSuccess,
   Icon,
   placeholder,
+  onKeyDown,
   onChange,
 }: TextInputProps) => {
   return (
@@ -39,6 +41,7 @@ const TextInput = ({
         className="outline-none w-full text-black-70 h-6"
         placeholder={placeholder}
         onChange={onChange}
+        onKeyDown={onKeyDown}
         name={name}
         id={name}
       />
@@ -55,6 +58,7 @@ TextInput.defaultProps = {
   isSuccess: false,
   labelCentered: false,
   labelSize: "base",
+  onKeyDown: () => null,
 };
 
 export default memo(withInputWrap(TextInput));

@@ -6,5 +6,3 @@ export const fauna = new Client({
   port: 443,
   scheme: "https",
 });
-
-console.log("fauna>>>", process.env.FAUNA_DB_KEY);
