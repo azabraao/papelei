@@ -6,4 +6,5 @@ interface InputProps {
   isSuccess?: boolean;
   labelSize?: string;
   labelCentered?: boolean;
+  isControlled?: boolean;
 }

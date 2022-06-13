@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { Label } from "components/atoms";
 import { ReactNode, memo } from "react";
 
 interface InputWrapProps {
@@ -21,16 +22,12 @@ const InputWrap = ({
   return (
     <div className="flex gap-2 flex-col">
       {label && (
-        <label
+        <Label
+          label={label}
           htmlFor={name}
-          className={clsx("text-black-70", {
-            "text-base": labelSize === "base",
-            "text-lg": labelSize === "lg",
-            "text-center": labelCentered,
-          })}
-        >
-          {label}
-        </label>
+          labelSize={labelSize}
+          labelCentered={labelCentered}
+        />
       )}
       {children}
       {error && (

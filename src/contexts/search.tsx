@@ -3,6 +3,7 @@ import React, {
   memo,
   useCallback,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import { algolia } from "utils";
@@ -11,7 +12,8 @@ interface SearchContextValues {
   performSearch: (query: string) => void;
   closeSearch: () => void;
   openSearch: () => void;
-  shouldSearch: boolean;
+  clearSearchResults: () => void;
+  searchIsOpen: boolean;
   isLoading: boolean;
   isError: boolean;
   noProductsFound: boolean;
@@ -25,18 +27,32 @@ interface SearchProps {
 }
 
 export const SearchProvider: React.FC<SearchProps> = ({ children }) => {
-  const [shouldSearch, setShouldSearch] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [noProductsFound, setNoProductsFound] = useState(false);
-  const [searchResult, setSearchResult] = useState([]);
+  const [searchIsOpen, setSearchIsOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [noProductsFound, setNoProductsFound] = useState<boolean>(false);
+  const [searchResult, setSearchResult] = useState<Product[]>([]);
+
+  useEffect(() => {
+    if (!searchIsOpen) {
+      setNoProductsFound(false);
+      setIsError(false);
+      setSearchResult([]);
+    }
+  }, [searchIsOpen]);
+
+  const clearSearchResults = useCallback(() => {
+    setNoProductsFound(false);
+    setIsError(false);
+    setSearchResult([]);
+  }, []);
 
   const openSearch = useCallback(() => {
-    setShouldSearch(true);
+    setSearchIsOpen(true);
   }, []);
 
   const closeSearch = useCallback(() => {
-    setShouldSearch(false);
+    setSearchIsOpen(false);
   }, []);
 
   const performSearch = useCallback(async (value) => {
@@ -45,7 +61,7 @@ export const SearchProvider: React.FC<SearchProps> = ({ children }) => {
     try {
       const results = await algolia.search(value);
       setNoProductsFound(results.hits.length === 0);
-      setSearchResult(results.hits);
+      setSearchResult(results.hits as Product[]);
     } catch (error) {
       setIsError(true);
     } finally {
@@ -59,7 +75,8 @@ export const SearchProvider: React.FC<SearchProps> = ({ children }) => {
         performSearch,
         closeSearch,
         openSearch,
-        shouldSearch,
+        clearSearchResults,
+        searchIsOpen,
         isLoading,
         isError,
         noProductsFound,

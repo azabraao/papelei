@@ -1,12 +1,13 @@
 import InputWrap from "components/molecules/Form/InputWrap";
+import React from "react";
 
 const withInputWrap = (Component) => {
-  const WrappedComponent = (props) => (
+  const WrappedComponent = (props, ref) => (
     <InputWrap {...props}>
-      <Component {...props} />
+      <Component {...props} ref={ref} />
     </InputWrap>
   );
-  return WrappedComponent;
+  return React.forwardRef(WrappedComponent);
 };
 
 export default withInputWrap;

@@ -76,24 +76,26 @@ const SearchComponent = () => (
   </SearchProvider>
 );
 
+const openSearchWindow = () => {
+  render(<SearchComponent />);
+  const buttonOpenSearch = screen.getByTestId("button-open-search");
+
+  fireEvent.click(buttonOpenSearch);
+};
+
 describe("Search", () => {
-  it("should render", () => {
-    expect(render(<SearchComponent />)).toBeTruthy();
-  });
+  it("should open the search window on button open search click", async () => {
+    openSearchWindow();
 
-  it("should float to the top on search input focus", () => {
-    render(<SearchComponent />);
-    const input = screen.getByPlaceholderText("Escreva o nome do produto");
-    const searchWrap = screen.getByTestId("search");
+    const searchWindow = await waitFor(() =>
+      screen.getByTestId("search-window")
+    );
 
-    fireEvent.focus(input);
-
-    expect(searchWrap).toHaveClass("fixed top-0 left-0 right-0 z-10");
+    expect(searchWindow).toBeInTheDocument();
   });
 
   it("should display a loading state when user start to type", () => {
-    render(<SearchComponent />);
-
+    openSearchWindow();
     const input = screen.getByPlaceholderText("Escreva o nome do produto");
 
     fireEvent.change(input, { target: { value: "gesso" } });
@@ -101,20 +103,20 @@ describe("Search", () => {
     expect(screen.findByTestId("loading-state")).toBeTruthy();
   });
 
-  it("should close search on Portal click", () => {
-    render(<SearchComponent />);
-    const input = screen.getByPlaceholderText("Escreva o nome do produto");
-    const searchWrap = screen.getByTestId("search");
-    fireEvent.focus(input);
+  it("should close search on Portal click", async () => {
+    openSearchWindow();
 
     const portal = screen.getByTestId("portal");
     fireEvent.click(portal);
 
-    expect(searchWrap).toHaveClass("relative");
+    const buttonOpenSearch = await waitFor(() =>
+      screen.getByTestId("button-open-search")
+    );
+    expect(buttonOpenSearch).toBeInTheDocument();
   });
 
   it("should show an error message in case of error", async () => {
-    render(<SearchComponent />);
+    openSearchWindow();
     const input = await screen.findByPlaceholderText(
       "Escreva o nome do produto"
     );
@@ -132,7 +134,8 @@ describe("Search", () => {
   });
 
   it("should show a message for when no products are found", async () => {
-    render(<SearchComponent />);
+    openSearchWindow();
+
     const input = screen.getByPlaceholderText("Escreva o nome do produto");
     const searchMock = jest.mocked(algolia.search);
     searchMock.mockImplementationOnce(emptySearchImplementationMock);
@@ -149,7 +152,7 @@ describe("Search", () => {
   });
 
   it("should display a list of products for a given input value", async () => {
-    render(<SearchComponent />);
+    openSearchWindow();
     const input = screen.getByPlaceholderText("Escreva o nome do produto");
     const searchMock = jest.mocked(algolia.search);
     searchMock.mockImplementationOnce(searchImplementationMock);
@@ -164,7 +167,7 @@ describe("Search", () => {
   });
 
   it("should add products to cart when user clicks on a product", async () => {
-    render(<SearchComponent />);
+    openSearchWindow();
     const input = screen.getByPlaceholderText("Escreva o nome do produto");
     const searchMock = jest.mocked(algolia.search);
     searchMock.mockImplementationOnce(searchImplementationMock);
@@ -182,7 +185,7 @@ describe("Search", () => {
   });
 
   it("should close the search list when user selects a product", async () => {
-    render(<SearchComponent />);
+    openSearchWindow();
     const input = screen.getByPlaceholderText("Escreva o nome do produto");
     const searchMock = jest.mocked(algolia.search);
     searchMock.mockImplementationOnce(searchImplementationMock);

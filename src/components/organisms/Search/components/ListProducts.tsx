@@ -15,7 +15,7 @@ const ListProducts = ({ products }: ListProductsProps) => {
       }}
       testId="search-list-products"
     >
-      <div className="max-h-[80vh] overflow-y-auto">
+      <div className="max-h-[70vh] overflow-y-auto overscroll-contain">
         {products.map((product, index, array) => (
           <SearchListProduct
             key={product.code}
