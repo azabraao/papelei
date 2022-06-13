@@ -1,0 +1,1 @@
+export { productsMock } from "./productsMock";

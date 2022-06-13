@@ -8,6 +8,7 @@ import {
 } from "@testing-library/react";
 import { SearchProvider } from "contexts/search";
 import { algolia } from "utils";
+import { productsMock } from "__mocks__";
 import Search from "./index";
 
 jest.mock("utils");
@@ -23,40 +24,8 @@ jest.mock("contexts/cart", () => {
     }),
   };
 });
-jest.mock("contexts/cart");
 
 afterEach(cleanup);
-
-const productsMock = [
-  {
-    code: "fake-code-0",
-    image: "https://fake-image.com",
-    name: "fake-name",
-    description: "fake-description",
-    archived: false,
-    price: {
-      sale: {
-        deferred: "R$20,00",
-        cash: "19,00",
-      },
-      provider: "R$20,00",
-    },
-  },
-  {
-    code: "fake-code-1",
-    image: "https://fake-image.com",
-    name: "fake-name",
-    description: "fake-description",
-    archived: false,
-    price: {
-      sale: {
-        deferred: "R$20,00",
-        cash: "19,00",
-      },
-      provider: "R$20,00",
-    },
-  },
-];
 
 const searchImplementationMock = jest.fn(() => {
   return {
