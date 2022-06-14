@@ -5,6 +5,7 @@ interface InputProps {
   error?: string;
   isSuccess?: boolean;
   labelSize?: string;
+  disabled?: boolean;
   labelCentered?: boolean;
   isControlled?: boolean;
 }

@@ -1,8 +1,8 @@
-import { memo, useCallback } from "react";
+import { memo, useCallback, useMemo } from "react";
 import clsx from "clsx";
 import { useCart } from "contexts/cart";
 import { useSearch } from "contexts/search";
-import { numberToMoney } from "utils";
+import { ifSpaceBar, numberToMoney } from "utils";
 
 interface SearchListProductProps {
   isLastProduct: boolean;
@@ -21,9 +21,19 @@ const SearchListProduct = ({
     closeSearch();
   }, []);
 
+  const onKeyDown = useCallback((event) => {
+    ifSpaceBar(event, onProductClick);
+  }, []);
+
+  const noPrice = useMemo(() => {
+    return !product.price.sale.cash;
+  }, []);
+
   return (
     <div
       onClick={onProductClick}
+      onKeyDown={onKeyDown}
+      tabIndex={0}
       className={clsx(
         "flex p-4 text-black-70 items-center gap-6 w-full cursor-pointer",
         {
@@ -43,7 +53,7 @@ const SearchListProduct = ({
       <div className="flex flex-col gap-2">
         <p className="text-lg">{product.name}</p>
         <p className="text-base">
-          {numberToMoney(product.price.sale.cash) || "Sem preço"}
+          {noPrice ? "Sem preço" : numberToMoney(product.price.sale.cash)}
         </p>
       </div>
     </div>

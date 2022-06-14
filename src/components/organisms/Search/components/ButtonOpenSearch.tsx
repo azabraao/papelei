@@ -10,7 +10,7 @@ const ButtonOpenSearch = () => {
 
   return (
     <div onClick={openSearch} data-testid="button-open-search">
-      <div className={clsx("flex flex-col px-4 py-2 gap-1")}>
+      <div className={clsx("flex flex-col px-4 py-2 gap-2")}>
         <Label
           label={
             cartIsEmpty ? "Do que você precisa?" : "Do que mais você precisa?"

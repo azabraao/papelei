@@ -38,26 +38,35 @@ export const CartProvider = ({ children }: CartProps) => {
       );
       const newCartProducts = [...cartProducts];
       newCartProducts[productIndex].quantity = quantity;
+
       setCartProducts(newCartProducts);
     },
     [cartProducts]
   );
 
-  const addToCart = useCallback((product: Product) => {
-    // const productIsInCart = cartProducts.some(
-    //     (cartProduct) => cartProduct.code === product.code
-    // );
+  const addToCart = useCallback(
+    (product: Product) => {
+      const productIsInCart = cartProducts.find(
+        (cartProduct) => cartProduct.code === product.code
+      );
 
-    // if (productIsInCart) return;
+      if (productIsInCart) {
+        return updateCartItemQuantity(
+          product.code,
+          productIsInCart.quantity + 1
+        );
+      }
 
-    setCartProducts((cartProducts) => [
-      ...cartProducts,
-      {
-        ...product,
-        quantity: 1,
-      },
-    ]);
-  }, []);
+      setCartProducts((cartProducts) => [
+        ...cartProducts,
+        {
+          ...product,
+          quantity: 1,
+        },
+      ]);
+    },
+    [cartProducts]
+  );
 
   const cartIsEmpty = useMemo(() => cartProducts.length === 0, [cartProducts]);
 
@@ -79,9 +88,22 @@ export const CartProvider = ({ children }: CartProps) => {
 
 export default memo(CartProvider);
 
-export const useCart = () => {
+export const useCart = (): CartContextValues => {
   const context = useContext(CartContext);
   if (!context) throw new Error("useCart must be used within a CartProvider");
 
   return context;
+};
+
+export const useCartItem = (productCode: string): CartProduct => {
+  const context = useContext(CartContext);
+  if (!context) throw new Error("useCart must be used within a CartProvider");
+
+  const { cartProducts } = context;
+
+  const cartItem = cartProducts.find(
+    (cartProduct) => cartProduct.code === productCode
+  );
+
+  return cartItem;
 };

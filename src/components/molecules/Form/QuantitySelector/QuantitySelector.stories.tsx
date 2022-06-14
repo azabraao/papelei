@@ -25,3 +25,10 @@ export const Primary = Template.bind({});
 Primary.args = {
   label: "Quantity",
 };
+
+export const Disabled = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+Disabled.args = {
+  label: "Quantity",
+  disabled: true,
+};

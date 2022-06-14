@@ -4,6 +4,7 @@ import { withInputWrap } from "components/HOCs";
 
 interface QuantitySelectorProps extends InputProps {
   initialValue?: number;
+  value?: number;
   onValueChange: (value: number) => void;
 }
 
@@ -12,6 +13,8 @@ const QuantitySelector = ({
   name,
   error,
   isSuccess,
+  disabled,
+  value,
   onValueChange,
 }: QuantitySelectorProps) => {
   const [inputValue, setInputValue] = useState<number>(initialValue);
@@ -54,9 +57,13 @@ const QuantitySelector = ({
       )}
     >
       <button
-        className="py-2 px-4 outline-none"
+        className={clsx("py-2 px-4 outline-none", {
+          "text-black-70": !disabled,
+          "text-black-40": disabled,
+        })}
         data-testid="decrease-button"
         onClick={decrease}
+        disabled={disabled}
       >
         -
       </button>
@@ -66,14 +73,22 @@ const QuantitySelector = ({
         onBlur={handleBlur}
         id={name}
         name={name}
-        value={inputValue}
+        value={disabled ? 0 : value || inputValue}
         data-testid="number-input"
-        className="outline-none w-full text-black-70 h-auto py-2 px-4 text-center bg-transparent"
+        disabled={disabled}
+        className={clsx("outline-none w-12 h-ful text-center bg-transparent", {
+          "text-black-70": !disabled,
+          "text-black-40": disabled,
+        })}
       />
       <button
         data-testid="increase-button"
         onClick={increase}
-        className="py-2 px-4 outline-none"
+        className={clsx("py-2 px-4 outline-none", {
+          "text-black-70": !disabled,
+          "text-black-40": disabled,
+        })}
+        disabled={disabled}
       >
         +
       </button>
@@ -85,6 +100,8 @@ QuantitySelector.defaultProps = {
   error: "",
   isSuccess: false,
   initialValue: 1,
+  disabled: false,
+  value: null,
   onValueChange: () => null,
 };
 
