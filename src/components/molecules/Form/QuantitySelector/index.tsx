@@ -1,10 +1,10 @@
-import { useState, memo, useCallback } from "react";
+import { useState, memo, useCallback, useEffect } from "react";
 import clsx from "clsx";
 import { withInputWrap } from "components/HOCs";
 
 interface QuantitySelectorProps extends InputProps {
   initialValue?: number;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onValueChange: (value: number) => void;
 }
 
 const QuantitySelector = ({
@@ -12,9 +12,13 @@ const QuantitySelector = ({
   name,
   error,
   isSuccess,
-  onChange,
+  onValueChange,
 }: QuantitySelectorProps) => {
   const [inputValue, setInputValue] = useState<number>(initialValue);
+
+  useEffect(() => {
+    onValueChange(inputValue);
+  }, [inputValue]);
 
   const increase = useCallback(() => {
     setInputValue(inputValue + 1);
@@ -25,7 +29,6 @@ const QuantitySelector = ({
   }, [inputValue]);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e);
     setInputValue(Number(e.target.value));
   }, []);
 
@@ -82,6 +85,7 @@ QuantitySelector.defaultProps = {
   error: "",
   isSuccess: false,
   initialValue: 1,
+  onValueChange: () => null,
 };
 
 export default memo(withInputWrap(QuantitySelector));

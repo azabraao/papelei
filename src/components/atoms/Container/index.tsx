@@ -7,10 +7,14 @@ interface AppCopyTitleProps {
 
 const Container = ({ children, className }: AppCopyTitleProps) => {
   return (
-    <div className={`px-4 mx-auto max-w-6xl md:px-10 ${className}`}>
+    <div className={`px-4 mx-auto max-w-6xl md:px-10 w-full ${className}`}>
       {children}
     </div>
   );
+};
+
+Container.defaultProps = {
+  className: "",
 };
 
 export default memo(Container);

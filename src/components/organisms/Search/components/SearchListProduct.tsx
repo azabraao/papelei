@@ -2,6 +2,7 @@ import { memo, useCallback } from "react";
 import clsx from "clsx";
 import { useCart } from "contexts/cart";
 import { useSearch } from "contexts/search";
+import { numberToMoney } from "utils";
 
 interface SearchListProductProps {
   isLastProduct: boolean;
@@ -41,7 +42,9 @@ const SearchListProduct = ({
       </div>
       <div className="flex flex-col gap-2">
         <p className="text-lg">{product.name}</p>
-        <p className="text-base">{product.price.sale.cash || "Sem preço"}</p>
+        <p className="text-base">
+          {numberToMoney(product.price.sale.cash) || "Sem preço"}
+        </p>
       </div>
     </div>
   );

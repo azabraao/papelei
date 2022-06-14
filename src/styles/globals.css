@@ -16,3 +16,7 @@ input[type="number"] {
 html {
   -webkit-tap-highlight-color: transparent;
 }
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}

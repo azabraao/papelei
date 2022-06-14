@@ -1,7 +1,12 @@
 import { memo } from "react";
 import { Container } from "components/atoms";
+import { useCart } from "contexts/cart";
 
 const AppCopyTitle = () => {
+  const { cartIsEmpty } = useCart();
+
+  if (!cartIsEmpty) return null;
+
   return (
     <div className="pt-10">
       <Container>

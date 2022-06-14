@@ -1,4 +1,11 @@
-import React, { createContext, memo, useCallback, useContext } from "react";
+import React, {
+  createContext,
+  memo,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
 interface CartProduct extends Product {
   quantity: number;
@@ -6,8 +13,12 @@ interface CartProduct extends Product {
 
 interface CartContextValues {
   addToCart: (product: Product) => void;
+  setPaymentMethod: (method: string) => void;
+  updateCartItemQuantity: (code: string, quantity: number) => void;
   // removeFromCart: (product: Product) => void;
   cartProducts: CartProduct[];
+  cartIsEmpty: boolean;
+  paymentMethod: string;
 }
 
 export const CartContext = createContext({} as CartContextValues);
@@ -16,8 +27,21 @@ interface CartProps {
   children: React.ReactNode;
 }
 
-export const CartProvider: React.FC<CartProps> = ({ children }) => {
-  const [cartProducts, setCartProducts] = React.useState<CartProduct[]>([]);
+export const CartProvider = ({ children }: CartProps) => {
+  const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
+  const [paymentMethod, setPaymentMethod] = useState<string>("in-cash");
+
+  const updateCartItemQuantity = useCallback(
+    (code: string, quantity: number) => {
+      const productIndex = cartProducts.findIndex(
+        (cartProduct) => cartProduct.code === code
+      );
+      const newCartProducts = [...cartProducts];
+      newCartProducts[productIndex].quantity = quantity;
+      setCartProducts(newCartProducts);
+    },
+    [cartProducts]
+  );
 
   const addToCart = useCallback((product: Product) => {
     // const productIsInCart = cartProducts.some(
@@ -35,11 +59,17 @@ export const CartProvider: React.FC<CartProps> = ({ children }) => {
     ]);
   }, []);
 
+  const cartIsEmpty = useMemo(() => cartProducts.length === 0, [cartProducts]);
+
   return (
     <CartContext.Provider
       value={{
         addToCart,
+        setPaymentMethod,
+        updateCartItemQuantity,
+        paymentMethod,
         cartProducts,
+        cartIsEmpty,
       }}
     >
       {children}

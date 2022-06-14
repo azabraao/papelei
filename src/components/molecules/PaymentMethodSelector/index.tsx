@@ -1,5 +1,5 @@
-import clsx from "clsx";
 import { memo, useCallback, useState } from "react";
+import clsx from "clsx";
 import { CreditCardIcon, MoneyIcon } from "components/atoms";
 
 interface PaymentMethodSelectorProps {
@@ -32,7 +32,7 @@ const PaymentMethodSelector = ({
             "flex items-center transition-colors gap-2 rounded-lg p-2 border text-black-70",
             activeMethod === "in-cash"
               ? "bg-info-lighter border-info-light"
-              : "border-black-20"
+              : "border-black-20 bg-white"
           )}
           onClick={onInCashClick}
           data-testid="in-cash"
@@ -45,7 +45,7 @@ const PaymentMethodSelector = ({
             "flex items-center transition-colors gap-2 rounded-lg p-2 border text-black-70",
             activeMethod === "deferred"
               ? "bg-info-lighter border-info-light"
-              : "border-black-20"
+              : "border-black-20 bg-white"
           )}
           onClick={onDeferredClick}
           data-testid="deferred"
