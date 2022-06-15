@@ -5,7 +5,7 @@ import { memo } from "react";
 import EmptyCartState from "./components/EmptyCartState";
 
 const Cart = () => {
-  const { cartIsEmpty, cartProducts } = useCart();
+  const { cartIsEmpty, cartProducts, setPaymentMethod } = useCart();
 
   if (cartIsEmpty) return <EmptyCartState />;
 
@@ -24,7 +24,7 @@ const Cart = () => {
       </div>
       <Container>
         <PaymentMethodSelector
-          onMethodSelected={() => null}
+          onMethodSelected={setPaymentMethod}
           label="Usar preços"
         />
       </Container>

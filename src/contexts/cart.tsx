@@ -29,7 +29,7 @@ interface CartProps {
 
 export const CartProvider = ({ children }: CartProps) => {
   const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
-  const [paymentMethod, setPaymentMethod] = useState<string>("in-cash");
+  const [paymentMethod, setPaymentMethod] = useState<string>("cash");
 
   const updateCartItemQuantity = useCallback(
     (code: string, quantity: number) => {

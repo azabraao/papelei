@@ -1,34 +1,30 @@
 import { memo, useCallback, useMemo } from "react";
 import { QuantitySelector } from "components/molecules";
 import { useCart, useCartItem } from "contexts/cart";
-import { numberToMoney } from "utils";
 import clsx from "clsx";
 import DragUpToRemove from "./components/DragUpToRemove";
+import { useProductPrice } from "hooks";
 
 interface ProductCardProps extends Product {
   error?: boolean;
 }
 
-const ProductCard = ({ code, image, name, price, error }: ProductCardProps) => {
+const ProductCard = ({ code, image, name, error }: ProductCardProps) => {
   const { updateCartItemQuantity } = useCart();
   const { quantity } = useCartItem(code);
+  const { formattedPrice, noPrice } = useProductPrice(code);
 
   const onQuantityChange = useCallback((quantity) => {
     updateCartItemQuantity(code, quantity);
   }, []);
-
-  const noPrice = useMemo(() => {
-    return !price.sale.cash;
-  }, [price]);
 
   const priceShown = useMemo(() => {
     if (error && noPrice) return "Defina um preço";
 
     if (noPrice) return "Sem preço";
 
-    const total = Number(price.sale.cash) * quantity;
-    return numberToMoney(total.toFixed(2));
-  }, [price, noPrice, error, quantity]);
+    return formattedPrice;
+  }, [error, noPrice, formattedPrice]);
 
   return (
     <DragUpToRemove productCode={code}>
