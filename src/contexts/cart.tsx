@@ -15,7 +15,7 @@ interface CartContextValues {
   addToCart: (product: Product) => void;
   setPaymentMethod: (method: string) => void;
   updateCartItemQuantity: (code: string, quantity: number) => void;
-  // removeFromCart: (product: Product) => void;
+  removeFromCart: (code: string) => void;
   cartProducts: CartProduct[];
   cartIsEmpty: boolean;
   paymentMethod: string;
@@ -68,6 +68,15 @@ export const CartProvider = ({ children }: CartProps) => {
     [cartProducts]
   );
 
+  const removeFromCart = useCallback(
+    (code) => {
+      setCartProducts((cartProducts) =>
+        cartProducts.filter((cartProduct) => cartProduct.code !== code)
+      );
+    },
+    [cartProducts]
+  );
+
   const cartIsEmpty = useMemo(() => cartProducts.length === 0, [cartProducts]);
 
   return (
@@ -76,6 +85,7 @@ export const CartProvider = ({ children }: CartProps) => {
         addToCart,
         setPaymentMethod,
         updateCartItemQuantity,
+        removeFromCart,
         paymentMethod,
         cartProducts,
         cartIsEmpty,
