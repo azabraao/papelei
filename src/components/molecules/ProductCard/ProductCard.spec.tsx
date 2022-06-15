@@ -15,6 +15,13 @@ jest.mock("contexts/cart", () => ({
   })),
 }));
 
+jest.mock("hooks", () => ({
+  useProductPrice: jest.fn(() => ({
+    formattedPrice: "R$ 100,00",
+    noPrice: false,
+  })),
+}));
+
 describe("ProductCard", () => {
   it("should render", () => {
     expect(render(<ProductCard {...productsMock[0]} />)).toBeTruthy();

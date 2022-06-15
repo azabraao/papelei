@@ -52,6 +52,7 @@ const DragUpToRemove = ({ productCode, children }: DragUpToRemoveProps) => {
         onStart={onStartDraggingUp}
         onStop={onStopDraggingUp}
         bounds={{ bottom: 0 }}
+        allowAnyClick={true}
       >
         {children}
       </Draggable>
