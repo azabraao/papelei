@@ -1,16 +1,33 @@
+import { memo, useCallback, useEffect, useState } from "react";
 import { useCart } from "contexts/cart";
-import { memo, useEffect, useState } from "react";
 import Draggable from "react-draggable";
+import clsx from "clsx";
 
 interface DragUpToRemoveProps {
   children: React.ReactNode;
   productCode: string;
 }
 
+interface RemovalIndicatorProps {
+  className?: string;
+  children: React.ReactNode;
+}
+
+const RemovalIndicator = ({ className, children }: RemovalIndicatorProps) => {
+  return (
+    <div
+      className={`transition-colors absolute border-2 border-dashed w-full h-full rounded-lg flex items-end justify-center text-xl pb-8 ${className}`}
+    >
+      {children}
+    </div>
+  );
+};
+
 const DragUpToRemove = ({ productCode, children }: DragUpToRemoveProps) => {
   const { removeFromCart } = useCart();
 
   const [willRemove, setWillRemove] = useState(false);
+  const [readyToRemove, setReadyToRemove] = useState(false);
   const [hasRemoved, setHasRemoved] = useState(false);
 
   useEffect(() => {
@@ -21,38 +38,49 @@ const DragUpToRemove = ({ productCode, children }: DragUpToRemoveProps) => {
     }
   }, [hasRemoved]);
 
-  const onStartDraggingUp = () => {
+  const onStartDraggingUp = useCallback(() => {
     setWillRemove(true);
-  };
+  }, []);
 
-  const onStopDraggingUp = (_, { y }) => {
-    if (y < -200) {
+  const onDragingUp = useCallback((_, { y }) => {
+    setReadyToRemove(y < -100);
+  }, []);
+
+  const onStopDraggingUp = useCallback((_, { y }) => {
+    if (y < -100) {
       setWillRemove(false);
       setHasRemoved(true);
     } else {
+      setReadyToRemove(false);
       setWillRemove(false);
       setHasRemoved(false);
     }
-  };
+  }, []);
 
   return (
     <div className="relative z-10">
       {willRemove && (
-        <div className="absolute border-2 border-danger border-dashed w-full h-full rounded-lg flex items-center justify-center text-danger text-xl">
+        <RemovalIndicator
+          className={clsx({
+            "border-danger text-danger": !readyToRemove,
+            "bg-danger text-white ": readyToRemove,
+          })}
+        >
           Remover
-        </div>
+        </RemovalIndicator>
       )}
       {hasRemoved && (
-        <div className="absolute border-2 border-info border-dashed w-full h-full rounded-lg flex items-center justify-center text-info text-xl">
+        <RemovalIndicator className="border-info text-info">
           Removido
-        </div>
+        </RemovalIndicator>
       )}
       <Draggable
         axis="y"
         onStart={onStartDraggingUp}
+        onDrag={onDragingUp}
         onStop={onStopDraggingUp}
         bounds={{ bottom: 0 }}
-        allowAnyClick={true}
+        position={{ x: 0, y: 0 }}
       >
         {children}
       </Draggable>

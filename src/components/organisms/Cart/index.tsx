@@ -16,7 +16,7 @@ const Cart = () => {
       </Container>
 
       <div className="overflow-x-scroll mx-auto max-w-6xl md:px-10 w-full scrollbar-none">
-        <div className="px-4 flex gap-4 w-fit py-1">
+        <div className="px-4 lg:px-0 flex gap-4 w-fit py-1">
           {cartProducts.map((product: Product) => (
             <ProductCard key={product.code} {...product} />
           ))}
