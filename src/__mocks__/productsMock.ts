@@ -29,4 +29,19 @@ export const productsMock: Product[] = [
       provider: "R$20,00",
     },
   },
+  {
+    objectID: "3",
+    code: "fake-code-2",
+    image: "https://fake-image.com",
+    name: "fake-name",
+    description: "fake-description",
+    archived: false,
+    price: {
+      sale: {
+        deferred: "R$20,00",
+        cash: "19,00",
+      },
+      provider: "R$20,00",
+    },
+  },
 ];

@@ -31,7 +31,7 @@ const ProductCard = ({ code, image, name, error }: ProductCardProps) => {
       <div
         data-testid="product-card"
         className={clsx(
-          "relative z-20 min-w-[163px] w-40 p-4 rounded-lg flex flex-col gap-2 text-black-70 cursor-pointer bg-white",
+          "relative z-20 min-w-[163px] w-40 p-4 rounded-lg flex flex-col gap-2 text-black-70 cursor-pointer bg-white select-none",
           {
             "animate-shake": error,
             "shadow-card-effect-danger": error,

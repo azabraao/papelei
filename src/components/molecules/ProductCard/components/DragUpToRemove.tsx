@@ -1,7 +1,8 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { useCart } from "contexts/cart";
-import Draggable from "react-draggable";
+import Draggable from "@azabraao/react-draggable";
 import clsx from "clsx";
+import { useCartScroll } from "contexts/cartScroll";
 
 interface DragUpToRemoveProps {
   children: React.ReactNode;
@@ -25,6 +26,7 @@ const RemovalIndicator = ({ className, children }: RemovalIndicatorProps) => {
 
 const DragUpToRemove = ({ productCode, children }: DragUpToRemoveProps) => {
   const { removeFromCart } = useCart();
+  const { isScrolling } = useCartScroll();
 
   const [willRemove, setWillRemove] = useState(false);
   const [readyToRemove, setReadyToRemove] = useState(false);
@@ -38,11 +40,11 @@ const DragUpToRemove = ({ productCode, children }: DragUpToRemoveProps) => {
     }
   }, [hasRemoved]);
 
-  const onStartDraggingUp = useCallback(() => {
+  const onStartDraggingUp = useCallback((e) => {
     setWillRemove(true);
   }, []);
 
-  const onDragingUp = useCallback((_, { y }) => {
+  const onDraggingUp = useCallback((_, { y }) => {
     setReadyToRemove(y < -100);
   }, []);
 
@@ -57,8 +59,30 @@ const DragUpToRemove = ({ productCode, children }: DragUpToRemoveProps) => {
     }
   }, []);
 
+  const onTouchStartCapture = useCallback(() => {
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = "0";
+    document.body.style.right = "0";
+    document.body.style.bottom = "0";
+    document.body.style.left = "0";
+  }, []);
+
+  const onTouchEndCapture = useCallback(() => {
+    document.body.style.overflow = "auto";
+    document.body.style.position = "static";
+    document.body.style.top = "initial";
+    document.body.style.right = "initial";
+    document.body.style.bottom = "initial";
+    document.body.style.left = "initial";
+  }, []);
+
   return (
-    <div className="relative z-10">
+    <div
+      className="relative z-10"
+      onTouchStartCapture={onTouchStartCapture}
+      onTouchEndCapture={onTouchEndCapture}
+    >
       {willRemove && (
         <RemovalIndicator
           className={clsx({
@@ -77,10 +101,11 @@ const DragUpToRemove = ({ productCode, children }: DragUpToRemoveProps) => {
       <Draggable
         axis="y"
         onStart={onStartDraggingUp}
-        onDrag={onDragingUp}
+        onDrag={onDraggingUp}
         onStop={onStopDraggingUp}
-        bounds={{ bottom: 0 }}
+        bounds={{ bottom: 0, top: isScrolling ? 0 : undefined }}
         position={{ x: 0, y: 0 }}
+        disabled={isScrolling}
       >
         {children}
       </Draggable>
