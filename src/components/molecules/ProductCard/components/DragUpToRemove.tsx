@@ -3,6 +3,7 @@ import { useCart } from "contexts/cart";
 import Draggable from "@azabraao/react-draggable";
 import clsx from "clsx";
 import { useCartScroll } from "contexts/cartScroll";
+import { isAppleDevice } from "utils";
 
 interface DragUpToRemoveProps {
   children: React.ReactNode;
@@ -46,6 +47,12 @@ const DragUpToRemove = ({ productCode, children }: DragUpToRemoveProps) => {
 
   const onDraggingUp = useCallback((_, { y }) => {
     setReadyToRemove(y < -100);
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = "0";
+    document.body.style.right = "0";
+    document.body.style.bottom = "0";
+    document.body.style.left = "0";
   }, []);
 
   const onStopDraggingUp = useCallback((_, { y }) => {
@@ -59,16 +66,7 @@ const DragUpToRemove = ({ productCode, children }: DragUpToRemoveProps) => {
     }
   }, []);
 
-  const onTouchStartCapture = useCallback(() => {
-    document.body.style.overflow = "hidden";
-    document.body.style.position = "fixed";
-    document.body.style.top = "0";
-    document.body.style.right = "0";
-    document.body.style.bottom = "0";
-    document.body.style.left = "0";
-  }, []);
-
-  const onTouchEndCapture = useCallback(() => {
+  const onTouchEnd = useCallback(() => {
     document.body.style.overflow = "auto";
     document.body.style.position = "static";
     document.body.style.top = "initial";
@@ -78,11 +76,7 @@ const DragUpToRemove = ({ productCode, children }: DragUpToRemoveProps) => {
   }, []);
 
   return (
-    <div
-      className="relative z-10"
-      onTouchStartCapture={onTouchStartCapture}
-      onTouchEndCapture={onTouchEndCapture}
-    >
+    <div className="relative z-10" onTouchEnd={onTouchEnd}>
       {willRemove && (
         <RemovalIndicator
           className={clsx({
@@ -105,7 +99,7 @@ const DragUpToRemove = ({ productCode, children }: DragUpToRemoveProps) => {
         onStop={onStopDraggingUp}
         bounds={{ bottom: 0, top: isScrolling ? 0 : undefined }}
         position={{ x: 0, y: 0 }}
-        disabled={isScrolling}
+        disabled={isScrolling || isAppleDevice()}
       >
         {children}
       </Draggable>

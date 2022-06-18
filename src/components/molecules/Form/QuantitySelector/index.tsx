@@ -1,6 +1,7 @@
 import { useState, memo, useCallback, useEffect } from "react";
 import clsx from "clsx";
 import { withInputWrap } from "components/HOCs";
+import { stopPropagation } from "utils";
 
 interface QuantitySelectorProps extends InputProps {
   initialValue?: number;
@@ -42,6 +43,7 @@ const QuantitySelector = ({
 
   return (
     <div
+      onTouchStart={stopPropagation}
       className={clsx(
         "max-w-[180px] flex items-center justify-between rounded-lg border hover:shadow-on-hover-shadow focus-within:shadow-focus-shadow-info focus-within:border-info-light placeholder-black-40 w-full overflow-hidden",
         error &&
