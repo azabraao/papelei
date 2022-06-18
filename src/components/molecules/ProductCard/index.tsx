@@ -10,13 +10,16 @@ interface ProductCardProps extends Product {
 }
 
 const ProductCard = ({ code, image, name, error }: ProductCardProps) => {
-  const { updateCartItemQuantity } = useCart();
+  const { updateCartItemQuantity, cartProducts } = useCart();
   const { quantity } = useCartItem(code);
   const { formattedPrice, noPrice } = useProductPrice(code);
 
-  const onQuantityChange = useCallback((quantity) => {
-    updateCartItemQuantity(code, quantity);
-  }, []);
+  const onQuantityChange = useCallback(
+    (quantity) => {
+      updateCartItemQuantity(code, quantity);
+    },
+    [cartProducts]
+  );
 
   const priceShown = useMemo(() => {
     if (error && noPrice) return "Defina um preço";

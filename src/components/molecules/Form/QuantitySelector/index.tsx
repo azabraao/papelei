@@ -63,7 +63,6 @@ const QuantitySelector = ({
         })}
         data-testid="decrease-button"
         onClick={decrease}
-        onTouchStart={decrease}
         disabled={disabled}
       >
         -
@@ -84,7 +83,6 @@ const QuantitySelector = ({
       <button
         data-testid="increase-button"
         onClick={increase}
-        onTouchStart={increase}
         className={clsx("py-2 px-4 outline-none", {
           "text-black-70": !disabled,
           "text-black-40": disabled,
