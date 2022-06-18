@@ -59,7 +59,7 @@ const TextInput = forwardRef(
         )}
         <input
           type="text"
-          className={clsx("outline-none w-full text-black-70 select-none", {
+          className={clsx("outline-none w-full text-black-70", {
             "px-4 py-2": !IconLeft,
           })}
           placeholder={placeholder}
