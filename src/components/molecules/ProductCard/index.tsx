@@ -1,72 +1,55 @@
-import { memo, useCallback, useMemo } from "react";
-import { QuantitySelector } from "components/molecules";
-import { useCart, useCartItem } from "contexts/cart";
-import clsx from "clsx";
+import { createContext, memo, useContext } from "react";
 import DragUpToRemove from "./components/DragUpToRemove";
-import { useProductPrice } from "hooks";
+import ProductDetailsWrap from "./components/ProductDetailsWrap";
+import ProductImage from "./components/ProductImage";
+import ProductWrap from "./components/ProductWrap";
+import ProductName from "./components/ProductName";
+import ProductTotalPrice from "./components/ProductTotalPrice";
+import ProductQuantitySelector from "./components/ProductQuantitySelector";
 
 interface ProductCardProps extends Product {
   error?: boolean;
 }
 
+interface ProductCardContextValues {
+  code: string;
+  image: string;
+  name: string;
+  error: string | boolean;
+}
+
+export const ProductCardContext = createContext({} as ProductCardContextValues);
+
 const ProductCard = ({ code, image, name, error }: ProductCardProps) => {
-  const { updateCartItemQuantity, cartProducts } = useCart();
-  const { quantity } = useCartItem(code);
-  const { formattedPrice, noPrice } = useProductPrice(code);
-
-  const onQuantityChange = useCallback(
-    (quantity) => {
-      updateCartItemQuantity(code, quantity);
-    },
-    [cartProducts]
-  );
-
-  const priceShown = useMemo(() => {
-    if (error && noPrice) return "Defina um preço";
-
-    if (noPrice) return "Sem preço";
-
-    return formattedPrice;
-  }, [error, noPrice, formattedPrice]);
-
   return (
-    <DragUpToRemove productCode={code}>
-      <div
-        data-testid="product-card"
-        className={clsx(
-          "relative z-20 min-w-[163px] w-40 p-4 rounded-lg flex flex-col gap-2 text-black-70 cursor-pointer bg-white select-none",
-          {
-            "animate-shake": error,
-            "shadow-card-effect-danger": error,
-            "shadow-card-effect-soft": !error,
-          }
-        )}
-      >
-        <img src={image} alt="Product" width={300} height={300} />
-        <article className="flex flex-col gap-2 mb-1">
-          <div className="flex items-center min-h-[48px]">
-            <span className="webkit-box line-clamp-2 box-orient-vertical text-ellipsis overflow-hidden  ">
-              {name}
-            </span>
-          </div>
-          <h3
-            className={clsx("font-medium ", {
-              "text-danger": noPrice,
-            })}
-          >
-            {priceShown}
-          </h3>
-        </article>
-        <QuantitySelector
-          name="quantity"
-          onValueChange={onQuantityChange}
-          placeholder="Qtd"
-          value={quantity}
-          disabled={noPrice}
-        />
-      </div>
-    </DragUpToRemove>
+    <ProductCardContext.Provider
+      value={{
+        code,
+        image,
+        name,
+        error,
+      }}
+    >
+      <DragUpToRemove>
+        <ProductWrap>
+          <ProductImage />
+          <ProductDetailsWrap>
+            <ProductName />
+            <ProductTotalPrice />
+          </ProductDetailsWrap>
+          <ProductQuantitySelector />
+        </ProductWrap>
+      </DragUpToRemove>
+    </ProductCardContext.Provider>
   );
+};
+
+export const useProductCard = (): ProductCardContextValues => {
+  const context = useContext(ProductCardContext);
+  if (!context)
+    throw new Error("useProductCard must be used within a ProductCardProvider");
+
+  return context;
 };
 
 ProductCard.defaultProps = {

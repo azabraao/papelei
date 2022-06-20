@@ -3,11 +3,11 @@ import { useCart } from "contexts/cart";
 import Draggable from "@azabraao/react-draggable";
 import clsx from "clsx";
 import { useCartScroll } from "contexts/cartScroll";
-import { isAppleDevice } from "utils";
+import { isAppleDevice, lockBodyScroll, unlockBodyScroll } from "utils";
+import { useProductCard } from "..";
 
 interface DragUpToRemoveProps {
   children: React.ReactNode;
-  productCode: string;
 }
 
 interface RemovalIndicatorProps {
@@ -25,9 +25,10 @@ const RemovalIndicator = ({ className, children }: RemovalIndicatorProps) => {
   );
 };
 
-const DragUpToRemove = ({ productCode, children }: DragUpToRemoveProps) => {
+const DragUpToRemove = ({ children }: DragUpToRemoveProps) => {
   const { removeFromCart } = useCart();
   const { isScrolling } = useCartScroll();
+  const { code } = useProductCard();
 
   const [willRemove, setWillRemove] = useState(false);
   const [readyToRemove, setReadyToRemove] = useState(false);
@@ -36,23 +37,18 @@ const DragUpToRemove = ({ productCode, children }: DragUpToRemoveProps) => {
   useEffect(() => {
     if (hasRemoved) {
       setTimeout(() => {
-        removeFromCart(productCode);
+        removeFromCart(code);
       }, 200);
     }
   }, [hasRemoved]);
 
-  const onStartDraggingUp = useCallback((e) => {
+  const onStartDraggingUp = useCallback(() => {
     setWillRemove(true);
   }, []);
 
   const onDraggingUp = useCallback((_, { y }) => {
     setReadyToRemove(y < -100);
-    document.body.style.overflow = "hidden";
-    document.body.style.position = "fixed";
-    document.body.style.top = "0";
-    document.body.style.right = "0";
-    document.body.style.bottom = "0";
-    document.body.style.left = "0";
+    lockBodyScroll();
   }, []);
 
   const onStopDraggingUp = useCallback((_, { y }) => {
@@ -67,12 +63,7 @@ const DragUpToRemove = ({ productCode, children }: DragUpToRemoveProps) => {
   }, []);
 
   const onTouchEnd = useCallback(() => {
-    document.body.style.overflow = "auto";
-    document.body.style.position = "static";
-    document.body.style.top = "initial";
-    document.body.style.right = "initial";
-    document.body.style.bottom = "initial";
-    document.body.style.left = "initial";
+    unlockBodyScroll();
   }, []);
 
   return (

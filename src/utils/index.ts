@@ -6,3 +6,4 @@ export { numberToMoney } from "./numberToMoney";
 export { ifSpaceBar } from "./ifSpaceBar";
 export { isAppleDevice } from "./devices";
 export { stopPropagation } from "./events";
+export { lockBodyScroll, unlockBodyScroll } from "./dom";
