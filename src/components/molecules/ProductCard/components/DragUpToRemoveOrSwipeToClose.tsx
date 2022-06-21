@@ -6,7 +6,7 @@ import { useCartScroll } from "contexts/cartScroll";
 import { isAppleDevice, lockBodyScroll, unlockBodyScroll } from "utils";
 import { useProductCard } from "..";
 
-interface DragUpToRemoveProps {
+interface DragUpToRemoveOrSwipeToCloseProps {
   children: React.ReactNode;
 }
 
@@ -25,7 +25,9 @@ const RemovalIndicator = ({ className, children }: RemovalIndicatorProps) => {
   );
 };
 
-const DragUpToRemove = ({ children }: DragUpToRemoveProps) => {
+const DragUpToRemoveOrSwipeToClose = ({
+  children,
+}: DragUpToRemoveOrSwipeToCloseProps) => {
   const { removeFromCart } = useCart();
   const { isScrolling } = useCartScroll();
   const { code } = useProductCard();
@@ -98,4 +100,4 @@ const DragUpToRemove = ({ children }: DragUpToRemoveProps) => {
   );
 };
 
-export default memo(DragUpToRemove);
+export default memo(DragUpToRemoveOrSwipeToClose);

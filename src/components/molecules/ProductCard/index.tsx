@@ -1,5 +1,5 @@
 import { createContext, memo, useContext } from "react";
-import DragUpToRemove from "./components/DragUpToRemove";
+import DragUpToRemove from "./components/DragUpToRemoveOrSwipeToClose";
 import ProductDetailsWrap from "./components/ProductDetailsWrap";
 import ProductImage from "./components/ProductImage";
 import ProductWrap from "./components/ProductWrap";
