@@ -1,18 +1,18 @@
 import "@testing-library/jest-dom";
-import { render, renderHook, screen } from "@testing-library/react";
-import { CartProvider, useCart } from "contexts/cart";
-import { productsMock } from "__mocks__";
+import { render } from "@testing-library/react";
+import { CartProvider } from "contexts/cart";
+// import { productsMock } from "__mocks__";
 import Cart from "./index";
-interface CartProduct extends Product {
-  quantity: number;
-}
+// interface CartProduct extends Product {
+//   quantity: number;
+// }
 
-interface CartContextValues {
-  addToCart: (product: Product) => void;
-  // removeFromCart: (product: Product) => void;
-  cartProducts: CartProduct[];
-}
-const mockedAddToCard = jest.fn();
+// interface CartContextValues {
+//   addToCart: (product: Product) => void;
+//   // removeFromCart: (product: Product) => void;
+//   cartProducts: CartProduct[];
+// }
+// const mockedAddToCard = jest.fn();
 
 // jest.mock("contexts/cart", () => {
 //   return {

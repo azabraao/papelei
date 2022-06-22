@@ -6,7 +6,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import ProductDetailsWrap from "./components/ProductDetailsWrap";
 import ProductImage from "./components/ProductImage";
 import ProductWrap from "./components/ProductWrap";
 import ProductName from "./components/ProductName";
