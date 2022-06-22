@@ -30,7 +30,7 @@ const DragUpToRemoveOrSwipeToClose = ({
 }: DragUpToRemoveOrSwipeToCloseProps) => {
   const { removeFromCart } = useCart();
   const { isScrolling } = useCartScroll();
-  const { code, isExpanded } = useProductCard();
+  const { code, isExpanded, setIsDraggingUp } = useProductCard();
 
   const [willRemove, setWillRemove] = useState(false);
   const [readyToRemove, setReadyToRemove] = useState(false);
@@ -49,11 +49,13 @@ const DragUpToRemoveOrSwipeToClose = ({
   }, []);
 
   const onDraggingUp = useCallback((_, { y }) => {
+    setIsDraggingUp(true);
     setReadyToRemove(y < -100);
     lockBodyScroll();
   }, []);
 
   const onStopDraggingUp = useCallback((_, { y }) => {
+    setIsDraggingUp(false);
     if (y < -100) {
       setWillRemove(false);
       setHasRemoved(true);

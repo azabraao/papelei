@@ -23,12 +23,15 @@ interface ProductCardContextValues {
   isExpanded: boolean;
   expandProductCard: VoidFunction;
   restoreProductCard: VoidFunction;
+  setIsDraggingUp: (isDraggingUp: boolean) => void;
+  isDraggingUp: boolean;
 }
 
 export const ProductCardContext = createContext({} as ProductCardContextValues);
 
 const ProductCard = ({ code, image, name, error }: ProductCardProps) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [isDraggingUp, setIsDraggingUp] = useState<boolean>(false);
 
   const expandProductCard = useCallback(() => setIsExpanded(true), []);
 
@@ -39,6 +42,8 @@ const ProductCard = ({ code, image, name, error }: ProductCardProps) => {
       value={{
         expandProductCard,
         restoreProductCard,
+        setIsDraggingUp,
+        isDraggingUp,
         isExpanded,
         code,
         image,

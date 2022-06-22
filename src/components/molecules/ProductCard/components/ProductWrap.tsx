@@ -7,7 +7,8 @@ interface ProductWrapProps {
 }
 
 const ProductWrap = ({ children }: ProductWrapProps) => {
-  const { error, expandProductCard, isExpanded } = useProductCard();
+  const { error, expandProductCard, isExpanded, isDraggingUp } =
+    useProductCard();
 
   const handleClick = useCallback(() => {
     if (!isExpanded) expandProductCard();
@@ -20,6 +21,7 @@ const ProductWrap = ({ children }: ProductWrapProps) => {
       className={clsx(
         "relative overflow-hidden z-20 rounded-lg flex flex-col text-black-70 cursor-pointer bg-white select-none",
         {
+          "pointer-events-none": isDraggingUp,
           "min-w-[163px] w-40 gap-2": !isExpanded,
           "w-[272px] gap-4": isExpanded,
           "animate-shake": error,
