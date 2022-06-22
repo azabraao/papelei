@@ -80,7 +80,7 @@ const DragUpToRemoveOrSwipeToClose = ({
       const shouldRestoreProductCard = opacity < 0.4;
       node.style.opacity = 1;
 
-      if (shouldRestoreProductCard) {
+      if (shouldRestoreProductCard && isExpanded) {
         return restoreProductCard();
       }
 
