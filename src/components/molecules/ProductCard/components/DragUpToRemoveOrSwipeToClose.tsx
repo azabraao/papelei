@@ -30,7 +30,7 @@ const DragUpToRemoveOrSwipeToClose = ({
 }: DragUpToRemoveOrSwipeToCloseProps) => {
   const { removeFromCart } = useCart();
   const { isScrolling } = useCartScroll();
-  const { code } = useProductCard();
+  const { code, isExpanded } = useProductCard();
 
   const [willRemove, setWillRemove] = useState(false);
   const [readyToRemove, setReadyToRemove] = useState(false);
@@ -92,7 +92,7 @@ const DragUpToRemoveOrSwipeToClose = ({
         onStop={onStopDraggingUp}
         bounds={{ bottom: 0, top: isScrolling ? 0 : undefined }}
         position={{ x: 0, y: 0 }}
-        disabled={isScrolling || isAppleDevice()}
+        disabled={isScrolling || isAppleDevice() || isExpanded}
       >
         {children}
       </Draggable>

@@ -7,9 +7,9 @@ type Product = {
   archived: boolean;
   price: {
     sale: {
-      deferred: string;
-      cash: string;
+      deferred: number;
+      cash: number;
     };
-    provider: string;
+    provider: number;
   };
 };

@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import clsx from "clsx";
 import { maskMoney } from "utils";
 import { withInputWrap } from "components/HOCs";
@@ -6,6 +6,7 @@ import { withInputWrap } from "components/HOCs";
 interface MoneyInputProps extends InputProps {
   initialValue?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 const MoneyInput = ({
@@ -15,19 +16,20 @@ const MoneyInput = ({
   isSuccess,
   placeholder,
   onChange,
+  onBlur,
 }: MoneyInputProps) => {
   const [inputValue, setInputValue] = useState(initialValue);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e);
     const { value } = e.target;
     setInputValue(maskMoney(value));
-  };
+  }, []);
 
   return (
     <div
       className={clsx(
-        "flex items-center justify-between max-w-[180px] bg-white rounded-lg border hover:shadow-on-hover-shadow focus-within:shadow-focus-shadow-info focus-within:border-info-light placeholder-black-40 w-full overflow-hidden",
+        "flex items-center justify-between bg-white rounded-lg border hover:shadow-on-hover-shadow focus-within:shadow-focus-shadow-info focus-within:border-info-light placeholder-black-40 w-full overflow-hidden",
         error &&
           "border-danger focus-within:border-danger focus-within:shadow-none",
         isSuccess &&
@@ -48,6 +50,7 @@ const MoneyInput = ({
         className="outline-none w-full text-black-70 h-6 px-4 py-2"
         placeholder={placeholder}
         onChange={handleChange}
+        onBlur={onBlur}
         name={name}
         id={name}
         value={inputValue}
@@ -60,6 +63,7 @@ MoneyInput.defaultProps = {
   error: "",
   isSuccess: false,
   initialValue: "1,00",
+  onBlur: () => null,
 };
 
 export default memo(withInputWrap(MoneyInput));

@@ -4,7 +4,7 @@ import { useProductPrice } from "hooks";
 import { useProductCard } from "..";
 
 const ProductTotalPrice = () => {
-  const { error, code } = useProductCard();
+  const { error, code, isExpanded } = useProductCard();
   const { formattedPrice, noPrice } = useProductPrice(code);
 
   const priceShown = useMemo(() => {
@@ -17,8 +17,10 @@ const ProductTotalPrice = () => {
 
   return (
     <h3
-      className={clsx("font-medium ", {
+      className={clsx("font-medium pl-4 pr-4", {
         "text-danger": noPrice,
+        "mb-1": !isExpanded,
+        "text-3xl font-bold mb-2 mt-2": isExpanded,
       })}
     >
       {priceShown}

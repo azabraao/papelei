@@ -1,11 +1,15 @@
-import { createContext, memo, useContext } from "react";
-import DragUpToRemove from "./components/DragUpToRemoveOrSwipeToClose";
+import { createContext, memo, useCallback, useContext, useState } from "react";
 import ProductDetailsWrap from "./components/ProductDetailsWrap";
 import ProductImage from "./components/ProductImage";
 import ProductWrap from "./components/ProductWrap";
 import ProductName from "./components/ProductName";
 import ProductTotalPrice from "./components/ProductTotalPrice";
 import ProductQuantitySelector from "./components/ProductQuantitySelector";
+import DragUpToRemoveOrSwipeToClose from "./components/DragUpToRemoveOrSwipeToClose";
+import ProductWindow from "./components/ProductWindow";
+import SavePositionQueue from "./components/SavePositionQueue";
+import ButtonRemoveProductFromCart from "./components/ButtonRemoveProductFromCart";
+import UpdatePriceInput from "./components/UpdatePriceInput";
 
 interface ProductCardProps extends Product {
   error?: boolean;
@@ -16,30 +20,50 @@ interface ProductCardContextValues {
   image: string;
   name: string;
   error: string | boolean;
+  isExpanded: boolean;
+  expandProductCard: VoidFunction;
+  restoreProductCard: VoidFunction;
 }
 
 export const ProductCardContext = createContext({} as ProductCardContextValues);
 
 const ProductCard = ({ code, image, name, error }: ProductCardProps) => {
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
+  const expandProductCard = useCallback(() => setIsExpanded(true), []);
+
+  const restoreProductCard = useCallback(() => setIsExpanded(false), []);
+
   return (
     <ProductCardContext.Provider
       value={{
+        expandProductCard,
+        restoreProductCard,
+        isExpanded,
         code,
         image,
         name,
         error,
       }}
     >
-      <DragUpToRemove>
-        <ProductWrap>
-          <ProductImage />
-          <ProductDetailsWrap>
-            <ProductName />
-            <ProductTotalPrice />
-          </ProductDetailsWrap>
-          <ProductQuantitySelector />
-        </ProductWrap>
-      </DragUpToRemove>
+      {isExpanded && <SavePositionQueue />}
+      <ProductWindow>
+        <DragUpToRemoveOrSwipeToClose>
+          <div>
+            <ProductWrap>
+              <ProductImage />
+
+              <ProductName />
+              {!isExpanded && <ProductTotalPrice />}
+
+              {isExpanded && <UpdatePriceInput />}
+              <ProductQuantitySelector />
+              {isExpanded && <ProductTotalPrice />}
+              {isExpanded && <ButtonRemoveProductFromCart />}
+            </ProductWrap>
+          </div>
+        </DragUpToRemoveOrSwipeToClose>
+      </ProductWindow>
     </ProductCardContext.Provider>
   );
 };

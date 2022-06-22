@@ -4,6 +4,7 @@ export { default as MoneyIcon } from "./Icon/Money";
 export { default as XIcon } from "./Icon/X";
 export { default as SearchIcon } from "./Icon/Search";
 export { default as ArrowLeftIcon } from "./Icon/ArrowLeft";
+export { default as TrashIcon } from "./Icon/Trash";
 export { default as XSimpleIcon } from "./Icon/XSimple";
 export { default as Container } from "./Container";
 export { default as Button } from "./Button";

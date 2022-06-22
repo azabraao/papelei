@@ -13,7 +13,8 @@ interface CartProduct extends Product {
 
 interface CartContextValues {
   addToCart: (product: Product) => void;
-  setPaymentMethod: (method: string) => void;
+  setPaymentMethod: (method: "cash" | "deferred") => void;
+  updateCartItemPrice: (code: string, price: number) => void;
   updateCartItemQuantity: (code: string, quantity: number) => void;
   removeFromCart: (code: string) => void;
   cartProducts: CartProduct[];
@@ -29,7 +30,8 @@ interface CartProps {
 
 export const CartProvider = ({ children }: CartProps) => {
   const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
-  const [paymentMethod, setPaymentMethod] = useState<string>("cash");
+  const [paymentMethod, setPaymentMethod] =
+    useState<"cash" | "deferred">("cash");
 
   const updateCartItemQuantity = useCallback(
     (code: string, quantity: number) => {
@@ -42,6 +44,19 @@ export const CartProvider = ({ children }: CartProps) => {
       setCartProducts(newCartProducts);
     },
     [cartProducts]
+  );
+
+  const updateCartItemPrice = useCallback(
+    (code: string, price: number) => {
+      const productIndex = cartProducts.findIndex(
+        (cartProduct) => cartProduct.code === code
+      );
+      const newCartProducts = [...cartProducts];
+      newCartProducts[productIndex].price.sale[paymentMethod] = price;
+
+      setCartProducts(newCartProducts);
+    },
+    [cartProducts, paymentMethod]
   );
 
   const addToCart = useCallback(
@@ -86,6 +101,7 @@ export const CartProvider = ({ children }: CartProps) => {
         setPaymentMethod,
         updateCartItemQuantity,
         removeFromCart,
+        updateCartItemPrice,
         paymentMethod,
         cartProducts,
         cartIsEmpty,
