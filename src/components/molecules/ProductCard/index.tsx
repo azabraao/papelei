@@ -1,4 +1,11 @@
-import { createContext, memo, useCallback, useContext, useState } from "react";
+import {
+  createContext,
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import ProductDetailsWrap from "./components/ProductDetailsWrap";
 import ProductImage from "./components/ProductImage";
 import ProductWrap from "./components/ProductWrap";
@@ -10,6 +17,7 @@ import ProductWindow from "./components/ProductWindow";
 import SavePositionQueue from "./components/SavePositionQueue";
 import ButtonRemoveProductFromCart from "./components/ButtonRemoveProductFromCart";
 import UpdatePriceInput from "./components/UpdatePriceInput";
+import { lockBodyScroll, unlockBodyScroll } from "utils";
 
 interface ProductCardProps extends Product {
   error?: boolean;
@@ -32,6 +40,14 @@ export const ProductCardContext = createContext({} as ProductCardContextValues);
 const ProductCard = ({ code, image, name, error }: ProductCardProps) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [isDraggingUp, setIsDraggingUp] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isExpanded) {
+      lockBodyScroll();
+    } else {
+      unlockBodyScroll();
+    }
+  }, [isExpanded]);
 
   const expandProductCard = useCallback(() => setIsExpanded(true), []);
 

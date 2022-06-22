@@ -1,9 +1,14 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useCart } from "contexts/cart";
 import Draggable from "@azabraao/react-draggable";
 import clsx from "clsx";
 import { useCartScroll } from "contexts/cartScroll";
-import { isAppleDevice, lockBodyScroll, unlockBodyScroll } from "utils";
+import {
+  getAxisOrientedOpacity,
+  lockBodyScroll,
+  stopPropagation,
+  unlockBodyScroll,
+} from "utils";
 import { useProductCard } from "..";
 
 interface DragUpToRemoveOrSwipeToCloseProps {
@@ -30,7 +35,13 @@ const DragUpToRemoveOrSwipeToClose = ({
 }: DragUpToRemoveOrSwipeToCloseProps) => {
   const { removeFromCart } = useCart();
   const { isScrolling } = useCartScroll();
-  const { code, isExpanded, setIsDraggingUp } = useProductCard();
+  const {
+    code,
+    isExpanded,
+    setIsDraggingUp,
+    isDraggingUp,
+    restoreProductCard,
+  } = useProductCard();
 
   const [willRemove, setWillRemove] = useState(false);
   const [readyToRemove, setReadyToRemove] = useState(false);
@@ -44,34 +55,69 @@ const DragUpToRemoveOrSwipeToClose = ({
     }
   }, [hasRemoved]);
 
-  const onStartDraggingUp = useCallback(() => {
-    setWillRemove(true);
-  }, []);
+  const onStartDragging = useCallback(() => {
+    !isExpanded && setWillRemove(true);
+  }, [isExpanded]);
 
-  const onDraggingUp = useCallback((_, { y }) => {
-    setIsDraggingUp(true);
-    setReadyToRemove(y < -100);
-    lockBodyScroll();
-  }, []);
+  const onDragging = useCallback(
+    (_, { y, x, node }) => {
+      lockBodyScroll();
 
-  const onStopDraggingUp = useCallback((_, { y }) => {
-    setIsDraggingUp(false);
-    if (y < -100) {
-      setWillRemove(false);
-      setHasRemoved(true);
-    } else {
-      setReadyToRemove(false);
-      setWillRemove(false);
-      setHasRemoved(false);
-    }
-  }, []);
+      if (isExpanded) {
+        node.style.opacity = getAxisOrientedOpacity(x, y);
+        return;
+      }
+
+      setIsDraggingUp(true);
+      setReadyToRemove(y < -100);
+    },
+    [isExpanded]
+  );
+
+  const onStopDragging = useCallback(
+    (_, { y, x, node }) => {
+      const opacity = getAxisOrientedOpacity(x, y);
+      const shouldRestoreProductCard = opacity < 0.4;
+      node.style.opacity = 1;
+
+      if (shouldRestoreProductCard) {
+        return restoreProductCard();
+      }
+
+      if (isExpanded) return;
+
+      setIsDraggingUp(false);
+      if (y < -100) {
+        setWillRemove(false);
+        setHasRemoved(true);
+      } else {
+        setReadyToRemove(false);
+        setWillRemove(false);
+        setHasRemoved(false);
+      }
+    },
+    [isExpanded]
+  );
 
   const onTouchEnd = useCallback(() => {
-    unlockBodyScroll();
-  }, []);
+    if (!isExpanded) unlockBodyScroll();
+  }, [isExpanded]);
+
+  const dragBounds = useMemo(() => {
+    if (isExpanded) return {};
+
+    if (isScrolling) return { bottom: 0, top: 0, left: 0, right: 0 };
+
+    return { bottom: 0, left: 0, right: 0 };
+  }, [isDraggingUp, isScrolling, isExpanded]);
 
   return (
-    <div className="relative z-10" onTouchEnd={onTouchEnd}>
+    <div
+      className="relative z-10"
+      onTouchEnd={onTouchEnd}
+      onScroll={stopPropagation}
+      onTouchStart={stopPropagation}
+    >
       {willRemove && (
         <RemovalIndicator
           className={clsx({
@@ -88,13 +134,13 @@ const DragUpToRemoveOrSwipeToClose = ({
         </RemovalIndicator>
       )}
       <Draggable
-        axis="y"
-        onStart={onStartDraggingUp}
-        onDrag={onDraggingUp}
-        onStop={onStopDraggingUp}
-        bounds={{ bottom: 0, top: isScrolling ? 0 : undefined }}
+        onStart={onStartDragging}
+        onDrag={onDragging}
+        onStop={onStopDragging}
+        bounds={dragBounds}
+        // scale={0.5}
         position={{ x: 0, y: 0 }}
-        disabled={isScrolling || isAppleDevice() || isExpanded}
+        // disabled={isScrolling || isAppleDevice()}
       >
         {children}
       </Draggable>
