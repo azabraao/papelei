@@ -90,6 +90,7 @@ const SearchWindow = () => {
             IconLeft={<ArrowLeftIcon />}
             IconRight={<XSimpleIcon />}
             autoFocus
+            testid="search-input"
             ref={inputRef}
           />
           {searchResult.length ? (

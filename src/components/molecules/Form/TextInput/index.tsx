@@ -13,6 +13,7 @@ interface TextInputProps extends InputProps {
   value?: string;
   IconRight?: ReactNode;
   IconLeft?: ReactNode;
+  testid?: string;
 }
 
 const TextInput = forwardRef(
@@ -27,6 +28,7 @@ const TextInput = forwardRef(
       value,
       isControlled,
       autoFocus,
+      testid,
       onKeyDown,
       onChange,
       onIconRightClick,
@@ -68,6 +70,7 @@ const TextInput = forwardRef(
           name={name}
           ref={ref}
           id={name}
+          {...(testid && { "data-testid": testid })}
           {...(isControlled && { value })}
           autoComplete="off"
           autoFocus={autoFocus}
@@ -98,6 +101,7 @@ TextInput.defaultProps = {
   onKeyDown: () => null,
   onIconLeftClick: () => null,
   onIconRightClick: () => null,
+  testid: "",
 };
 
 export default memo(withInputWrap(TextInput));

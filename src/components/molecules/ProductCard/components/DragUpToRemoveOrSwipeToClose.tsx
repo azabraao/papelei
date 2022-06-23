@@ -113,6 +113,7 @@ const DragUpToRemoveOrSwipeToClose = ({
 
   return (
     <div
+      data-testid="drag-product-card"
       className="relative z-10"
       onTouchEnd={onTouchEnd}
       onScroll={stopPropagation}

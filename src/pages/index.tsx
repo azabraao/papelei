@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { AppCopyTitle, Navbar } from "components/molecules";
-import { Cart, Search } from "components/organisms";
+import { BudgetProposalSummary, Cart, Search } from "components/organisms";
 
 export default function Home() {
   return (
@@ -14,6 +14,7 @@ export default function Home() {
         <AppCopyTitle />
         <Cart />
         <Search />
+        <BudgetProposalSummary />
       </main>
     </div>
   );

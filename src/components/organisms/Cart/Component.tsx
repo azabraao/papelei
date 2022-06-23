@@ -26,6 +26,7 @@ const Cart = () => {
       </Container>
 
       <div
+        data-testid="cart-scroll"
         onScroll={onScroll}
         onTouchEndCapture={onScrollEnd}
         className="overflow-scroll mx-auto max-w-6xl md:px-10 w-full scrollbar-none overscroll-y-contain"

@@ -22,6 +22,7 @@ const ProductTotalPrice = () => {
         "mb-1": !isExpanded,
         "text-3xl font-bold mb-2 mt-2": isExpanded,
       })}
+      data-testid="product-card-total-price"
     >
       {priceShown}
     </h3>

@@ -41,7 +41,7 @@ const SearchListProduct = ({
             isLastProduct,
         }
       )}
-      data-testid="search-list-product"
+      data-testid="search-result-item"
     >
       <div>
         <img
@@ -51,7 +51,9 @@ const SearchListProduct = ({
         />
       </div>
       <div className="flex flex-col gap-2">
-        <p className="text-lg">{product.name}</p>
+        <p data-testid="search-result-item-name" className="text-lg">
+          {product.name}
+        </p>
         <p className="text-base">
           {noPrice ? "Sem preço" : numberToMoney(product.price.sale.cash)}
         </p>

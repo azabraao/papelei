@@ -3,6 +3,7 @@ import React, {
   memo,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -20,6 +21,7 @@ interface CartContextValues {
   cartProducts: CartProduct[];
   cartIsEmpty: boolean;
   paymentMethod: string;
+  cartTotal: number;
 }
 
 export const CartContext = createContext({} as CartContextValues);
@@ -32,6 +34,19 @@ export const CartProvider = ({ children }: CartProps) => {
   const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
   const [paymentMethod, setPaymentMethod] =
     useState<"cash" | "deferred">("cash");
+  const [cartTotal, setCartTotal] = useState<number>(0);
+
+  useEffect(() => {
+    if (cartProducts.length > 0) {
+      setCartTotal(
+        cartProducts.reduce((acc, curr) => {
+          return acc + curr.price.sale[paymentMethod] * curr.quantity;
+        }, 0)
+      );
+    } else {
+      setCartTotal(0);
+    }
+  }, [cartProducts]);
 
   const updateCartItemQuantity = useCallback(
     (code: string, quantity: number) => {
@@ -105,6 +120,7 @@ export const CartProvider = ({ children }: CartProps) => {
         paymentMethod,
         cartProducts,
         cartIsEmpty,
+        cartTotal,
       }}
     >
       {children}

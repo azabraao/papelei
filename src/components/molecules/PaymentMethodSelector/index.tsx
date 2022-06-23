@@ -11,11 +11,11 @@ const PaymentMethodSelector = ({
   label,
   onMethodSelected,
 }: PaymentMethodSelectorProps) => {
-  const [activeMethod, setActiveMethod] = useState("in-cash");
+  const [activeMethod, setActiveMethod] = useState("cash");
 
   const onInCashClick = useCallback(() => {
-    onMethodSelected("in-cash");
-    setActiveMethod("in-cash");
+    onMethodSelected("cash");
+    setActiveMethod("cash");
   }, []);
 
   const onDeferredClick = useCallback(() => {
@@ -30,12 +30,12 @@ const PaymentMethodSelector = ({
         <button
           className={clsx(
             "flex items-center transition-colors gap-2 rounded-lg p-2 border text-black-70",
-            activeMethod === "in-cash"
+            activeMethod === "cash"
               ? "bg-info-lighter border-info-light"
               : "border-black-20 bg-white"
           )}
           onClick={onInCashClick}
-          data-testid="in-cash"
+          data-testid="cash"
         >
           <MoneyIcon />
           <span>À vista</span>

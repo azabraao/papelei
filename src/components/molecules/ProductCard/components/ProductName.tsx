@@ -15,6 +15,7 @@ const ProductName = () => {
           "webkit-box line-clamp-2 box-orient-vertical text-ellipsis overflow-hidden ":
             !isExpanded,
         })}
+        data-testid="product-card-name"
       >
         {name}
       </span>

@@ -16,11 +16,11 @@ describe("PaymentMethodSelector", () => {
 
   it("should return the method name when the proper button is clicked", async () => {
     render(<PaymentMethodSelector {...defaultProps} />);
-    const inCashButton = screen.getByTestId("in-cash");
+    const inCashButton = screen.getByTestId("cash");
     const deferredButton = screen.getByTestId("deferred");
 
     fireEvent.click(inCashButton);
-    expect(defaultProps.onMethodSelected).toHaveBeenCalledWith("in-cash");
+    expect(defaultProps.onMethodSelected).toHaveBeenCalledWith("cash");
 
     fireEvent.click(deferredButton);
     expect(defaultProps.onMethodSelected).toHaveBeenCalledWith("deferred");
@@ -28,10 +28,10 @@ describe("PaymentMethodSelector", () => {
 
   it("should visually change active button when clicked", async () => {
     render(<PaymentMethodSelector {...defaultProps} />);
-    const inCashButton = screen.getByTestId("in-cash");
+    const inCashButton = screen.getByTestId("cash");
     const deferredButton = screen.getByTestId("deferred");
 
-    fireEvent.click(screen.getByTestId("in-cash"));
+    fireEvent.click(screen.getByTestId("cash"));
     expect(inCashButton).toHaveClass("bg-info-lighter");
     expect(deferredButton).not.toHaveClass("bg-info-lighter");
 

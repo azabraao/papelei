@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["cypress", "@4tw/cypress-drag-drop"],
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,

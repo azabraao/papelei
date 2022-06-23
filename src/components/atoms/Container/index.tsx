@@ -2,12 +2,16 @@ import React, { memo } from "react";
 
 interface AppCopyTitleProps {
   className?: string;
+  testid?: string;
   children: React.ReactNode;
 }
 
-const Container = ({ children, className }: AppCopyTitleProps) => {
+const Container = ({ children, className, testid }: AppCopyTitleProps) => {
   return (
-    <div className={`px-4 mx-auto max-w-6xl md:px-10 w-full ${className}`}>
+    <div
+      {...(testid && { "data-testid": testid })}
+      className={`px-4 mx-auto max-w-6xl md:px-10 w-full ${className}`}
+    >
       {children}
     </div>
   );
@@ -15,6 +19,7 @@ const Container = ({ children, className }: AppCopyTitleProps) => {
 
 Container.defaultProps = {
   className: "",
+  testid: "",
 };
 
 export default memo(Container);

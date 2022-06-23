@@ -145,7 +145,7 @@ describe("Search", () => {
     fireEvent.change(input, { target: { value: "gesso" } });
 
     const products = await waitFor(() =>
-      screen.findAllByTestId("search-list-product")
+      screen.findAllByTestId("search-result-item")
     );
 
     fireEvent.click(products[0]);
@@ -163,7 +163,7 @@ describe("Search", () => {
     fireEvent.change(input, { target: { value: "gesso" } });
 
     const products = await waitFor(() =>
-      screen.findAllByTestId("search-list-product")
+      screen.findAllByTestId("search-result-item")
     );
     fireEvent.click(products[0]);
 
