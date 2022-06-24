@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "types": ["cypress", "@4tw/cypress-drag-drop"],
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -17,6 +16,6 @@
     "jsx": "preserve",
     "baseUrl": "./src"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules"]
 }
