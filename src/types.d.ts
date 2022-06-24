@@ -7,6 +7,7 @@ type Product = {
   archived: boolean;
   price: {
     sale: {
+      // for now, only deferred prices are shown to users
       deferred: number;
       cash: number;
     };

@@ -33,7 +33,7 @@ interface CartProps {
 export const CartProvider = ({ children }: CartProps) => {
   const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
   const [paymentMethod, setPaymentMethod] =
-    useState<"cash" | "deferred">("cash");
+    useState<"cash" | "deferred">("deferred");
   const [cartTotal, setCartTotal] = useState<number>(0);
 
   useEffect(() => {
