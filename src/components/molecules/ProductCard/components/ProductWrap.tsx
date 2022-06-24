@@ -17,7 +17,7 @@ const ProductWrap = ({ children }: ProductWrapProps) => {
   return (
     <div
       onClick={handleClick}
-      data-testid="product-card"
+      data-testid={isExpanded ? "product-card-expanded" : "product-card"}
       className={clsx(
         "relative overflow-hidden z-20 rounded-lg flex flex-col text-black-70 cursor-pointer bg-white select-none",
         {

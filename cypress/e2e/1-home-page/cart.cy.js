@@ -126,27 +126,7 @@ describe("cart", () => {
       cy.get("[data-testid=product-card]").should("have.length", 2);
     });
 
-    it("should toggle the products price on payment method toggle", () => {
-      cy.get("[data-testid=product-card-total-price]")
-        .first()
-        .then(($div) => {
-          const productPrice = $div.text();
-
-          cy.get("[data-testid=deferred]").click();
-
-          cy.get("[data-testid=product-card-total-price]")
-            .first()
-            .then(($div) => {
-              const productPriceAfter = $div.text();
-
-              expect(productPriceAfter).to.not.equal(productPrice);
-            });
-        });
-    });
-
-    it("should change the product card total value if I decrease the product quantity", () => {
-      cy.get("[data-testid=cash]").click();
-
+    it("should change the product card total value if I change the product quantity", () => {
       cy.get("[data-testid=product-card-total-price]")
         .first()
         .then(($div) => {
@@ -179,18 +159,64 @@ describe("cart", () => {
         });
       });
     });
+
+    it("should decrease the cart total value if I remove a product", () => {
+      cy.get("[data-testid=budget-total-value]").then(($div) => {
+        const oldValue = $div.text();
+
+        cy.get("[data-testid=drag-product-card]")
+          .first()
+          .move({ deltaX: 0, deltaY: -200 });
+
+        cy.get("[data-testid=budget-total-value]").should(($div) => {
+          const newValue = $div.text();
+
+          expect(newValue).to.not.equal(oldValue);
+        });
+      });
+    });
+
+    it("should increase budget value total on new product added", () => {
+      cy.get("[data-testid=button-open-search]").scrollIntoView();
+      cy.get("[data-testid=button-open-search]").click();
+      cy.get("[data-testid=search-input]").type("gesso");
+
+      cy.get("[data-testid=budget-total-value]").then(($div) => {
+        const oldValue = $div.text();
+
+        cy.get("[data-testid=search-result-item]").eq(3).click();
+
+        cy.get("[data-testid=budget-total-value]").should(($div) => {
+          const newValue = $div.text();
+
+          expect(newValue).to.not.equal(oldValue);
+        });
+      });
+    });
+
+    it("should open a modal when we click on the cart item", () => {
+      cy.get("[data-testid=product-card]")
+        .first()
+        .then(() => {
+          cy.get("[data-testid=product-card]").first().click();
+
+          cy.get("[data-testid=product-card-expanded]").should("exist");
+        });
+    });
+
+    it(" should remove the item from the cart if we click in the modal remove button and confirm the deletion", () => {
+      cy.get("[data-testid=button-remove-product-from-cart]").dblclick();
+
+      cy.get("[data-testid=product-card-expanded]").should("not.exist");
+    });
   });
 
   // TODO:
-  // should decrease the cart total value if I remove a product
-  // should increase budget value total on new product added
-  // should increase the budget value total on product quantity change
-  // should display an image for each product
-  // every cart product should open a modal with its related information
+
+  //
   // updates in a product shouldn't affect other products
   // modal testing:
-  // should open a modal when we click on the cart item
-  // should remove the item from the cart if we click in the modal remove button and confirm the deletion
+  //
   // should not remove the item from the cart if we click in the modal remove button and close the modal without confirming the deletion
   // should close the modal if we click in the portal (backdrop)
   // should close the modal if we click in the X icon

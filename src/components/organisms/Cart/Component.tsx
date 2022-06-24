@@ -1,12 +1,12 @@
 import { Container } from "components/atoms";
-import { PaymentMethodSelector, ProductCard } from "components/molecules";
+import { ProductCard } from "components/molecules";
 import { useCart } from "contexts/cart";
 import { useCartScroll } from "contexts/cartScroll";
 import { memo, useCallback } from "react";
 import EmptyCartState from "./components/EmptyCartState";
 
 const Cart = () => {
-  const { cartIsEmpty, cartProducts, setPaymentMethod } = useCart();
+  const { cartIsEmpty, cartProducts } = useCart();
   const { setIsScrolling } = useCartScroll();
 
   const onScrollEnd = useCallback(() => {
@@ -37,12 +37,6 @@ const Cart = () => {
           ))}
         </div>
       </div>
-      <Container>
-        <PaymentMethodSelector
-          onMethodSelected={setPaymentMethod}
-          label="Usar preços"
-        />
-      </Container>
     </div>
   );
 };

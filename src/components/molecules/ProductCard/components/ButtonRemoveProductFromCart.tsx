@@ -32,6 +32,7 @@ const ButtonRemoveProductFromCart = () => {
         "bg-danger-lighter text-danger": !confirmRemoval,
         "bg-danger text-white": confirmRemoval,
       })}
+      data-testid="button-remove-product-from-cart"
     >
       <TrashIcon />
       {confirmRemoval ? "Clique pra confirmar" : "Remover item"}

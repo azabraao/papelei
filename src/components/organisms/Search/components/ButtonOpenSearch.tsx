@@ -1,12 +1,15 @@
 import { memo } from "react";
 import clsx from "clsx";
-import { Container, Label, SearchIcon } from "components/atoms";
+import { Container, FloatingButton, Label, SearchIcon } from "components/atoms";
 import { useSearch } from "contexts/search";
 import { useCart } from "contexts/cart";
 
 const ButtonOpenSearch = () => {
   const { openSearch } = useSearch();
   const { cartIsEmpty } = useCart();
+
+  if (!cartIsEmpty)
+    return <FloatingButton onClick={openSearch} testid="button-open-search" />;
 
   return (
     <Container>
