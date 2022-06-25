@@ -22,7 +22,11 @@ const ProductImage = () => {
         <img src={image} alt="Product" width={127} height={127} />
       </div>
       {isExpanded && (
-        <div className="pt-4 pr-3 pb-4 pl-4" onClick={handleRestoreProductCard}>
+        <div
+          className="pt-4 pr-3 pb-4 pl-4"
+          data-testid="x-close-expanded-product-card"
+          onClick={handleRestoreProductCard}
+        >
           <XSimpleIcon />
         </div>
       )}

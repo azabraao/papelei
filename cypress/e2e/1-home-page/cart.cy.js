@@ -25,8 +25,6 @@ describe("cart", () => {
     it("should open the search when search input clicked", () => {
       cy.get("[data-testid=button-open-search]").click();
 
-      cy.wait(200);
-
       cy.get("[data-testid=search-window]").should("exist");
     });
 
@@ -39,7 +37,6 @@ describe("cart", () => {
       };
 
       performSearch();
-      cy.wait(200);
 
       cy.get("[data-testid=search-result-item]")
         .first()
@@ -49,8 +46,6 @@ describe("cart", () => {
 
           cy.get("[data-testid=search-result-item]").first().click();
 
-          cy.wait(200);
-
           cy.get("[data-testid=product-card]")
             .first()
             .should("contain", itemName);
@@ -58,7 +53,6 @@ describe("cart", () => {
 
       openSearchWindow();
       performSearch();
-      cy.wait(200);
 
       cy.get("[data-testid=search-result-item]")
         .eq(1)
@@ -68,8 +62,6 @@ describe("cart", () => {
 
           cy.get("[data-testid=search-result-item]").eq(1).click();
 
-          cy.wait(1000);
-
           cy.get("[data-testid=product-card]")
             .eq(1)
             .should("contain", itemName);
@@ -77,7 +69,6 @@ describe("cart", () => {
 
       openSearchWindow();
       performSearch();
-      cy.wait(200);
 
       cy.get("[data-testid=search-result-item]")
         .eq(2)
@@ -86,8 +77,6 @@ describe("cart", () => {
           const itemName = $div.text();
 
           cy.get("[data-testid=search-result-item]").eq(2).click();
-
-          cy.wait(1000);
 
           cy.get("[data-testid=product-card]")
             .eq(2)
@@ -195,32 +184,141 @@ describe("cart", () => {
     });
 
     it("should open a modal when we click on the cart item", () => {
-      cy.get("[data-testid=product-card]")
-        .first()
-        .then(() => {
-          cy.get("[data-testid=product-card]").first().click();
+      cy.get("[data-testid=product-card]").first().click();
 
-          cy.get("[data-testid=product-card-expanded]").should("exist");
-        });
+      cy.get("[data-testid=product-card-expanded]").should("exist");
     });
 
     it(" should remove the item from the cart if we click in the modal remove button and confirm the deletion", () => {
-      cy.get("[data-testid=button-remove-product-from-cart]").dblclick();
+      cy.get("[data-testid=product-card-name]")
+        .first()
+        .then(($div) => {
+          const productName = $div.text();
+
+          cy.get("[data-testid=drag-product-card]")
+            .first()
+            .move({ deltaX: 0, deltaY: 0 });
+          cy.get("[data-testid=button-remove-product]").click();
+          cy.get("[data-testid=button-remove-product]").click();
+
+          cy.get("[data-testid=product-card-expanded]").should("not.exist");
+
+          cy.get("[data-testid=product-card-name]")
+            .first()
+            .then(($div) => {
+              const otherProductName = $div.text();
+
+              expect(productName).to.not.equal(otherProductName);
+            });
+        });
+    });
+
+    it("should not remove the item from the cart from modal without user confirmation", () => {
+      cy.get("[data-testid=product-card-name]")
+        .first()
+        .then(($div) => {
+          const productName = $div.text();
+          cy.get("[data-testid=product-card]").click();
+
+          cy.get("[data-testid=drag-product-card]")
+            .first()
+            .move({ deltaX: 0, deltaY: 0 });
+          cy.get("[data-testid=button-remove-product]").click();
+          cy.get("[data-testid=x-close-expanded-product-card]").click();
+
+          cy.get("[data-testid=product-card-expanded]").should("not.exist");
+
+          cy.get("[data-testid=product-card-name]")
+            .first()
+            .then(($div) => {
+              const otherProductName = $div.text();
+
+              expect(productName).to.equal(otherProductName);
+            });
+        });
+    });
+
+    it("should close the modal if we click in the portal (backdrop)", () => {
+      cy.get("[data-testid=product-card]").click();
+      cy.viewport("iphone-x");
+
+      cy.get("[data-testid=product-card-expanded]").should("exist");
+
+      cy.get("[data-testid=portal]").click(1, 1, { force: true });
 
       cy.get("[data-testid=product-card-expanded]").should("not.exist");
+    });
+
+    it("should close the modal if we click in the X icon", () => {
+      cy.get("[data-testid=product-card]").click();
+
+      cy.get("[data-testid=product-card-expanded]").should("exist");
+
+      cy.get("[data-testid=x-close-expanded-product-card]").click();
+
+      cy.get("[data-testid=product-card-expanded]").should("not.exist");
+    });
+
+    it("should close the modal if we drag the modal out of the viewport", () => {
+      cy.get("[data-testid=product-card]").click();
+
+      cy.wait(1000);
+
+      cy.get("[data-testid=drag-product-card]")
+        .first()
+        .move({ deltaX: 0, deltaY: -100 });
+      cy.get("[data-testid=product-card-expanded]").should("not.exist");
+    });
+
+    it("should change the product value if update the price in the money input", () => {
+      cy.get("[data-testid=product-card]").click();
+
+      cy.get("[data-testid=product-card-total-price]")
+        .first()
+        .then(($div) => {
+          const productTotalPrice = $div.text();
+          cy.get("[data-testid=drag-product-card]")
+            .first()
+            .move({ deltaX: 0, deltaY: 0 });
+          cy.get("[data-testid=update-price-input] input").click().type(10);
+
+          cy.get("[data-testid=product-card-total-price]")
+            .first()
+            .then(($div) => {
+              const updatedProductPrice = $div.text();
+              expect(productTotalPrice).not.to.equal(updatedProductPrice);
+            });
+        });
     });
   });
 
   // TODO:
 
   //
-  // updates in a product shouldn't affect other products
-  // modal testing:
-  //
-  // should not remove the item from the cart if we click in the modal remove button and close the modal without confirming the deletion
-  // should close the modal if we click in the portal (backdrop)
-  // should close the modal if we click in the X icon
-  // should close the modal if we drag the modal out of the viewport
-  // should change the product value if we change the quantity
-  // should change the product value if update the price in the money input
 });
+
+// const simularCompra = ({
+//   precoProvedor,
+//   precoUnitarioAVista,
+//   quantidade
+// }) => {
+//   const precoDeVenda = precoUnitarioAVista * 1.05;
+
+//   const totalParcelado = precoDeVenda * quantidade;
+
+//   const precoGildasio = precoProvedor * quantidade;
+
+//   const totalAVista = totalParcelado * 0.9;
+
+//   return {
+//       parcelado: {
+//           total: numberToMoney(totalParcelado),
+//           lucro: numberToMoney(totalParcelado * 0.95 - precoGildasio)
+//       },
+//       precoGildasio: numberToMoney(precoGildasio),
+//       aVista: {
+//           total: numberToMoney(totalAVista),
+//           lucro: numberToMoney(totalAVista - precoGildasio)
+//       },
+//   }
+// }

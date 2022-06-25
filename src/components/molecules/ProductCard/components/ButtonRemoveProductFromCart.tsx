@@ -18,12 +18,17 @@ const ButtonRemoveProductFromCart = () => {
     }
   }, [confirmRemoval]);
 
-  const handleRemoval = useCallback(() => {
-    if (!confirmRemoval) return setConfirmRemoval(true);
+  const handleRemoval = useCallback(
+    (event) => {
+      event.stopPropagation();
 
-    removeFromCart(code);
-    restoreProductCard();
-  }, [confirmRemoval, code]);
+      if (!confirmRemoval) return setConfirmRemoval(true);
+
+      removeFromCart(code);
+      restoreProductCard();
+    },
+    [confirmRemoval, code]
+  );
 
   return (
     <button
@@ -32,7 +37,7 @@ const ButtonRemoveProductFromCart = () => {
         "bg-danger-lighter text-danger": !confirmRemoval,
         "bg-danger text-white": confirmRemoval,
       })}
-      data-testid="button-remove-product-from-cart"
+      data-testid="button-remove-product"
     >
       <TrashIcon />
       {confirmRemoval ? "Clique pra confirmar" : "Remover item"}

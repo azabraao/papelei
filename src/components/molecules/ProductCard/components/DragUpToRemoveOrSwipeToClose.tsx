@@ -119,7 +119,7 @@ const DragUpToRemoveOrSwipeToClose = ({
       onScroll={stopPropagation}
       onTouchStart={stopPropagation}
     >
-      {willRemove && (
+      {willRemove && !isExpanded && (
         <RemovalIndicator
           className={clsx({
             "border-danger text-danger": !readyToRemove,
