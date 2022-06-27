@@ -23,7 +23,7 @@ const ProductWrap = ({ children }: ProductWrapProps) => {
         {
           "pointer-events-none": isDraggingUp,
           "min-w-[163px] w-40 gap-2": !isExpanded,
-          "w-[272px] gap-4": isExpanded,
+          "w-[300px] gap-4": isExpanded,
           "animate-shake": error,
           "shadow-card-effect-danger": error,
           "shadow-card-effect-soft": !error,
