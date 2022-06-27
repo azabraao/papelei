@@ -72,7 +72,7 @@ const SearchWindow = () => {
 
   return (
     <Container>
-      <Portal onClick={closeSearch} />
+      <Portal isActive={true} onClick={closeSearch} />
       <div
         className={"fixed top-0 left-0 right-0 z-10"}
         data-testid="search-window"
@@ -88,7 +88,7 @@ const SearchWindow = () => {
             onIconRightClick={handleClearSearchInput}
             onIconLeftClick={closeSearch}
             IconLeft={<ArrowLeftIcon />}
-            IconRight={<XSimpleIcon />}
+            IconRight={searchValue ? <XSimpleIcon /> : undefined}
             autoFocus
             testid="search-input"
             ref={inputRef}
