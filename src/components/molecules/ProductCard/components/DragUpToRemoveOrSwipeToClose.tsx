@@ -5,7 +5,6 @@ import clsx from "clsx";
 import { useCartScroll } from "contexts/cartScroll";
 import {
   getAxisOrientedOpacity,
-  isAppleDevice,
   lockBodyScroll,
   stopPropagation,
   unlockBodyScroll,
@@ -141,7 +140,6 @@ const DragUpToRemoveOrSwipeToClose = ({
         onStop={onStopDragging}
         bounds={dragBounds}
         position={{ x: 0, y: 0 }}
-        disabled={isScrolling || (isAppleDevice() && !isExpanded)}
       >
         {children}
       </Draggable>
