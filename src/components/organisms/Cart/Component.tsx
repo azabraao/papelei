@@ -20,7 +20,7 @@ const Cart = () => {
   if (cartIsEmpty) return <EmptyCartState />;
 
   return (
-    <div className="py-6 flex flex-col gap-2 items-start">
+    <div className="py-4 flex flex-col gap-2 items-start">
       <Container>
         <h2 className="font-medium text-black-70 text-2xl">Produtos</h2>
       </Container>
