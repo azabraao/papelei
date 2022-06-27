@@ -1,10 +1,12 @@
 import { Button, Container } from "components/atoms";
 import { useCart } from "contexts/cart";
+import { useBudgetProposal } from "contexts/budgetProposal";
 import { memo } from "react";
 import { numberToMoney } from "utils";
 
 const BudgetProposalSummary = () => {
   const { cartIsEmpty, cartTotal } = useCart();
+  const { openBudgetProposal } = useBudgetProposal();
 
   if (cartIsEmpty) return null;
 
@@ -25,7 +27,11 @@ const BudgetProposalSummary = () => {
           </div>
 
           <div className="pt-4 pb-4 pl-4">
-            <Button label="Fechar orçamento" backgroundColor="success" />
+            <Button
+              label="Fechar orçamento"
+              backgroundColor="success"
+              onClick={openBudgetProposal}
+            />
           </div>
         </div>
       </Container>
