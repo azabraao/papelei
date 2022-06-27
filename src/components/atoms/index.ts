@@ -12,3 +12,4 @@ export { default as Portal } from "./Portal";
 export { default as Card } from "./Card";
 export { default as Label } from "./Label";
 export { default as FloatingButton } from "./FloatingButton";
+export { default as ModalBottom } from "./ModalBottom";
