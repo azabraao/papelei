@@ -8,6 +8,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import "../styles/globals.css";
 import { CartProvider } from "contexts/cart";
 import { SearchProvider } from "contexts/search";
+import { BudgetProposalProvider } from "contexts/budgetProposal";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -52,7 +53,9 @@ const App = ({ Component, pageProps }: AppProps) => {
       >
         <CartProvider>
           <SearchProvider>
-            <Component {...pageProps} />
+            <BudgetProposalProvider>
+              <Component {...pageProps} />
+            </BudgetProposalProvider>
           </SearchProvider>
         </CartProvider>
       </SkeletonTheme>
