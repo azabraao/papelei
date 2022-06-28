@@ -5,6 +5,7 @@ import { CheckedIcon, XIcon } from "components/atoms";
 import { withInputWrap } from "components/HOCs";
 
 interface TextInputProps extends InputProps {
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onIconRightClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
@@ -31,6 +32,7 @@ const TextInput = forwardRef(
       testid,
       onKeyDown,
       onChange,
+      onBlur,
       onIconRightClick,
       onIconLeftClick,
     }: TextInputProps,
@@ -66,6 +68,7 @@ const TextInput = forwardRef(
           })}
           placeholder={placeholder}
           onChange={onChange}
+          onBlur={onBlur}
           onKeyDown={onKeyDown}
           name={name}
           ref={ref}
@@ -77,7 +80,9 @@ const TextInput = forwardRef(
         />
 
         <div
-          className={clsx({ "px-4 py-2": IconLeft || IconRight || isSuccess })}
+          className={clsx({
+            "px-4 py-2": IconLeft || IconRight || isSuccess || error,
+          })}
           onClick={onIconRightClick}
         >
           {IconRight && IconRight}
