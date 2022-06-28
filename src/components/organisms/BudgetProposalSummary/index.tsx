@@ -11,7 +11,7 @@ const BudgetProposalSummary = () => {
   if (cartIsEmpty) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white shadow-elevation-1">
+    <div className="fixed bottom-0 left-0 right-0 bg-white shadow-elevation-1 z-10">
       <Container>
         <div className="flex justify-between items-center">
           <div className="pt-4 pb-4 pr-4 ">

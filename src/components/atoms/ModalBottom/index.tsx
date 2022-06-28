@@ -45,13 +45,15 @@ const ModalBottom = ({
       x: 0,
       y: isOpen ? 0 : window.innerHeight,
     };
-  }, [isOpen]);
+  }, [isOpen, draggableElement.current]);
 
   return (
     <div
       className={clsx(
-        "fixed top-0 right-0 bottom-0 left-0 flex items-end justify-center z-20 duration-1000 transition-transform ease-in-out",
-        isOpen ? " pointer-events-auto" : " pointer-events-none "
+        "fixed top-0 right-0 bottom-0 left-0 flex items-end justify-center z-20 transition-opacity",
+        isOpen
+          ? "pointer-events-auto opacity-100"
+          : "pointer-events-none opacity-0 delay-1000"
       )}
     >
       <Portal

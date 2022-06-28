@@ -12,7 +12,7 @@ const Portal = ({ transitionDuration, isActive, onClick }: PortalProps) => (
     onClick={onClick}
     data-testid="portal"
     className={clsx(
-      "bg-black-transparent absolute top-0 right-0 bottom-0 left-0 transition-opacity z-10",
+      "bg-black-transparent absolute top-0 right-0 bottom-0 left-0 transition-opacity z-20",
       {
         "duration-1000": transitionDuration === 1000,
         "duration-500": transitionDuration === 500,

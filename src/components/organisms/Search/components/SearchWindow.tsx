@@ -11,6 +11,7 @@ import ErrorState from "./ErrorState";
 import NoProductsState from "./NoProductsState";
 import ListProducts from "./ListProducts";
 import { useSearch } from "contexts/search";
+import { lockBodyScroll, unlockBodyScroll } from "utils";
 
 const SearchWindow = () => {
   const {
@@ -28,11 +29,11 @@ const SearchWindow = () => {
 
   useEffect(() => {
     if (searchIsOpen) {
-      document.body.style.overflow = "hidden";
+      lockBodyScroll();
     }
 
     return () => {
-      document.body.style.overflow = "auto";
+      unlockBodyScroll();
     };
   }, [searchIsOpen]);
 
@@ -74,7 +75,7 @@ const SearchWindow = () => {
     <Container>
       <Portal isActive={true} onClick={closeSearch} />
       <div
-        className={"fixed top-0 left-0 right-0 z-10"}
+        className={"fixed top-0 left-0 right-0 z-20"}
         data-testid="search-window"
       >
         <div className={"flex flex-col px-4 pt-11 pb-4 gap-1"}>
