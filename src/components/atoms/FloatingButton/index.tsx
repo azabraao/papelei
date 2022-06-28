@@ -1,4 +1,7 @@
-import { memo } from "react";
+/* eslint-disable react/display-name */
+import clsx from "clsx";
+import search, { useSearch } from "contexts/search";
+import { forwardRef, memo } from "react";
 import { Container, SearchIcon } from "..";
 
 interface FloatingButtonProps {
@@ -6,18 +9,32 @@ interface FloatingButtonProps {
   testid?: string;
 }
 
-const FloatingButton = ({ onClick, testid }: FloatingButtonProps) => {
-  return (
-    <Container className="fixed z-10 right-4 bottom-24 flex justify-end mx-auto left-0">
-      <button
-        onClick={onClick}
-        data-testid={testid}
-        className="bg-white rounded-full shadow-elevation-1 p-4 flex justify-center items-center"
-      >
-        <SearchIcon />
-      </button>
-    </Container>
-  );
-};
+const FloatingButton = forwardRef(
+  (
+    { onClick, testid }: FloatingButtonProps,
+    ref: React.Ref<HTMLButtonElement>
+  ) => {
+    const { searchIsOpen } = useSearch();
+
+    return (
+      <Container className="fixed z-10 right-4 bottom-24 flex justify-end mx-auto left-0">
+        <button
+          ref={ref}
+          onClick={onClick}
+          data-testid={testid}
+          className={clsx(
+            "bg-white relative rounded-full shadow-elevation-1 p-4 flex items-center transition-all  ",
+            {
+              "right-0 justify-center w-[56px] h-[56px]": !searchIsOpen,
+              "justify-end w-[200px] h-[40px] right-20": searchIsOpen,
+            }
+          )}
+        >
+          <SearchIcon />
+        </button>
+      </Container>
+    );
+  }
+);
 
 export default memo(FloatingButton);
