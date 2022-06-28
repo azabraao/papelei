@@ -31,13 +31,38 @@
     },
     {
       "type": "npm",
-      "label": "Testing",
+      "label": "Jest",
       "script": "test:watch",
       "options": {
         "cwd": "${workspaceFolder}"
       },
       "runOptions": {
         "runOn": "folderOpen"
+      },
+      "isBackground": true,
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": {
+        "owner": "custom",
+        "pattern": {
+          "regexp": "____________"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Compiling\\.\\.\\.$",
+          "endsPattern": "(Compiled successfully|Failed to compile)\\.$"
+        }
+      }
+    },
+    {
+      "type": "npm",
+      "label": "Cypress",
+      "script": "cy:open",
+      "options": {
+        "cwd": "${workspaceFolder}"
       },
       "isBackground": true,
       "group": "test",
