@@ -244,7 +244,7 @@ describe("cart", () => {
 
       cy.get("[data-testid=product-card-expanded]").should("exist");
 
-      cy.get("[data-testid=portal]").click(1, 1, { force: true });
+      cy.get("[data-testid=portal]").first().click(1, 1, { force: true });
 
       cy.get("[data-testid=product-card-expanded]").should("not.exist");
     });
