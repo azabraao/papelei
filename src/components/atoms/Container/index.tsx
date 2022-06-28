@@ -10,7 +10,7 @@ const Container = ({ children, className, testid }: AppCopyTitleProps) => {
   return (
     <div
       {...(testid && { "data-testid": testid })}
-      className={`px-4 mx-auto max-w-6xl md:px-10 w-full ${className}`}
+      className={`px-4 mx-auto max-w-3xl md:px-10 w-full ${className}`}
     >
       {children}
     </div>

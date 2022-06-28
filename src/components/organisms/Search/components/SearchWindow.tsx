@@ -72,10 +72,10 @@ const SearchWindow = () => {
   }, []);
 
   return (
-    <Container>
+    <>
       <Portal isActive={true} onClick={closeSearch} />
       <div
-        className={"fixed top-0 left-0 right-0 z-20"}
+        className="fixed top-0 left-0 right-0 z-20 max-w-3xl mx-auto"
         data-testid="search-window"
       >
         <div className={"flex flex-col px-4 pt-11 pb-4 gap-1"}>
@@ -105,7 +105,7 @@ const SearchWindow = () => {
           ) : null}
         </div>
       </div>
-    </Container>
+    </>
   );
 };
 

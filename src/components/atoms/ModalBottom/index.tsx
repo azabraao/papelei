@@ -1,6 +1,8 @@
-import { memo, useCallback, useEffect, useMemo, useRef } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Draggable from "@azabraao/react-draggable";
 import clsx from "clsx";
+import { useCallbackRef } from "use-callback-ref";
+
 import { lockBodyScroll, unlockBodyScroll } from "utils";
 import dynamic from "next/dynamic";
 import Portal from "../Portal";
@@ -16,7 +18,10 @@ const ModalBottom = ({
   isOpen,
   closeModalBottom,
 }: ModalBottomProps) => {
-  const draggableElement = useRef(null);
+  const [rect, setRect] = useState<DOMRect>(null);
+  const ref = useCallbackRef(null, (ref) => {
+    setRect(ref?.getBoundingClientRect());
+  });
 
   useEffect(() => {
     if (isOpen) lockBodyScroll();
@@ -24,36 +29,34 @@ const ModalBottom = ({
   }, [isOpen]);
 
   const onDragging = useCallback(() => {
-    draggableElement.current.style.transition = "none";
-  }, [draggableElement]);
+    ref.current.style.transition = "none";
+  }, [ref]);
 
   const handleStopDragging = useCallback(
     (_, { y }) => {
-      draggableElement.current.style.transition = "transform 0.3s ease-in-out";
+      ref.current.style.transition = "transform 0.3s ease-in-out";
 
-      const elementHeight = draggableElement.current.offsetHeight;
+      const elementHeight = ref.current.offsetHeight;
       const elementHeightHalf = elementHeight / 2;
       const shouldClose = y > elementHeightHalf;
 
       if (shouldClose) closeModalBottom();
     },
-    [draggableElement]
+    [ref]
   );
 
   const position = useMemo(() => {
     return {
       x: 0,
-      y: isOpen ? 0 : window.innerHeight,
+      y: isOpen ? 0 : rect?.height || 10000,
     };
-  }, [isOpen, draggableElement.current]);
+  }, [isOpen, rect]);
 
   return (
     <div
       className={clsx(
-        "fixed top-0 right-0 bottom-0 left-0 flex items-end justify-center z-20 transition-opacity",
-        isOpen
-          ? "pointer-events-auto opacity-100"
-          : "pointer-events-none opacity-0 delay-1000"
+        "fixed top-0 right-0 bottom-0 left-0 flex items-end justify-center z-20",
+        isOpen ? "pointer-events-auto" : "pointer-events-none"
       )}
     >
       <Portal
@@ -72,10 +75,10 @@ const ModalBottom = ({
         )}
         onStop={handleStopDragging}
         onDrag={onDragging}
-        nodeRef={draggableElement}
+        nodeRef={ref}
       >
         <div
-          ref={draggableElement}
+          ref={ref}
           className="relative z-40 bg-white rounded-t-2xl pl-4 pr-4"
         >
           <div className="flex justify-center items-center pt-4 pb-4">

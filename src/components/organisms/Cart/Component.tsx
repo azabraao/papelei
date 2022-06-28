@@ -29,7 +29,7 @@ const Cart = () => {
         data-testid="cart-scroll"
         onScroll={onScroll}
         onTouchEndCapture={onScrollEnd}
-        className="overflow-scroll mx-auto max-w-6xl md:px-10 w-full scrollbar-none overscroll-y-contain"
+        className="overflow-scroll mx-auto max-w-3xl md:px-10 w-full scrollbar-none overscroll-y-contain"
       >
         <div className="px-4 lg:px-0 flex gap-4 w-fit py-1">
           {cartProducts.map((product: Product) => (
