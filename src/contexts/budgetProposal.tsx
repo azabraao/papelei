@@ -10,6 +10,10 @@ interface BudgetProposalContextValues {
   isEditing: boolean;
   openBudgetProposal: VoidFunction;
   closeBudgetProposal: VoidFunction;
+  addComments: (comments: string) => void;
+  addClientName: (clientName: string) => void;
+  addClientAddress: (clientAddress: string) => void;
+  client: Client;
 }
 
 export const BudgetProposalContext = createContext(
@@ -20,8 +24,36 @@ interface BudgetProposalProps {
   children: React.ReactNode;
 }
 
+type Client = {
+  name: string;
+  address: string;
+};
+
 export const BudgetProposalProvider = ({ children }: BudgetProposalProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [client, setClient] = useState<Client>({} as Client);
+  const [comments, setComments] = useState<string>("");
+
+  const addComments = useCallback(
+    (comments) => {
+      setComments(comments);
+    },
+    [comments]
+  );
+
+  const addClientName = useCallback(
+    (name) => {
+      setClient((current) => ({ ...current, name }));
+    },
+    [client]
+  );
+
+  const addClientAddress = useCallback(
+    (address) => {
+      setClient((current) => ({ ...current, address }));
+    },
+    [client]
+  );
 
   const openBudgetProposal = useCallback(() => setIsEditing(true), []);
   const closeBudgetProposal = useCallback(() => setIsEditing(false), []);
@@ -30,8 +62,12 @@ export const BudgetProposalProvider = ({ children }: BudgetProposalProps) => {
     <BudgetProposalContext.Provider
       value={{
         isEditing,
+        client,
         openBudgetProposal,
         closeBudgetProposal,
+        addComments,
+        addClientName,
+        addClientAddress,
       }}
     >
       {children}
