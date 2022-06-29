@@ -6,7 +6,7 @@ import { numberToMoney } from "utils";
 
 const BudgetProposalSummary = () => {
   const { cartIsEmpty, cartTotal } = useCart();
-  const { openBudgetProposal } = useBudgetProposal();
+  const { tryToFinishBudget } = useBudgetProposal();
 
   if (cartIsEmpty) return null;
 
@@ -30,7 +30,7 @@ const BudgetProposalSummary = () => {
             <Button
               label="Fechar orçamento"
               backgroundColor="success"
-              onClick={openBudgetProposal}
+              onClick={tryToFinishBudget}
             />
           </div>
         </div>

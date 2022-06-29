@@ -8,7 +8,7 @@ import { numberToMoney } from "utils";
 
 const FinishBudgetProposal = () => {
   const {
-    isEditing,
+    isFinishing,
     closeBudgetProposal,
     addClientAddress,
     addClientName,
@@ -52,7 +52,7 @@ const FinishBudgetProposal = () => {
   );
 
   return (
-    <ModalBottom isOpen={isEditing} closeModalBottom={closeBudgetProposal}>
+    <ModalBottom isOpen={isFinishing} closeModalBottom={closeBudgetProposal}>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4 pb-6"

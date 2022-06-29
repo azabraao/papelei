@@ -9,6 +9,7 @@ jest.mock("contexts/cart", () => ({
   },
   useCart: jest.fn(() => ({
     updateCartItemQuantity: jest.fn(),
+    cartProducts: productsMock,
   })),
   useCartItem: jest.fn(() => ({
     quantity: 1,

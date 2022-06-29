@@ -2,18 +2,20 @@ import { memo, useMemo } from "react";
 import clsx from "clsx";
 import { useProductPrice } from "hooks";
 import { useProductCard } from "..";
+import { useBudgetProposal } from "contexts/budgetProposal";
 
 const ProductTotalPrice = () => {
-  const { error, code, isExpanded } = useProductCard();
+  const { isValid, code, isExpanded } = useProductCard();
   const { formattedPrice, noPrice } = useProductPrice(code);
+  const { shouldFinishBudget } = useBudgetProposal();
 
   const priceShown = useMemo(() => {
-    if (error && noPrice) return "Defina um preço";
+    if (!isValid && noPrice && shouldFinishBudget) return "Defina um preço";
 
     if (noPrice) return "Sem preço";
 
     return formattedPrice;
-  }, [error, noPrice, formattedPrice]);
+  }, [isValid, noPrice, formattedPrice, shouldFinishBudget]);
 
   return (
     <h3

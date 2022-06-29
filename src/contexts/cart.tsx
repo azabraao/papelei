@@ -10,6 +10,7 @@ import React, {
 
 interface CartProduct extends Product {
   quantity: number;
+  isValid: boolean;
 }
 
 interface CartContextValues {
@@ -68,6 +69,7 @@ export const CartProvider = ({ children }: CartProps) => {
       );
       const newCartProducts = [...cartProducts];
       newCartProducts[productIndex].price.sale[paymentMethod] = price;
+      newCartProducts[productIndex].isValid = !!price;
 
       setCartProducts(newCartProducts);
     },
@@ -92,6 +94,7 @@ export const CartProvider = ({ children }: CartProps) => {
         {
           ...product,
           quantity: 1,
+          isValid: !!product.price.sale.deferred,
         },
       ]);
     },

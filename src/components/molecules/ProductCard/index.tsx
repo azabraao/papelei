@@ -19,24 +19,24 @@ import UpdatePriceInput from "./components/UpdatePriceInput";
 import { lockBodyScroll, unlockBodyScroll } from "utils";
 
 interface ProductCardProps extends Product {
-  error?: boolean;
+  isValid?: boolean;
 }
 
 interface ProductCardContextValues {
   code: string;
   image: string;
   name: string;
-  error: string | boolean;
   isExpanded: boolean;
   expandProductCard: VoidFunction;
   restoreProductCard: VoidFunction;
   setIsDraggingUp: (isDraggingUp: boolean) => void;
   isDraggingUp: boolean;
+  isValid: boolean;
 }
 
 export const ProductCardContext = createContext({} as ProductCardContextValues);
 
-const ProductCard = ({ code, image, name, error }: ProductCardProps) => {
+const ProductCard = ({ code, image, name, isValid }: ProductCardProps) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [isDraggingUp, setIsDraggingUp] = useState<boolean>(false);
 
@@ -58,12 +58,12 @@ const ProductCard = ({ code, image, name, error }: ProductCardProps) => {
         expandProductCard,
         restoreProductCard,
         setIsDraggingUp,
+        isValid,
         isDraggingUp,
         isExpanded,
         code,
         image,
         name,
-        error,
       }}
     >
       {isExpanded && <SavePositionQueue />}

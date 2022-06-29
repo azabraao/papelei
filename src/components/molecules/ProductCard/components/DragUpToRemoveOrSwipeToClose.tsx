@@ -1,15 +1,17 @@
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useCart } from "contexts/cart";
 import Draggable from "@azabraao/react-draggable";
 import clsx from "clsx";
 import { useCartScroll } from "contexts/cartScroll";
 import {
   getAxisOrientedOpacity,
+  isAppleDevice,
   lockBodyScroll,
   stopPropagation,
   unlockBodyScroll,
 } from "utils";
 import { useProductCard } from "..";
+import { useBudgetProposal } from "contexts/budgetProposal";
 
 interface DragUpToRemoveOrSwipeToCloseProps {
   children: React.ReactNode;
@@ -41,11 +43,30 @@ const DragUpToRemoveOrSwipeToClose = ({
     setIsDraggingUp,
     isDraggingUp,
     restoreProductCard,
+    isValid,
   } = useProductCard();
 
   const [willRemove, setWillRemove] = useState(false);
   const [readyToRemove, setReadyToRemove] = useState(false);
   const [hasRemoved, setHasRemoved] = useState(false);
+
+  const { shouldFinishBudget } = useBudgetProposal();
+  const { cartProducts } = useCart();
+  const ref = useRef(null);
+
+  const isFirstInvalidItem = useMemo(() => {
+    const invalidProducts = cartProducts.filter((item) => !item.isValid);
+
+    const index = invalidProducts.findIndex((product) => product.code === code);
+
+    return index === 0;
+  }, [cartProducts]);
+
+  useEffect(() => {
+    if (shouldFinishBudget && !isValid && isFirstInvalidItem) {
+      ref.current.scrollIntoView();
+    }
+  }, [shouldFinishBudget]);
 
   useEffect(() => {
     if (hasRemoved) {
@@ -114,10 +135,11 @@ const DragUpToRemoveOrSwipeToClose = ({
   return (
     <div
       data-testid="drag-product-card"
-      className={clsx("relative", isExpanded && "z-20")}
+      className={clsx("relative scroll-m-4", isExpanded && "z-20")}
       onTouchEnd={onTouchEnd}
       onScroll={stopPropagation}
       onTouchStart={stopPropagation}
+      ref={ref}
     >
       {willRemove && !isExpanded && (
         <RemovalIndicator
@@ -140,6 +162,7 @@ const DragUpToRemoveOrSwipeToClose = ({
         onStop={onStopDragging}
         bounds={dragBounds}
         position={{ x: 0, y: 0 }}
+        disabled={isAppleDevice() && !isExpanded}
       >
         {children}
       </Draggable>

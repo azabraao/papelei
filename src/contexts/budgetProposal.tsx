@@ -3,16 +3,21 @@ import React, {
   memo,
   useCallback,
   useContext,
+  useEffect,
+  useMemo,
   useState,
 } from "react";
+import { useCart } from "./cart";
 
 interface BudgetProposalContextValues {
-  isEditing: boolean;
+  isFinishing: boolean;
+  shouldFinishBudget: boolean;
   openBudgetProposal: VoidFunction;
   closeBudgetProposal: VoidFunction;
   addComments: (comments: string) => void;
   addClientName: (clientName: string) => void;
   addClientAddress: (clientAddress: string) => void;
+  tryToFinishBudget: VoidFunction;
   client: Client;
 }
 
@@ -30,9 +35,26 @@ type Client = {
 };
 
 export const BudgetProposalProvider = ({ children }: BudgetProposalProps) => {
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isFinishing, setIsFinishing] = useState<boolean>(false);
   const [client, setClient] = useState<Client>({} as Client);
   const [comments, setComments] = useState<string>("");
+  const [shouldFinishBudget, setShouldFinishBudget] = useState<boolean>(false);
+  const { cartProducts } = useCart();
+
+  const cartItemsAreValid = useMemo(() => {
+    return cartProducts.every((product) => product.isValid);
+  }, [cartProducts]);
+
+  useEffect(() => {
+    if (shouldFinishBudget && cartItemsAreValid) setIsFinishing(true);
+  }, [shouldFinishBudget, cartItemsAreValid]);
+
+  const tryToFinishBudget = useCallback(() => {
+    setShouldFinishBudget(true);
+    setTimeout(() => {
+      setShouldFinishBudget(false);
+    }, 500);
+  }, []);
 
   const addComments = useCallback(
     (comments) => {
@@ -55,14 +77,16 @@ export const BudgetProposalProvider = ({ children }: BudgetProposalProps) => {
     [client]
   );
 
-  const openBudgetProposal = useCallback(() => setIsEditing(true), []);
-  const closeBudgetProposal = useCallback(() => setIsEditing(false), []);
+  const openBudgetProposal = useCallback(() => setIsFinishing(true), []);
+  const closeBudgetProposal = useCallback(() => setIsFinishing(false), []);
 
   return (
     <BudgetProposalContext.Provider
       value={{
-        isEditing,
+        isFinishing,
+        shouldFinishBudget,
         client,
+        tryToFinishBudget,
         openBudgetProposal,
         closeBudgetProposal,
         addComments,

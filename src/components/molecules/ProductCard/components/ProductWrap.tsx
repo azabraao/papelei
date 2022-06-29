@@ -1,5 +1,6 @@
 import clsx from "clsx";
-import { memo, useCallback } from "react";
+import { useBudgetProposal } from "contexts/budgetProposal";
+import { memo, useCallback, useMemo } from "react";
 import { useProductCard } from "..";
 
 interface ProductWrapProps {
@@ -7,26 +8,31 @@ interface ProductWrapProps {
 }
 
 const ProductWrap = ({ children }: ProductWrapProps) => {
-  const { error, expandProductCard, isExpanded, isDraggingUp } =
+  const { isValid, expandProductCard, isExpanded, isDraggingUp } =
     useProductCard();
+  const { shouldFinishBudget } = useBudgetProposal();
 
   const handleClick = useCallback(() => {
     if (!isExpanded) expandProductCard();
   }, [isExpanded]);
+
+  const hasError = useMemo(() => {
+    return !isValid && shouldFinishBudget;
+  }, [isValid, shouldFinishBudget]);
 
   return (
     <div
       onClick={handleClick}
       data-testid={isExpanded ? "product-card-expanded" : "product-card"}
       className={clsx(
-        "relative overflow-hidden z-20 rounded-lg flex flex-col text-black-70 cursor-pointer bg-white select-none",
+        "scroll-mr-4 relative overflow-hidden z-20 rounded-lg flex flex-col text-black-70 cursor-pointer bg-white select-none",
         {
           "pointer-events-none": isDraggingUp,
           "min-w-[163px] w-40 gap-2": !isExpanded,
           "w-[300px] gap-4": isExpanded,
-          "animate-shake": error,
-          "shadow-card-effect-danger": error,
-          "shadow-card-effect-soft": !error,
+          "animate-shake ": hasError,
+          "shadow-card-effect-danger": hasError,
+          "shadow-card-effect-soft": !hasError,
         }
       )}
     >
