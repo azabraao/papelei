@@ -5,7 +5,7 @@ import { useCallbackRef } from "use-callback-ref";
 
 import { lockBodyScroll, unlockBodyScroll } from "utils";
 import dynamic from "next/dynamic";
-import Portal from "../Portal";
+import Backdrop from "../Backdrop";
 
 interface ModalBottomProps {
   children: React.ReactNode;
@@ -59,7 +59,7 @@ const ModalBottom = ({
         isOpen ? "pointer-events-auto" : "pointer-events-none"
       )}
     >
-      <Portal
+      <Backdrop
         isActive={isOpen}
         onClick={closeModalBottom}
         transitionDuration={500}

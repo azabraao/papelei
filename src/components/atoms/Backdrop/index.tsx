@@ -1,16 +1,16 @@
 import clsx from "clsx";
 import { memo } from "react";
 
-interface PortalProps {
+interface BackdropProps {
   isActive: boolean;
   onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   transitionDuration?: number;
 }
 
-const Portal = ({ transitionDuration, isActive, onClick }: PortalProps) => (
+const Backdrop = ({ transitionDuration, isActive, onClick }: BackdropProps) => (
   <div
     onClick={onClick}
-    data-testid="portal"
+    data-testid="backdrop"
     className={clsx(
       "bg-black-transparent absolute top-0 right-0 bottom-0 left-0 transition-opacity z-20",
       {
@@ -24,8 +24,8 @@ const Portal = ({ transitionDuration, isActive, onClick }: PortalProps) => (
   />
 );
 
-Portal.defaultProps = {
+Backdrop.defaultProps = {
   transitionDuration: 300,
 };
 
-export default memo(Portal);
+export default memo(Backdrop);

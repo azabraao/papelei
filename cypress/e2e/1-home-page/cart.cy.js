@@ -238,13 +238,13 @@ describe("cart", () => {
         });
     });
 
-    it("should close the modal if we click in the portal (backdrop)", () => {
+    it("should close the modal if we click in the backdrop (backdrop)", () => {
       cy.get("[data-testid=product-card]").click();
       cy.viewport("iphone-x");
 
       cy.get("[data-testid=product-card-expanded]").should("exist");
 
-      cy.get("[data-testid=portal]").first().click(1, 1, { force: true });
+      cy.get("[data-testid=backdrop]").first().click(1, 1, { force: true });
 
       cy.get("[data-testid=product-card-expanded]").should("not.exist");
     });

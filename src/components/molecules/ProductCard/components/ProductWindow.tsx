@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { Portal } from "components/atoms";
+import { Backdrop } from "components/atoms";
 import { memo } from "react";
 import { useProductCard } from "..";
 
@@ -17,7 +17,7 @@ const ProductWindow = ({ children }: ProductWindowProps) => {
           "fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center z-30 p-6"
       )}
     >
-      <Portal
+      <Backdrop
         isActive={isExpanded}
         onClick={() => {
           restoreProductCard();

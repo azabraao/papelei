@@ -72,11 +72,11 @@ describe("Search", () => {
     expect(screen.findByTestId("loading-state")).toBeTruthy();
   });
 
-  it("should close search on Portal click", async () => {
+  it("should close search on Backdrop click", async () => {
     openSearchWindow();
 
-    const portal = screen.getByTestId("portal");
-    fireEvent.click(portal);
+    const backdrop = screen.getByTestId("backdrop");
+    fireEvent.click(backdrop);
 
     const buttonOpenSearch = await waitFor(() =>
       screen.getByTestId("button-open-search")

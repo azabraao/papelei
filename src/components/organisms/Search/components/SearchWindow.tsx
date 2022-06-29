@@ -3,7 +3,7 @@ import { TextInput } from "components/molecules";
 import {
   ArrowLeftIcon,
   Container,
-  Portal,
+  Backdrop,
   XSimpleIcon,
 } from "components/atoms";
 import LoadingState from "./LoadingState";
@@ -79,7 +79,7 @@ const SearchWindow = () => {
           : "opacity-0 pointer-events-none"
       }
     >
-      <Portal isActive={searchIsOpen} onClick={closeSearch} />
+      <Backdrop isActive={searchIsOpen} onClick={closeSearch} />
       <div
         className="fixed top-0 left-0 right-0 z-20 max-w-3xl mx-auto"
         data-testid="search-window"

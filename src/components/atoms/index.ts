@@ -8,7 +8,7 @@ export { default as TrashIcon } from "./Icon/Trash";
 export { default as XSimpleIcon } from "./Icon/XSimple";
 export { default as Container } from "./Container";
 export { default as Button } from "./Button";
-export { default as Portal } from "./Portal";
+export { default as Backdrop } from "./Backdrop";
 export { default as Card } from "./Card";
 export { default as Label } from "./Label";
 export { default as FloatingButton } from "./FloatingButton";
