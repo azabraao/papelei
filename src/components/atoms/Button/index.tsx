@@ -3,7 +3,7 @@ import React, { memo } from "react";
 
 interface ButtonProps {
   backgroundColor?: string;
-  label: string;
+  children: React.ReactNode;
   fullWidth?: boolean;
   onClick?: () => void;
   disabled?: boolean;
@@ -13,8 +13,8 @@ const Button = ({
   fullWidth,
   onClick,
   backgroundColor,
-  label,
   disabled,
+  children,
   ...props
 }: ButtonProps) => {
   return (
@@ -34,7 +34,7 @@ const Button = ({
       disabled={disabled}
       {...props}
     >
-      {label}
+      {children}
     </button>
   );
 };

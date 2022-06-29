@@ -16,7 +16,7 @@ const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
 const defaultProps = {
   backgroundColor: "success",
-  label: "Button",
+  children: <>Button</>,
 };
 
 export const Primary = Template.bind({});

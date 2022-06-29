@@ -27,11 +27,9 @@ const BudgetProposalSummary = () => {
           </div>
 
           <div className="pt-4 pb-4 pl-4">
-            <Button
-              label="Fechar orçamento"
-              backgroundColor="success"
-              onClick={tryToFinishBudget}
-            />
+            <Button backgroundColor="success" onClick={tryToFinishBudget}>
+              Fechar orçamento
+            </Button>
           </div>
         </div>
       </Container>
