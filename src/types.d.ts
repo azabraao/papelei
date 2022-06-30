@@ -14,3 +14,13 @@ type Product = {
     provider: number;
   };
 };
+
+type Client = {
+  name: string;
+  address: string;
+};
+
+interface CartProduct extends Product {
+  quantity: number;
+  isValid: boolean;
+}

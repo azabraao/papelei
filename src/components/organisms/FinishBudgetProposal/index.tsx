@@ -1,10 +1,12 @@
-import { memo, useCallback } from "react";
+import { memo, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, ModalBottom } from "components/atoms";
 import { TextArea, TextInput } from "components/molecules";
 import { useBudgetProposal } from "contexts/budgetProposal";
 import { useCart } from "contexts/cart";
 import { numberToMoney } from "utils";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import PDF from "./PDF";
 
 const FinishBudgetProposal = () => {
   const {
@@ -13,9 +15,12 @@ const FinishBudgetProposal = () => {
     addClientAddress,
     addClientName,
     client,
+    comments,
     addComments,
   } = useBudgetProposal();
-  const { cartTotal } = useCart();
+  const { cartTotal, cartProducts } = useCart();
+
+  const [allowShare, setAllowShare] = useState<boolean>(false);
 
   const {
     register,
@@ -23,10 +28,10 @@ const FinishBudgetProposal = () => {
     clearErrors,
     formState: { errors },
   } = useForm({
-    mode: "onBlur",
+    mode: "onChange",
   });
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = () => setAllowShare(true);
 
   const onNameChange = useCallback(
     (event) => {
@@ -99,11 +104,28 @@ const FinishBudgetProposal = () => {
           {...register("budgetComments", { required: false })}
         />
         <div className="pt-4">
-          <Button
-            label="Compartilhar orçamento"
-            fullWidth
-            backgroundColor="success"
-          />
+          {allowShare ? (
+            <PDFDownloadLink
+              className="py-2 px-4 rounded-lg text-sm text-center bg-success hover:bg-success-dark active:shadow-focus-shadow-success text-white block w-full"
+              document={
+                <PDF
+                  cartProducts={cartProducts}
+                  cartTotal={cartTotal}
+                  client={client}
+                  comments={comments}
+                />
+              }
+              fileName={`Orçamento ${client.name}.pdf`}
+            >
+              {({ blob, url, loading, error }) =>
+                loading ? "Criando orçamento" : "Compartilhar agora"
+              }
+            </PDFDownloadLink>
+          ) : (
+            <Button fullWidth backgroundColor="success">
+              Criar orçamento
+            </Button>
+          )}
         </div>
       </form>
     </ModalBottom>

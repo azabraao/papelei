@@ -19,6 +19,7 @@ interface BudgetProposalContextValues {
   addClientAddress: (clientAddress: string) => void;
   tryToFinishBudget: VoidFunction;
   client: Client;
+  comments: string;
 }
 
 export const BudgetProposalContext = createContext(
@@ -28,11 +29,6 @@ export const BudgetProposalContext = createContext(
 interface BudgetProposalProps {
   children: React.ReactNode;
 }
-
-type Client = {
-  name: string;
-  address: string;
-};
 
 export const BudgetProposalProvider = ({ children }: BudgetProposalProps) => {
   const [isFinishing, setIsFinishing] = useState<boolean>(false);
@@ -86,6 +82,7 @@ export const BudgetProposalProvider = ({ children }: BudgetProposalProps) => {
         isFinishing,
         shouldFinishBudget,
         client,
+        comments,
         tryToFinishBudget,
         openBudgetProposal,
         closeBudgetProposal,

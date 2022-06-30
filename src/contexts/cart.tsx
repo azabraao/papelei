@@ -8,11 +8,6 @@ import React, {
   useState,
 } from "react";
 
-interface CartProduct extends Product {
-  quantity: number;
-  isValid: boolean;
-}
-
 interface CartContextValues {
   addToCart: (product: Product) => void;
   setPaymentMethod: (method: "cash" | "deferred") => void;
