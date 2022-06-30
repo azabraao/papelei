@@ -55,7 +55,7 @@ const ModalBottom = ({
   return (
     <div
       className={clsx(
-        "fixed top-0 right-0 bottom-0 left-0 flex items-end justify-center z-20",
+        "fixed top-0 right-0 bottom-0 left-0 flex items-end justify-center z-20 ",
         isOpen ? "pointer-events-auto" : "pointer-events-none"
       )}
     >
@@ -79,12 +79,12 @@ const ModalBottom = ({
       >
         <div
           ref={ref}
-          className="relative z-40 bg-white rounded-t-2xl pl-4 pr-4"
+          className="relative z-40 bg-white rounded-t-2xl pl-4 pr-4 max-h-screen flex flex-col"
         >
           <div className="flex justify-center items-center pt-4 pb-4">
             <div className="w-10 h-[2px] bg-black-40" />
           </div>
-          {children}
+          <div className="overflow-y-auto scrollbar-none">{children}</div>
         </div>
       </Draggable>
     </div>
