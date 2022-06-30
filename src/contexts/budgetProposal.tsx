@@ -18,6 +18,8 @@ interface BudgetProposalContextValues {
   addClientName: (clientName: string) => void;
   addClientAddress: (clientAddress: string) => void;
   tryToFinishBudget: VoidFunction;
+  setShouldDownload: (shouldDownload: boolean) => void;
+  shouldDownload: boolean;
   client: Client;
   comments: string;
 }
@@ -35,6 +37,8 @@ export const BudgetProposalProvider = ({ children }: BudgetProposalProps) => {
   const [client, setClient] = useState<Client>({} as Client);
   const [comments, setComments] = useState<string>("");
   const [shouldFinishBudget, setShouldFinishBudget] = useState<boolean>(false);
+  const [shouldDownload, setShouldDownload] = useState<boolean>(false);
+
   const { cartProducts } = useCart();
 
   const cartItemsAreValid = useMemo(() => {
@@ -83,6 +87,8 @@ export const BudgetProposalProvider = ({ children }: BudgetProposalProps) => {
         shouldFinishBudget,
         client,
         comments,
+        shouldDownload,
+        setShouldDownload,
         tryToFinishBudget,
         openBudgetProposal,
         closeBudgetProposal,

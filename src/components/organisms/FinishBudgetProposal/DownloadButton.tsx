@@ -35,12 +35,8 @@ const DownloadButton = () => {
       }
       fileName={`Orçamento ${client.name}.pdf`}
     >
-      {({ blob, loading, url, error }) => {
-        return error?.message ? (
-          <Button backgroundColor="danger" fullWidth>
-            Houve um erro, tente novamente
-          </Button>
-        ) : loading ? (
+      {({ blob, loading, url }) => {
+        return loading ? (
           <Button disabled fullWidth>
             Criando orçamento...
           </Button>

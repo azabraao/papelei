@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ModalBottom } from "components/atoms";
 import { TextArea, TextInput } from "components/molecules";
@@ -15,46 +15,40 @@ const FinishBudgetProposal = () => {
     closeBudgetProposal,
     addClientAddress,
     addClientName,
-    client,
+    shouldDownload,
+    setShouldDownload,
     addComments,
   } = useBudgetProposal();
   const { cartTotal } = useCart();
 
-  const [allowShare, setAllowShare] = useState<boolean>(false);
-
   const {
     register,
     handleSubmit,
-    clearErrors,
     formState: { errors },
+    watch,
   } = useForm({
     mode: "onChange",
+    reValidateMode: "onChange",
   });
+  const customerName = watch("customerName");
+  const customerAddress = watch("customerAddress");
+  const budgetComments = watch("budgetComments");
 
-  const onSubmit = () => setAllowShare(true);
+  useEffect(() => {
+    addClientName(customerName);
+    setShouldDownload(false);
+  }, [customerName]);
 
-  const onNameChange = useCallback(
-    (event) => {
-      clearErrors("customerName");
-      addClientName(event.target.value);
-    },
-    [client]
-  );
+  useEffect(() => {
+    addClientAddress(customerAddress);
+    setShouldDownload(false);
+  }, [customerAddress]);
+  useEffect(() => {
+    addComments(budgetComments);
+    setShouldDownload(false);
+  }, [budgetComments]);
 
-  const onAddressChange = useCallback(
-    (event) => {
-      clearErrors("customerAddress");
-      addClientAddress(event.target.value);
-    },
-    [client]
-  );
-
-  const onCommentsChange = useCallback(
-    (event) => {
-      addComments(event.target.value);
-    },
-    [client]
-  );
+  const onSubmit = useCallback(() => setShouldDownload(true), []);
 
   return (
     <ModalBottom isOpen={isFinishing} closeModalBottom={closeBudgetProposal}>
@@ -74,7 +68,6 @@ const FinishBudgetProposal = () => {
           name="customerName"
           {...register("customerName", validationSchema.customerName)}
           error={errors?.customerName?.message}
-          onChange={onNameChange}
         />
         <TextInput
           label="Endereço"
@@ -82,17 +75,15 @@ const FinishBudgetProposal = () => {
           name="customerAddress"
           {...register("customerAddress", validationSchema.customerAddress)}
           error={errors?.customerAddress?.message}
-          onChange={onAddressChange}
         />
         <TextArea
           label="Observações"
           placeholder="Vale citar que..."
           name="budgetComments"
-          onChange={onCommentsChange}
           {...register("budgetComments", validationSchema.budgetComments)}
         />
         <div className="pt-4">
-          {allowShare ? <DownloadButton /> : <SubmitButton />}
+          {shouldDownload ? <DownloadButton /> : <SubmitButton />}
         </div>
       </form>
     </ModalBottom>

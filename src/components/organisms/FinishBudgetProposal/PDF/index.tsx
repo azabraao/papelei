@@ -141,9 +141,12 @@ const PDF = ({ client, comments, cartTotal, cartProducts }: PDFProps) => {
             </View>
           </View>
         </View>
+
         <View>
-          <Text style={tw("text-base font-bold")}>Observações</Text>
-          <Text style={{ ...tw("text-sm") }}>{comments}</Text>
+          {comments && (
+            <Text style={tw("text-base font-bold")}>Observações</Text>
+          )}
+          {comments && <Text style={{ ...tw("text-sm") }}>{comments}</Text>}
         </View>
         <View style={tw("py-10")}>
           <Text style={tw("text-sm")}>Roberval Oliveira</Text>

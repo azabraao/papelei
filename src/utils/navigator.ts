@@ -5,16 +5,14 @@ interface shareFileProps {
 }
 
 export const shareFile = async ({ blob, fileName, url }: shareFileProps) => {
-  const buffer = await blob.arrayBuffer();
-
-  const pdf = new File([buffer], `${fileName}.pdf`, {
-    type: "application/pdf",
+  const pdf = new File([blob], fileName, {
+    type: blob.type,
   });
 
   const files = [pdf];
 
   try {
-    await navigator.share({ files });
+    await navigator.share({ files, title: fileName, text: fileName });
   } catch (e) {
     if (e.toString().includes("AbortError")) return;
     else window.open(url);
