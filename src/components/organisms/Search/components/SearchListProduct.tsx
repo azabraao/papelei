@@ -55,7 +55,7 @@ const SearchListProduct = ({
           {product.name}
         </p>
         <p className="text-base">
-          {noPrice ? "Sem preço" : numberToMoney(product.price.sale.cash)}
+          {noPrice ? "Sem preço" : numberToMoney(product.price.sale.deferred)}
         </p>
       </div>
     </div>
