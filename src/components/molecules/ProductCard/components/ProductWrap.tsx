@@ -1,6 +1,9 @@
 import clsx from "clsx";
 import { useBudgetProposal } from "contexts/budgetProposal";
-import { memo, useCallback, useMemo } from "react";
+import { useCart } from "contexts/cart";
+import { useCartScroll } from "contexts/cartScroll";
+import { memo, useCallback, useEffect, useMemo } from "react";
+import { vibrate } from "utils";
 import { useProductCard } from "..";
 
 interface ProductWrapProps {
@@ -10,7 +13,25 @@ interface ProductWrapProps {
 const ProductWrap = ({ children }: ProductWrapProps) => {
   const { isValid, expandProductCard, isExpanded, isDraggingUp } =
     useProductCard();
+  const { code } = useProductCard();
   const { shouldFinishBudget } = useBudgetProposal();
+  const { cartProducts } = useCart();
+  const { scrollTo } = useCartScroll();
+
+  const isFirstInvalidItem = useMemo(() => {
+    const invalidProducts = cartProducts.filter((item) => !item.isValid);
+
+    const index = invalidProducts.findIndex((product) => product.code === code);
+
+    return index === 0;
+  }, [cartProducts]);
+
+  useEffect(() => {
+    if (shouldFinishBudget && !isValid && isFirstInvalidItem) {
+      scrollTo(code);
+      vibrate();
+    }
+  }, [shouldFinishBudget]);
 
   const handleClick = useCallback(() => {
     if (!isExpanded) expandProductCard();

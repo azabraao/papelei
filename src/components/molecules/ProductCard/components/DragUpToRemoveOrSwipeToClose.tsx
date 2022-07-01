@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useCart } from "contexts/cart";
 import Draggable from "@azabraao/react-draggable";
 import clsx from "clsx";
@@ -9,10 +9,8 @@ import {
   lockBodyScroll,
   stopPropagation,
   unlockBodyScroll,
-  vibrate,
 } from "utils";
 import { useProductCard } from "..";
-import { useBudgetProposal } from "contexts/budgetProposal";
 
 interface DragUpToRemoveOrSwipeToCloseProps {
   children: React.ReactNode;
@@ -51,24 +49,7 @@ const DragUpToRemoveOrSwipeToClose = ({
   const [readyToRemove, setReadyToRemove] = useState(false);
   const [hasRemoved, setHasRemoved] = useState(false);
 
-  const { shouldFinishBudget } = useBudgetProposal();
   const { cartProducts } = useCart();
-  const ref = useRef(null);
-
-  const isFirstInvalidItem = useMemo(() => {
-    const invalidProducts = cartProducts.filter((item) => !item.isValid);
-
-    const index = invalidProducts.findIndex((product) => product.code === code);
-
-    return index === 0;
-  }, [cartProducts]);
-
-  useEffect(() => {
-    if (shouldFinishBudget && !isValid && isFirstInvalidItem) {
-      scrollTo(code);
-      vibrate();
-    }
-  }, [shouldFinishBudget]);
 
   useEffect(() => {
     if (hasRemoved) {
@@ -141,7 +122,6 @@ const DragUpToRemoveOrSwipeToClose = ({
       onTouchEnd={onTouchEnd}
       onScroll={stopPropagation}
       onTouchStart={stopPropagation}
-      ref={ref}
     >
       {willRemove && !isExpanded && (
         <RemovalIndicator
