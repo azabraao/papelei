@@ -29,7 +29,7 @@ const TextArea = forwardRef(
         data-testid={clsx(
           error && "error-state",
           isSuccess && "success-state",
-          !error && !isSuccess && "input"
+          !error && !isSuccess && "textarea"
         )}
       >
         <TextareaAutosize

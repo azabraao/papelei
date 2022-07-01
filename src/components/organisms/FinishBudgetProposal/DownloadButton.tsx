@@ -37,7 +37,11 @@ const DownloadButton = () => {
     >
       {({ blob, loading, url }) => {
         return loading ? (
-          <Button disabled fullWidth>
+          <Button
+            disabled
+            fullWidth
+            testid="budget-modal-bottom-download-button"
+          >
             Criando orçamento...
           </Button>
         ) : (
@@ -47,6 +51,7 @@ const DownloadButton = () => {
             type="button"
             className="pointer-events-auto"
             onClick={(event) => handleDownload(event, blob, url)}
+            testid="budget-modal-bottom-download-button"
           >
             Compartilhe agora
           </Button>

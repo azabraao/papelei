@@ -11,12 +11,14 @@ interface ModalBottomProps {
   children: React.ReactNode;
   closeModalBottom: VoidFunction;
   isOpen: boolean;
+  testid?: string;
 }
 
 const ModalBottom = ({
   children,
   isOpen,
   closeModalBottom,
+  testid,
 }: ModalBottomProps) => {
   const [rect, setRect] = useState<DOMRect>(null);
   const ref = useCallbackRef(null, (ref) => {
@@ -55,9 +57,12 @@ const ModalBottom = ({
   return (
     <div
       className={clsx(
-        "fixed top-0 right-0 bottom-0 left-0 flex items-end justify-center z-20 ",
-        isOpen ? "pointer-events-auto" : "pointer-events-none"
+        "fixed top-0 right-0 bottom-0 left-0 flex items-end justify-center z-20 transition-opacity",
+        isOpen
+          ? "pointer-events-auto opacity-100"
+          : "pointer-events-none opacity-0 delay-300"
       )}
+      data-testid={testid}
     >
       <Backdrop
         isActive={isOpen}
@@ -79,6 +84,7 @@ const ModalBottom = ({
       >
         <div
           ref={ref}
+          data-testid={`${testid}-children`}
           className="relative z-40 bg-white rounded-t-2xl pl-4 pr-4 max-h-screen flex flex-col"
         >
           <div className="flex justify-center items-center pt-4 pb-4">
@@ -89,6 +95,10 @@ const ModalBottom = ({
       </Draggable>
     </div>
   );
+};
+
+ModalBottom.defaultProps = {
+  testid: "",
 };
 
 export default memo(

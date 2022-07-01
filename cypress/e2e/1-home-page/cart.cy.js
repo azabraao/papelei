@@ -1,15 +1,9 @@
 /// <reference types="cypress" />
 
-// Welcome to Cypress!
-//
-// This spec file contains a variety of sample tests
-// for a todo list app that are designed to demonstrate
-// the power of writing tests in Cypress.
-//
-// To learn more about how Cypress works and
-// what makes it such an awesome testing tool,
-// please read our getting started guide:
-// https://on.cypress.io/introduction-to-cypress
+import path from "path";
+const CLIENT_NAME = "John Doe";
+const CLIENT_ADDRESS = "John Doe's house";
+const GENERATED_BUDGET_NAME = "Orçamento John Doe.pdf";
 
 describe("cart", () => {
   context("with the cart empty", () => {
@@ -292,9 +286,145 @@ describe("cart", () => {
     });
   });
 
-  // TODO:
+  context("create budget", () => {
+    before(() => {
+      cy.visit("/");
 
-  //
+      // cy.get("[data-testid=x-close-expanded-product-card]").click();
+
+      const openSearchWindow = () => {
+        cy.get("[data-testid=button-open-search]").click();
+      };
+      const performSearch = (term) => {
+        cy.get("[data-testid=search-input]").type(term);
+      };
+
+      openSearchWindow();
+      performSearch("gesso");
+
+      cy.get("[data-testid=search-result-item]").first().click();
+
+      openSearchWindow();
+      performSearch("gesso");
+
+      cy.get("[data-testid=search-result-item]").eq(1).click();
+
+      openSearchWindow();
+      performSearch("gesso");
+
+      cy.get("[data-testid=search-result-item]").eq(2).click();
+
+      openSearchWindow();
+      performSearch("gesso");
+
+      cy.get("[data-testid=search-result-item]").eq(3).click();
+
+      openSearchWindow();
+      performSearch("g");
+
+      cy.get("body").then(($body) => {
+        if ($body.find("[data-testid=search-result-no-price]").length) {
+          cy.get("[data-testid=search-result-no-price]").first().click();
+        } else {
+          cy.get("[data-testid=search-window] [data-testid=backdrop]")
+            .first()
+            .click(1, 1, { force: true });
+        }
+      });
+    });
+
+    it("should define the price of the product if there's a product without price", () => {
+      cy.get("[data-testid=open-budget-modal-bottom]").click();
+
+      cy.get("body").then(($body) => {
+        if ($body.find("[data-testid=invalid-product-card]").length) {
+          cy.get("[data-testid=budget-modal-bottom-open]").should("not.exist");
+
+          cy.get("[data-testid=invalid-product-card]").click();
+          cy.get(
+            "[data-testid=invalid-product-card] [data-testid=drag-product-card]"
+          ).move({
+            deltaX: 0,
+            deltaY: 0,
+          });
+
+          cy.get("[data-testid=update-price-input] input").click().type(10);
+          cy.get("[data-testid=x-close-expanded-product-card]").click();
+        }
+      });
+    });
+
+    it("should open the modal bottom if all products have price", () => {
+      cy.get("body").then(($body) => {
+        if ($body.find("[data-testid=budget-modal-bottom-closed]").length) {
+          cy.get("[data-testid=open-budget-modal-bottom]").click();
+        }
+
+        cy.get("[data-testid=budget-modal-bottom-open]").should("exist");
+      });
+    });
+
+    it("should not submit form if name or address wasn't provided", () => {
+      cy.get("[data-testid=budget-modal-bottom-submit-button]").click();
+
+      cy.get("[data-testid=budget-modal-bottom-download-button]").should(
+        "not.exist"
+      );
+    });
+
+    it("should close the modal bottom if we click in the backdrop ", () => {
+      cy.get("[data-testid=budget-modal-bottom-open] [data-testid=backdrop]")
+        .first()
+        .click(1, 1, { force: true });
+      cy.get("[data-testid=budget-modal-bottom-open]").should("not.exist");
+      cy.get("[data-testid=budget-modal-bottom-closed]").should(
+        "not.be.visible"
+      );
+    });
+
+    it("should close the modal bottom if we drag the modal out of the viewport", () => {
+      cy.get("[data-testid=open-budget-modal-bottom]").click();
+      cy.get(
+        "[data-testid=budget-modal-bottom-open] [data-testid=budget-modal-bottom-open-children]"
+      ).move({
+        deltaX: 0,
+        deltaY: 400,
+        force: true,
+      });
+
+      cy.get("[data-testid=budget-modal-bottom-open]").should("not.exist");
+    });
+
+    it("should start creating the budget if we fill the form and click in the create budget button", () => {
+      cy.wait(1000);
+      cy.get("[data-testid=open-budget-modal-bottom]").click();
+
+      cy.get("[data-testid=budget-modal-bottom-customer-name]").type(
+        CLIENT_NAME
+      );
+      cy.get("[data-testid=budget-modal-bottom-customer-address]").type(
+        CLIENT_ADDRESS
+      );
+      cy.get("[data-testid=budget-modal-bottom-open] textarea").type(
+        "You are a real nice guy, take my money all to you"
+      );
+
+      cy.get("[data-testid=budget-modal-bottom-submit-button]").click();
+      cy.get("[data-testid=budget-modal-bottom-download-button]").should(
+        "exist"
+      );
+    });
+
+    it("should share a pdf if we click in the share budget button", () => {
+      cy.wait(1000);
+      cy.get("[data-testid=budget-modal-bottom-download-button]").click();
+      cy.wait(1000);
+      const downloadsFolder = Cypress.config("downloadsFolder");
+      cy.readFile(path.join(downloadsFolder, GENERATED_BUDGET_NAME)).should(
+        "exist"
+      );
+    });
+  });
 });
 
 // const simularCompra = ({

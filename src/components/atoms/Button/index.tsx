@@ -11,6 +11,7 @@ interface ButtonProps {
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
   className?: string;
+  testid?: string;
 }
 
 const Button = ({
@@ -21,6 +22,7 @@ const Button = ({
   children,
   type,
   className,
+  testid,
   ...props
 }: ButtonProps) => {
   return (
@@ -44,6 +46,7 @@ const Button = ({
         }
       )}
       disabled={disabled}
+      data-testid={testid}
       {...props}
     >
       {children}
@@ -55,6 +58,7 @@ Button.defaultProps = {
   backgroundColor: "success",
   type: "button",
   className: "",
+  testid: "",
 };
 
 export default memo(Button);

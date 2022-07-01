@@ -11,9 +11,8 @@ interface ProductWrapProps {
 }
 
 const ProductWrap = ({ children }: ProductWrapProps) => {
-  const { isValid, expandProductCard, isExpanded, isDraggingUp } =
+  const { isValid, expandProductCard, isExpanded, isDraggingUp, code } =
     useProductCard();
-  const { code } = useProductCard();
   const { shouldFinishBudget } = useBudgetProposal();
   const { cartProducts } = useCart();
   const { scrollTo } = useCartScroll();

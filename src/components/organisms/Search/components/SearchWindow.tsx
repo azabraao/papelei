@@ -78,12 +78,10 @@ const SearchWindow = () => {
           ? "opacity-100 pointer-events-auto delay-100"
           : "opacity-0 pointer-events-none"
       }
+      data-testid="search-window"
     >
       <Backdrop isActive={searchIsOpen} onClick={closeSearch} />
-      <div
-        className="fixed top-0 left-0 right-0 z-20 max-w-3xl mx-auto"
-        data-testid="search-window"
-      >
+      <div className="fixed top-0 left-0 right-0 z-20 max-w-3xl mx-auto">
         <div className={"flex flex-col px-4 pt-11 pb-4 gap-1"}>
           {searchIsOpen && (
             <TextInput

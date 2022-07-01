@@ -3,7 +3,12 @@ import { memo } from "react";
 
 const SubmitButton = () => {
   return (
-    <Button type="submit" fullWidth backgroundColor="info">
+    <Button
+      type="submit"
+      fullWidth
+      backgroundColor="info"
+      testid="budget-modal-bottom-submit-button"
+    >
       Criar orçamento
     </Button>
   );

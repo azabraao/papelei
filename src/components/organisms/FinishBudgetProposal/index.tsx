@@ -51,10 +51,17 @@ const FinishBudgetProposal = () => {
   const onSubmit = useCallback(() => setShouldDownload(true), []);
 
   return (
-    <ModalBottom isOpen={isFinishing} closeModalBottom={closeBudgetProposal}>
+    <ModalBottom
+      testid={
+        isFinishing ? "budget-modal-bottom-open" : "budget-modal-bottom-closed"
+      }
+      isOpen={isFinishing}
+      closeModalBottom={closeBudgetProposal}
+    >
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4 pb-6"
+        data-testid="budget-modal-bottom-form"
       >
         <div className="flex justify-between items-center">
           <span className="text-lg text-black-70">Fechar orçamento</span>
@@ -66,6 +73,7 @@ const FinishBudgetProposal = () => {
           label="Nome do cliente"
           placeholder="João Fulano"
           name="customerName"
+          testid="budget-modal-bottom-customer-name"
           {...register("customerName", validationSchema.customerName)}
           error={errors?.customerName?.message}
         />
@@ -73,6 +81,7 @@ const FinishBudgetProposal = () => {
           label="Endereço"
           placeholder="Rua das Flores, nº 0"
           name="customerAddress"
+          testid="budget-modal-bottom-customer-address"
           {...register("customerAddress", validationSchema.customerAddress)}
           error={errors?.customerAddress?.message}
         />
@@ -80,6 +89,7 @@ const FinishBudgetProposal = () => {
           label="Observações"
           placeholder="Vale citar que..."
           name="budgetComments"
+          testid="budget-modal-bottom-comments"
           {...register("budgetComments", validationSchema.budgetComments)}
         />
         <div className="pt-4">

@@ -8,7 +8,7 @@ interface ProductWindowProps {
 }
 
 const ProductWindow = ({ children }: ProductWindowProps) => {
-  const { isExpanded, restoreProductCard } = useProductCard();
+  const { isExpanded, restoreProductCard, isValid } = useProductCard();
 
   return (
     <div
@@ -16,6 +16,7 @@ const ProductWindow = ({ children }: ProductWindowProps) => {
         isExpanded &&
           "fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center z-30 p-6"
       )}
+      {...(!isValid && { "data-testid": "invalid-product-card" })}
     >
       <Backdrop
         isActive={isExpanded}

@@ -35,21 +35,18 @@ const DragUpToRemoveOrSwipeToClose = ({
   children,
 }: DragUpToRemoveOrSwipeToCloseProps) => {
   const { removeFromCart } = useCart();
-  const { isScrolling, scrollTo } = useCartScroll();
+  const { isScrolling } = useCartScroll();
   const {
     code,
     isExpanded,
     setIsDraggingUp,
     isDraggingUp,
     restoreProductCard,
-    isValid,
   } = useProductCard();
 
   const [willRemove, setWillRemove] = useState(false);
   const [readyToRemove, setReadyToRemove] = useState(false);
   const [hasRemoved, setHasRemoved] = useState(false);
-
-  const { cartProducts } = useCart();
 
   useEffect(() => {
     if (hasRemoved) {

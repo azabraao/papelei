@@ -41,7 +41,7 @@ const SearchListProduct = ({
             isLastProduct,
         }
       )}
-      data-testid="search-result-item"
+      data-testid={noPrice ? "search-result-no-price" : "search-result-item"}
     >
       <div>
         <img
