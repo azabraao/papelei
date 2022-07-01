@@ -9,6 +9,7 @@ import {
   lockBodyScroll,
   stopPropagation,
   unlockBodyScroll,
+  vibrate,
 } from "utils";
 import { useProductCard } from "..";
 import { useBudgetProposal } from "contexts/budgetProposal";
@@ -36,7 +37,7 @@ const DragUpToRemoveOrSwipeToClose = ({
   children,
 }: DragUpToRemoveOrSwipeToCloseProps) => {
   const { removeFromCart } = useCart();
-  const { isScrolling } = useCartScroll();
+  const { isScrolling, scrollTo } = useCartScroll();
   const {
     code,
     isExpanded,
@@ -64,7 +65,8 @@ const DragUpToRemoveOrSwipeToClose = ({
 
   useEffect(() => {
     if (shouldFinishBudget && !isValid && isFirstInvalidItem) {
-      ref.current.scrollIntoView();
+      scrollTo(code);
+      vibrate();
     }
   }, [shouldFinishBudget]);
 

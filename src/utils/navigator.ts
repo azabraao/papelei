@@ -18,3 +18,9 @@ export const shareFile = async ({ blob, fileName, url }: shareFileProps) => {
     else window.open(url);
   }
 };
+
+export const vibrate = () => {
+  if ("navigator" in window) {
+    "vibrate" in navigator ? navigator.vibrate(100) : null;
+  }
+};

@@ -1,8 +1,18 @@
-import React, { createContext, memo, useContext, useState } from "react";
+import React, {
+  createContext,
+  memo,
+  useCallback,
+  useContext,
+  useRef,
+  useState,
+} from "react";
+import { useCart } from "./cart";
 
 interface CartScrollContextValues {
   isScrolling: boolean;
   setIsScrolling: (isScrolling: boolean) => void;
+  cartScrollRef: React.RefObject<HTMLDivElement>;
+  scrollTo: (productCode: string) => void;
 }
 
 export const CartScrollContext = createContext({} as CartScrollContextValues);
@@ -13,12 +23,33 @@ interface CartScrollProps {
 
 export const CartScrollProvider = ({ children }: CartScrollProps) => {
   const [isScrolling, setIsScrolling] = useState<boolean>(false);
+  const { cartProducts } = useCart();
+  const cartScrollRef = useRef(null);
+
+  const scrollTo = useCallback(
+    (productCode: string) => {
+      const productIndex = cartProducts.findIndex(
+        (item) => item.code === productCode
+      );
+      const cardSpace = 163 + 16;
+      const scrollTo = productIndex * cardSpace;
+
+      cartScrollRef.current.scroll({
+        top: 0,
+        left: scrollTo,
+        behavior: "smooth",
+      });
+    },
+    [cartProducts, cartScrollRef]
+  );
 
   return (
     <CartScrollContext.Provider
       value={{
+        cartScrollRef,
         isScrolling,
         setIsScrolling,
+        scrollTo,
       }}
     >
       {children}

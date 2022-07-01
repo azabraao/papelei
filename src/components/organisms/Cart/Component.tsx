@@ -7,7 +7,7 @@ import EmptyCartState from "./components/EmptyCartState";
 
 const Cart = () => {
   const { cartIsEmpty, cartProducts } = useCart();
-  const { setIsScrolling } = useCartScroll();
+  const { setIsScrolling, cartScrollRef } = useCartScroll();
 
   const onScrollEnd = useCallback(() => {
     setIsScrolling(false);
@@ -28,6 +28,7 @@ const Cart = () => {
       <div
         data-testid="cart-scroll"
         onScroll={onScroll}
+        ref={cartScrollRef}
         onTouchEndCapture={onScrollEnd}
         className="overflow-scroll mx-auto max-w-3xl md:px-10 w-full scrollbar-none overscroll-y-contain"
       >
