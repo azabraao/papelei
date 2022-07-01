@@ -1,4 +1,11 @@
-module.exports = {
+const withPWA = require("next-pwa");
+
+module.exports = withPWA({
+  pwa: {
+    dest: "public",
+    register: true,
+    skipWaiting: true,
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,
@@ -8,4 +15,4 @@ module.exports = {
 
     return config;
   },
-};
+});

@@ -1,0 +1,22 @@
+{
+  "name": "AMD Gesso Orçamento",
+  "short_name": "Criar orçamento",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#FD777C",
+  "background_color": "#FD777C",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}
