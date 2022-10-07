@@ -10,7 +10,7 @@ const Document = () => {
           <meta name="theme-color" content="#FD777C" />
 
       </Head>
-      <body className="bg-danger-lighter min-h-screen">
+      <body className="bg-blue-50 min-h-screen">
         <Main />
         <NextScript />
       </body>

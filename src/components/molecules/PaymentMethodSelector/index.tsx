@@ -31,7 +31,7 @@ const PaymentMethodSelector = ({
           className={clsx(
             "flex items-center transition-colors gap-2 rounded-lg p-2 border text-black-70",
             activeMethod === "cash"
-              ? "bg-info-lighter border-info-light"
+              ? "bg-info-50 border-info-300"
               : "border-black-20 bg-white"
           )}
           onClick={onInCashClick}
@@ -44,7 +44,7 @@ const PaymentMethodSelector = ({
           className={clsx(
             "flex items-center transition-colors gap-2 rounded-lg p-2 border text-black-70",
             activeMethod === "deferred"
-              ? "bg-info-lighter border-info-light"
+              ? "bg-info-50 border-info-300"
               : "border-black-20 bg-white"
           )}
           onClick={onDeferredClick}

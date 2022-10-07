@@ -32,11 +32,11 @@ describe("PaymentMethodSelector", () => {
     const deferredButton = screen.getByTestId("deferred");
 
     fireEvent.click(screen.getByTestId("cash"));
-    expect(inCashButton).toHaveClass("bg-info-lighter");
-    expect(deferredButton).not.toHaveClass("bg-info-lighter");
+    expect(inCashButton).toHaveClass("bg-info-50");
+    expect(deferredButton).not.toHaveClass("bg-info-50");
 
     fireEvent.click(deferredButton);
-    expect(deferredButton).toHaveClass("bg-info-lighter");
-    expect(inCashButton).not.toHaveClass("bg-info-lighter");
+    expect(deferredButton).toHaveClass("bg-info-50");
+    expect(inCashButton).not.toHaveClass("bg-info-50");
   });
 });

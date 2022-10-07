@@ -33,11 +33,11 @@ const Button = ({
         "py-2 px-4 rounded-lg text-sm text-center transition-color duration-200",
         !disabled && "text-white",
         {
-          "bg-success hover:bg-success-dark active:shadow-focus-shadow-success":
+          "bg-success hover:bg-success-700 active:shadow-focus-shadow-success":
             backgroundColor === "success" && !disabled,
-          "bg-info hover:bg-info-dark active:shadow-focus-shadow-success":
+          "bg-info hover:bg-info-700 active:shadow-focus-shadow-success":
             backgroundColor === "info" && !disabled,
-          "bg-danger hover:bg-danger-dark active:shadow-focus-shadow-success":
+          "bg-danger hover:bg-danger-700 active:shadow-focus-shadow-success":
             backgroundColor === "danger" && !disabled,
           "w-full": fullWidth,
           "cursor-not-allowed": disabled,

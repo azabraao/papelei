@@ -45,7 +45,7 @@ const QuantitySelector = ({
     <div
       onClick={stopPropagation}
       className={clsx(
-        "flex items-center justify-between rounded-lg border hover:shadow-on-hover-shadow focus-within:shadow-focus-shadow-info focus-within:border-info-light placeholder-black-40 w-full overflow-hidden",
+        "flex items-center justify-between rounded-lg border hover:shadow-on-hover-shadow focus-within:shadow-focus-shadow-info focus-within:border-info-300 placeholder-black-40 w-full overflow-hidden",
         error &&
           "border-danger focus-within:border-danger focus-within:shadow-none",
         isSuccess &&

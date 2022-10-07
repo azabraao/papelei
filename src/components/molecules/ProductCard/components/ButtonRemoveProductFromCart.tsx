@@ -34,7 +34,7 @@ const ButtonRemoveProductFromCart = () => {
     <button
       onClick={handleRemoval}
       className={clsx("py-2 flex justify-center gap-2", {
-        "bg-danger-lighter text-danger": !confirmRemoval,
+        "bg-blue-50 text-danger": !confirmRemoval,
         "bg-danger text-white": confirmRemoval,
       })}
       data-testid="button-remove-product"

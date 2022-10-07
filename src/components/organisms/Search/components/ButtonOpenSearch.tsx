@@ -49,7 +49,7 @@ const ButtonOpenSearch = () => {
           )}
           <button
             className={clsx(
-              "px-4 py-2 flex items-center justify-between bg-white rounded-lg border hover:shadow-on-hover-shadow text-black-40 w-full overflow-hidden border-black-20 focus-within:shadow-focus-shadow-info focus-within:border-info-light transition-all"
+              "px-4 py-2 flex items-center justify-between bg-white rounded-lg border hover:shadow-on-hover-shadow text-black-40 w-full overflow-hidden border-black-20 focus-within:shadow-focus-shadow-info focus-within:border-info-300 transition-all"
             )}
             ref={ref}
           >
