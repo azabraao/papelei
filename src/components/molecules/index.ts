@@ -6,5 +6,5 @@ export { default as TextInput } from "./Form/TextInput";
 export { default as TextArea } from "./Form/TextArea";
 export { default as MoneyInput } from "./Form/MoneyInput";
 export { default as QuantitySelector } from "./Form/QuantitySelector";
-export { default as GoogleButton } from "./GoogleButton";
-export { default as FacebookButton } from "./FacebookButton";
+export { default as GoogleButton } from "./SocialLoginButtons/Google";
+export { default as FacebookButton } from "./SocialLoginButtons/Facebook";

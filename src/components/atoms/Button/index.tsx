@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { memo } from "react";
+import React, { ForwardRefExoticComponent, memo, RefAttributes } from "react";
 
 interface ButtonProps {
   backgroundColor?: string;
@@ -12,33 +12,41 @@ interface ButtonProps {
   type?: "button" | "submit" | "reset";
   className?: string;
   testid?: string;
+  icon?: React.ReactNode;
 }
 
-const Button = ({
-  fullWidth,
-  onClick,
-  backgroundColor,
-  disabled,
-  children,
-  type,
-  className,
-  testid,
-  ...props
-}: ButtonProps) => {
+const Button = (
+  {
+    fullWidth,
+    onClick,
+    backgroundColor,
+    disabled,
+    children,
+    type,
+    className,
+    testid,
+    icon,
+    ...props
+  }: ButtonProps,
+  ref
+) => {
   return (
     <button
+      ref={ref}
       type={type}
       onClick={onClick}
       className={clsx(
-        "py-2 px-4 rounded-lg text-sm text-center transition-color duration-200",
-        !disabled && "text-white",
+        "py-2 px-4 rounded-lg text-sm transition-color duration-200 flex",
+        icon ? "gap-4 items-center" : "justify-center",
         {
-          "bg-success hover:bg-success-700 active:shadow-focus-shadow-success":
+          "bg-success text-white hover:bg-success-700 active:shadow-focus-shadow-success":
             backgroundColor === "success" && !disabled,
-          "bg-info hover:bg-info-700 active:shadow-focus-shadow-success":
+          "bg-info text-white hover:bg-info-700 active:shadow-focus-shadow-success":
             backgroundColor === "info" && !disabled,
-          "bg-danger hover:bg-danger-700 active:shadow-focus-shadow-success":
+          "bg-danger text-white hover:bg-danger-700 active:shadow-focus-shadow-success":
             backgroundColor === "danger" && !disabled,
+          "bg-white text-gray-700 active:shadow-focus-shadow-success shadow-elevation-1":
+            backgroundColor === "white" && !disabled,
           "w-full": fullWidth,
           "cursor-not-allowed": disabled,
           "bg-black-20 text-black-70": disabled,
@@ -49,6 +57,7 @@ const Button = ({
       data-testid={testid}
       {...props}
     >
+      <div>{icon}</div>
       {children}
     </button>
   );
@@ -61,4 +70,8 @@ Button.defaultProps = {
   testid: "",
 };
 
-export default memo(Button);
+const ButtonWithRef = (Component) => {
+  return React.forwardRef<HTMLButtonElement, ButtonProps>(Component);
+};
+
+export default memo(ButtonWithRef(Button));

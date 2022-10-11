@@ -20,6 +20,7 @@
 //    }(document, 'script', 'facebook-jssdk'));
 // </script>
 
+import { Button, FacebookIcon } from "components/atoms";
 import dynamic from "next/dynamic";
 import React, { memo, useEffect, useState } from "react";
 
@@ -78,13 +79,14 @@ const WebLoginButton = () => {
   };
 
   return (
-    <button
-      className="social-button facebook font-regular"
-      onClick={onButtonClick}
+    <Button
+      backgroundColor="white"
+      icon={<FacebookIcon />}
       disabled={isLoading}
+      onClick={onButtonClick}
     >
-      Logar com facebook
-    </button>
+      Continuar com Facebook
+    </Button>
   );
 };
 
