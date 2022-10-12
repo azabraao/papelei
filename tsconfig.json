@@ -14,7 +14,9 @@
     "moduleResolution": "Node",
     "isolatedModules": true,
     "jsx": "preserve",
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "sourceMap": true,
+    "outDir": "dist"
   },
   "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules"]
