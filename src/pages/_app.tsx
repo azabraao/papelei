@@ -9,6 +9,8 @@ import "../styles/globals.css";
 import { CartProvider } from "contexts/cart";
 import { SearchProvider } from "contexts/search";
 import { BudgetProposalProvider } from "contexts/budgetProposal";
+import { SWRConfig } from "swr";
+import fetchJson from "lib/fetchJson";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -73,19 +75,28 @@ const App = ({ Component, pageProps }: AppProps) => {
         `,
         }}
       />
-      <SkeletonTheme
-        baseColor="#A4A4A6"
-        highlightColor="#E8E8E9"
-        borderRadius={4}
+      <SWRConfig
+        value={{
+          fetcher: fetchJson,
+          onError: (err) => {
+            console.error(err);
+          },
+        }}
       >
-        <CartProvider>
-          <SearchProvider>
-            <BudgetProposalProvider>
-              <Component {...pageProps} />
-            </BudgetProposalProvider>
-          </SearchProvider>
-        </CartProvider>
-      </SkeletonTheme>
+        <SkeletonTheme
+          baseColor="#A4A4A6"
+          highlightColor="#E8E8E9"
+          borderRadius={4}
+        >
+          <CartProvider>
+            <SearchProvider>
+              <BudgetProposalProvider>
+                <Component {...pageProps} />
+              </BudgetProposalProvider>
+            </SearchProvider>
+          </CartProvider>
+        </SkeletonTheme>
+      </SWRConfig>
     </>
   );
 };

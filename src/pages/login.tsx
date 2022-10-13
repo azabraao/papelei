@@ -1,9 +1,26 @@
 import { Container } from "components/atoms";
 import { FacebookButton, GoogleButton } from "components/molecules";
+import fetchJson from "lib/fetchJson";
+import useUser from "lib/useUser";
 import Head from "next/head";
 import { Fragment } from "react";
 
 export default function Auth() {
+  const { mutateUser } = useUser({
+    redirectTo: "/",
+    redirectIfFound: true,
+  });
+
+  const handleLogin = async (user: User) => {
+    return await mutateUser(
+      await fetchJson("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      })
+    );
+  };
+
   return (
     <Fragment>
       <Head>
@@ -18,8 +35,8 @@ export default function Auth() {
           </div>
 
           <main className="flex flex-col gap-4">
-            <GoogleButton />
-            <FacebookButton />
+            <GoogleButton handleLogin={handleLogin} />
+            <FacebookButton handleLogin={handleLogin} />
           </main>
         </div>
       </Container>

@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, GoogleIcon } from "components/atoms";
 
-const GoogleButton = () => {
+interface GoogleButtonProps {
+  handleLogin: (user: User) => void;
+}
+
+const GoogleButton = ({ handleLogin }: GoogleButtonProps) => {
   const buttonRef = useRef(null);
   const [auth2, setAuth2] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,11 +27,17 @@ const GoogleButton = () => {
     if (!auth2) initAuth2();
   }, [auth2]);
 
-  const onButtonClick = (user) => {
+  const onButtonClick = async (user) => {
     setIsLoading(true);
-    console.log("user>>>", user);
 
-    // handleGoogleLogin(user, (status) => setIsLoading(status));
+    try {
+      await handleLogin(user);
+    } catch (err) {
+      console.log(err);
+      alert("Desculpe, houve um erro. Por favor, tente novamente.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {

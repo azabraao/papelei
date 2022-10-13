@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { AppCopyTitle, Navbar } from "components/molecules";
 import {
   BudgetProposalSummary,
@@ -6,8 +5,12 @@ import {
   FinishBudgetProposal,
   Search,
 } from "components/organisms";
+import useUser from "lib/useUser";
+import Head from "next/head";
 
 export default function Home() {
+  useUser({ redirectTo: "/login" });
+
   return (
     <div>
       <Head>

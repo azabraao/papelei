@@ -24,8 +24,21 @@ import { Button, FacebookIcon } from "components/atoms";
 import dynamic from "next/dynamic";
 import React, { memo, useEffect, useState } from "react";
 
-const WebLoginButton = () => {
-  const [facebookUser, setFacebookUser] = useState({});
+interface GoogleButtonProps {
+  handleLogin: (user: User) => void;
+}
+
+type FacebookUser = {
+  email: string;
+  name: string;
+  facebookId: string;
+  picture: {
+    data?: { url?: string };
+  };
+};
+
+const WebLoginButton = ({ handleLogin }: GoogleButtonProps) => {
+  const [facebookUser, setFacebookUser] = useState<FacebookUser>({});
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -44,13 +57,21 @@ const WebLoginButton = () => {
     }
   }, [facebookUser]);
 
-  const startLogin = (user) => {
-    console.log("xablay", {
-      email: user.email,
-      name: user.name,
-      facebookId: user.facebookId,
-      picture: user.picture?.data?.url,
-    });
+  const startLogin = async (user) => {
+    setIsLoading(true);
+
+    try {
+      await handleLogin({
+        email: user.email,
+        name: user.name,
+        facebookId: user.facebookId,
+        picture: user.picture?.data?.url,
+      });
+    } catch (err) {
+      alert("Desculpe, houve um erro. Por favor, tente novamente.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onButtonClick = () => {

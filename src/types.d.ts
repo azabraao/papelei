@@ -24,3 +24,12 @@ interface CartProduct extends Product {
   quantity: number;
   isValid: boolean;
 }
+
+type User = {
+  id?: string;
+  name: string;
+  email: string;
+  picture?: string;
+  googleId?: string;
+  facebookId?: string;
+};
