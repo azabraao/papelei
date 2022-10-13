@@ -33,7 +33,6 @@ const GoogleButton = ({ handleLogin }: GoogleButtonProps) => {
     try {
       await handleLogin(user);
     } catch (err) {
-      console.log(err);
       alert("Desculpe, houve um erro. Por favor, tente novamente.");
     } finally {
       setIsLoading(false);
