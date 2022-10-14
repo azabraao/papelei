@@ -1,4 +1,4 @@
-import { AppCopyTitle, Navbar } from "components/molecules";
+import { AppCopyTitle, BottomBar, Navbar } from "components/molecules";
 import {
   BudgetProposalSummary,
   Cart,
@@ -7,12 +7,13 @@ import {
 } from "components/organisms";
 import useUser from "lib/useUser";
 import Head from "next/head";
+import { Fragment } from "react";
 
 export default function Home() {
   // useUser({ redirectTo: "/login" });
 
   return (
-    <div>
+    <Fragment>
       <Head>
         <title>AMD Gesso | Criar orçamento</title>
         <link rel="icon" href="/favicon.ico" />
@@ -25,6 +26,7 @@ export default function Home() {
         <BudgetProposalSummary />
         <FinishBudgetProposal />
       </main>
-    </div>
+      <BottomBar />
+    </Fragment>
   );
 }
