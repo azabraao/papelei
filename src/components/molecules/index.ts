@@ -8,3 +8,4 @@ export { default as MoneyInput } from "./Form/MoneyInput";
 export { default as QuantitySelector } from "./Form/QuantitySelector";
 export { default as GoogleButton } from "./SocialLoginButtons/Google";
 export { default as FacebookButton } from "./SocialLoginButtons/Facebook";
+export { default as BottomBar } from "./BottomBar";
