@@ -1,16 +1,16 @@
 import { memo } from "react";
-import NoProducts from "assets/no-products";
+import emptyBoxGif from "assets/empty-box.gif";
 import { Container } from "components/atoms";
 
 const EmptyCartState = () => {
   return (
     <Container
       testid="empty-cart"
-      className="gap-4 flex flex-col items-center pt-6 pb-10"
+      className="gap-4 flex flex-col items-start pt-3 pb-10"
     >
-      <NoProducts />
+      <img src={emptyBoxGif.src} alt="" />
 
-      <span className="text-black-70 text-center">
+      <span className="text-base text-black-70">
         Nenhum produto selecionado
       </span>
     </Container>

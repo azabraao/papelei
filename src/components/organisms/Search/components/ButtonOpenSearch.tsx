@@ -35,7 +35,7 @@ const ButtonOpenSearch = () => {
   return (
     <Container>
       <div onClick={openSearch} data-testid="button-open-search">
-        <div className={clsx("flex flex-col py-2 gap-2")}>
+        <div className={clsx("flex flex-col py-2 gap-3")}>
           {!searchIsOpen && (
             <Label
               label={
@@ -43,7 +43,6 @@ const ButtonOpenSearch = () => {
                   ? "Do que você precisa?"
                   : "Do que mais você precisa?"
               }
-              labelCentered={cartIsEmpty}
               labelSize="lg"
             />
           )}
