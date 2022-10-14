@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { ForwardRefExoticComponent, memo, RefAttributes } from "react";
+import React, { memo } from "react";
 
 interface ButtonProps {
   backgroundColor?: string;
@@ -13,6 +13,7 @@ interface ButtonProps {
   className?: string;
   testid?: string;
   icon?: React.ReactNode;
+  isRounded?: boolean;
 }
 
 const Button = (
@@ -26,6 +27,7 @@ const Button = (
     className,
     testid,
     icon,
+    isRounded,
     ...props
   }: ButtonProps,
   ref
@@ -36,8 +38,9 @@ const Button = (
       type={type}
       onClick={onClick}
       className={clsx(
-        "py-2 px-4 rounded-lg text-sm transition-color duration-200 flex",
+        "py-2 px-4 text-sm transition-color duration-200 flex",
         icon ? "gap-4 items-center" : "justify-center",
+        isRounded ? "rounded-full" : "rounded-lg",
         {
           "bg-success text-white hover:bg-success-700 active:shadow-focus-shadow-success":
             backgroundColor === "success" && !disabled,
@@ -68,6 +71,7 @@ Button.defaultProps = {
   type: "button",
   className: "",
   testid: "",
+  isRounded: false,
 };
 
 const ButtonWithRef = (Component) => {

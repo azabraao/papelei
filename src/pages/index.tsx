@@ -1,6 +1,6 @@
 import { AppCopyTitle, BottomBar, Navbar } from "components/molecules";
 import {
-  BudgetProposalSummary,
+  FinishBudgetButton,
   Cart,
   FinishBudgetProposal,
   Search,
@@ -23,7 +23,7 @@ export default function Home() {
         <AppCopyTitle />
         <Cart />
         <Search />
-        <BudgetProposalSummary />
+        <FinishBudgetButton />
         <FinishBudgetProposal />
       </main>
       <BottomBar />
