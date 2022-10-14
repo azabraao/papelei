@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <Fragment>
       <Head>
-        <title>AMD Gesso | Criar orçamento</title>
+        <title>Papelei</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>

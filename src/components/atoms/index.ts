@@ -21,3 +21,4 @@ export { default as FloatingButton } from "./FloatingButton";
 export { default as ModalBottom } from "./ModalBottom";
 export { default as LogoutLink } from "./LogoutLink";
 export { default as ActiveLink } from "./ActiveLink";
+export { default as PageHeader } from "./PageHeader";
