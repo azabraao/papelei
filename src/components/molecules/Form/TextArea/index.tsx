@@ -42,8 +42,8 @@ const TextArea = forwardRef(
           ref={ref}
         />
 
-        {error && <XIcon theme="danger" />}
-        {isSuccess && <CheckedIcon theme="success" />}
+        {error && <XIcon className="text-danger" />}
+        {isSuccess && <CheckedIcon className="text-success" />}
       </div>
     );
   }

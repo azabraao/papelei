@@ -9,7 +9,7 @@ import useUser from "lib/useUser";
 import Head from "next/head";
 
 export default function Home() {
-  useUser({ redirectTo: "/login" });
+  // useUser({ redirectTo: "/login" });
 
   return (
     <div>

@@ -53,7 +53,7 @@ const ButtonOpenSearch = () => {
             ref={ref}
           >
             <span>Escreva o nome do produto</span>
-            <SearchIcon theme="black-40" />
+            <SearchIcon className="text-black-40" />
           </button>
         </div>
       </div>

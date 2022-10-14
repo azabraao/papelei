@@ -86,8 +86,8 @@ const TextInput = forwardRef(
           onClick={onIconRightClick}
         >
           {IconRight && IconRight}
-          {error && <XIcon theme="danger" />}
-          {isSuccess && <CheckedIcon theme="success" />}
+          {error && <XIcon className="text-danger" />}
+          {isSuccess && <CheckedIcon className="text-success" />}
         </div>
       </div>
     );
