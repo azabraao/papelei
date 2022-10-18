@@ -10,7 +10,7 @@ import Head from "next/head";
 import { Fragment } from "react";
 
 export default function Home() {
-  // useUser({ redirectTo: "/login" });
+  useUser({ redirectTo: "/login" });
 
   return (
     <Fragment>

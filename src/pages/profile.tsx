@@ -1,11 +1,12 @@
-import { ArrowLeftIcon, Button, Container, PageHeader } from "components/atoms";
+import { Container, PageHeader } from "components/atoms";
 import { BottomBar, LogoUploader, Navbar } from "components/molecules";
 import LogoutButton from "components/molecules/LogoutButton";
+import useUser from "lib/useUser";
 import Head from "next/head";
 import { Fragment } from "react";
 
 export default function Profile() {
-  // useUser({ redirectTo: "/login" });
+  useUser({ redirectTo: "/login" });
 
   return (
     <Fragment>
