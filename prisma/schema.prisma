@@ -11,10 +11,20 @@ datasource db {
 }
 
 model User {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  picture     String?
+  email       String     @unique
+  googleId    String?
+  facebookId  String?
+  businessIDs String[]   @db.ObjectId
+  business    Business[] @relation(fields: [businessIDs], references: [id])
+}
+
+model Business {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
   picture String?
-  email String @unique
-  googleId String?
-  facebookId String?
+  userIDs String[] @db.ObjectId
+  users   User[]   @relation(fields: [userIDs], references: [id])
 }

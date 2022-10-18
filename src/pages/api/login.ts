@@ -22,29 +22,17 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       },
     });
 
-    if (!user?.facebookId && facebookId) {
-      await prisma.user.update({
-        where: {
-          email,
-        },
-        data: {
-          facebookId,
-        },
-      });
-    }
+    const shouldUpdateUserFacebookId =
+      !!user && !user?.facebookId && facebookId;
+    const shouldUpdateUserGoogleId = !!user && !user?.googleId && googleId;
+    const shouldCreateUser = !user?.id;
 
-    if (!user?.googleId && googleId) {
-      await prisma.user.update({
-        where: {
-          email,
-        },
-        data: {
-          googleId,
-        },
-      });
-    }
+    console.log(
+      "{shouldUpdateUserFacebookId, shouldUpdateUserGoogleId, shouldCreateUser}>>>",
+      { shouldUpdateUserFacebookId, shouldUpdateUserGoogleId, shouldCreateUser }
+    );
 
-    if (!user?.id) {
+    if (shouldCreateUser) {
       user = await prisma.user.create({
         data: {
           name,
@@ -52,6 +40,34 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
           picture,
           googleId,
           facebookId,
+          business: {
+            create: [
+              {
+                name: `Negócio de ${name}`,
+              },
+            ],
+          },
+        },
+      });
+    }
+    if (shouldUpdateUserFacebookId) {
+      await prisma.user.update({
+        where: {
+          email,
+        },
+        data: {
+          facebookId,
+        },
+      });
+    }
+
+    if (shouldUpdateUserGoogleId) {
+      await prisma.user.update({
+        where: {
+          email,
+        },
+        data: {
+          googleId,
         },
       });
     }
@@ -60,6 +76,8 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
     await req.session.save();
     res.json(user);
   } catch (error) {
+    console.log("error.message>>>", error.message);
+
     res.status(500).json({ message: (error as Error).message });
   }
 }

@@ -25,6 +25,14 @@ interface CartProduct extends Product {
   isValid: boolean;
 }
 
+type Business = {
+  id: string;
+  name: string;
+  picture?: string;
+  User?: User;
+  userId?: string;
+};
+
 type User = {
   id?: string;
   name: string;
@@ -32,4 +40,6 @@ type User = {
   picture?: string;
   googleId?: string;
   facebookId?: string;
+  business?: Business;
+  businessIDs: string[];
 };

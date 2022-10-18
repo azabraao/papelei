@@ -11,6 +11,7 @@ function logoutRoute(req: NextApiRequest, res: NextApiResponse<User>) {
     picture: "",
     googleId: "",
     facebookId: "",
+    businessIDs: [],
   });
 }
 
