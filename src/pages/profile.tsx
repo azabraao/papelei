@@ -1,5 +1,6 @@
-import { Container, PageHeader } from "components/atoms";
-import { BottomBar, Navbar } from "components/molecules";
+import { ArrowLeftIcon, Button, Container, PageHeader } from "components/atoms";
+import { BottomBar, LogoUploader, Navbar } from "components/molecules";
+import LogoutButton from "components/molecules/LogoutButton";
 import Head from "next/head";
 import { Fragment } from "react";
 
@@ -15,6 +16,14 @@ export default function Profile() {
       <main>
         <Navbar />
         <PageHeader>Seu negócio</PageHeader>
+
+        <Container className="py-11">
+          <LogoUploader />
+        </Container>
+
+        <Container className="pt-11">
+          <LogoutButton />
+        </Container>
       </main>
       <BottomBar />
     </Fragment>
