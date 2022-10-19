@@ -40,6 +40,6 @@ type User = {
   picture?: string;
   googleId?: string;
   facebookId?: string;
-  business?: Business;
-  businessIDs: string[];
+  business?: Business[];
+  businessIDs?: string[];
 };

@@ -5,13 +5,13 @@ import { NextApiRequest, NextApiResponse } from "next";
 function logoutRoute(req: NextApiRequest, res: NextApiResponse<User>) {
   req.session.destroy();
   res.json({
-    id: "",
-    name: "",
-    email: "",
-    picture: "",
-    googleId: "",
-    facebookId: "",
-    businessIDs: [],
+    id: null,
+    name: null,
+    email: null,
+    picture: null,
+    googleId: null,
+    facebookId: null,
+    business: [],
   });
 }
 

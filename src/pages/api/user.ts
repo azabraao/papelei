@@ -11,13 +11,13 @@ async function userRoute(req: NextApiRequest, res: NextApiResponse<User>) {
     });
   } else {
     res.json({
-      id: "",
-      name: "",
-      email: "",
-      picture: "",
-      googleId: "",
-      facebookId: "",
-      businessIDs: [],
+      id: null,
+      name: null,
+      email: null,
+      picture: null,
+      googleId: null,
+      facebookId: null,
+      business: [],
     });
   }
 }

@@ -1,23 +1,15 @@
+import { PrismaClient } from "@prisma/client";
+import { initializeApp } from "firebase/app";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadString,
+} from "firebase/storage";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
 
-const storage = getStorage();
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyAVpFpEMVxfd339rHYMtcPitKaYphR1HTg",
   authDomain: "pepelei.firebaseapp.com",
@@ -28,9 +20,8 @@ const firebaseConfig = {
   measurementId: "G-6EYTGNE4HV",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const storage = getStorage(app);
 
 const prisma = new PrismaClient();
 
@@ -46,80 +37,35 @@ async function putBusinessPhoto(req: NextApiRequest, res: NextApiResponse) {
     return;
   }
 
-  // Create the file metadata
-  /** @type {any} */
-  const metadata = {
-    contentType: "image/jpeg",
-  };
+  const { data_image, business_id } = JSON.parse(req.body);
+  const storageRef = ref(storage, business_id);
 
-  const { file, businessId } = await req.body;
-
-  const storageRef = ref(storage, "images/" + file.name);
-  const uploadTask = uploadBytesResumable(storageRef, file, metadata);
-
-  // Listen for state changes, errors, and completion of the upload.
-  uploadTask.on(
-    "state_changed",
-    (snapshot) => {
-      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log("Upload is " + progress + "% done");
-      switch (snapshot.state) {
-        case "paused":
-          console.log("Upload is paused");
-          break;
-        case "running":
-          console.log("Upload is running");
-          break;
-      }
-    },
-    (error) => {
-      // A full list of error codes is available at
-      // https://firebase.google.com/docs/storage/web/handle-errors
-
-      switch (error.code) {
-        case "storage/unauthorized":
-          res.status(500).json({ message: "No Permission" });
-
-          break;
-        case "storage/canceled":
-          res.status(500).json({ message: "Upload canceled" });
-
-          break;
-
-        // ...
-
-        case "storage/unknown":
-          // Unknown error occurred, inspect error.serverResponse
-          res.status(500).json({ message: (error as Error).message });
-          break;
-
-        default:
-          res.status(500).json({ message: (error as Error).message });
-      }
-    },
-    () => {
-      // Upload completed successfully, now we can get the download URL
-      getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-        console.log("File available at", downloadURL);
-
+  try {
+    uploadString(storageRef, data_image, "data_url").then((snapshot) => {
+      getDownloadURL(snapshot.ref).then(async (downloadURL) => {
         try {
-          await prisma.business.update({
+          const response = await prisma.business.update({
             where: {
-              id: businessId,
+              id: business_id,
             },
             data: {
               picture: downloadURL,
             },
           });
 
-          res.json({ downloadURL });
+          user.business[0] = response;
+          req.session.user = user;
+          await req.session.save();
+
+          res.json({ business: response });
         } catch (error) {
           res.status(500).json({ message: (error as Error).message });
         }
       });
-    }
-  );
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
 }
 
 export default withIronSessionApiRoute(putBusinessPhoto, sessionOptions);

@@ -1,10 +1,12 @@
 import clsx from "clsx";
 import { useCart } from "contexts/cart";
+import useUser from "lib/useUser";
 import { memo } from "react";
 import { numberToMoney } from "utils";
 
 const Navbar = () => {
   const { cartIsEmpty, cartTotal } = useCart();
+  const { user } = useUser();
 
   return (
     <div
@@ -13,7 +15,19 @@ const Navbar = () => {
         cartIsEmpty ? "p-4 justify-center" : "px-4 py-2 justify-between"
       )}
     >
-      <img src="./budget-generator.svg" alt="AMD Gesso" />
+      {user?.business?.[0]?.picture ? (
+        <div
+          className="bg-cover bg-center"
+          style={{
+            width: 100,
+            height: 30,
+            backgroundImage: `url(${user.business[0].picture})`,
+          }}
+        />
+      ) : (
+        <img src="./budget-generator.svg" alt="AMD Gesso" />
+      )}
+
       {!cartIsEmpty && (
         <article className="text-white">
           <p className="text-xs">Total</p>

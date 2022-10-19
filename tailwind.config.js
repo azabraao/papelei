@@ -46,6 +46,7 @@ module.exports = {
         "white-10": "rgba(254, 254, 254, 0.10000000149011612)",
         "white-05": "rgba(254, 254, 254, 0.05000000074505806)",
         "black-transparent": "rgba(28, 27, 32, 0.7)",
+        transparent: "rgba(254, 254, 254, 0)",
         "black-100": "rgba(28, 27, 32, 1)",
         "black-70": "rgba(96, 95, 99, 1)",
         "black-40": "rgba(164, 164, 166, 1)",

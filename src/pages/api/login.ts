@@ -16,21 +16,33 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
 
     let user = {} as User;
 
+    const selectUser = {
+      id: true,
+      name: true,
+      email: true,
+      picture: true,
+      googleId: true,
+      facebookId: true,
+      business: {
+        select: {
+          picture: true,
+          id: true,
+          name: true,
+        },
+      },
+    };
+
     user = await prisma.user.findFirst({
       where: {
         email,
       },
+      select: selectUser,
     });
 
     const shouldUpdateUserFacebookId =
       !!user && !user?.facebookId && facebookId;
     const shouldUpdateUserGoogleId = !!user && !user?.googleId && googleId;
     const shouldCreateUser = !user?.id;
-
-    console.log(
-      "{shouldUpdateUserFacebookId, shouldUpdateUserGoogleId, shouldCreateUser}>>>",
-      { shouldUpdateUserFacebookId, shouldUpdateUserGoogleId, shouldCreateUser }
-    );
 
     if (shouldCreateUser) {
       user = await prisma.user.create({
@@ -48,8 +60,10 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
             ],
           },
         },
+        select: selectUser,
       });
     }
+
     if (shouldUpdateUserFacebookId) {
       await prisma.user.update({
         where: {
@@ -58,6 +72,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
         data: {
           facebookId,
         },
+        select: selectUser,
       });
     }
 
@@ -69,6 +84,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
         data: {
           googleId,
         },
+        select: selectUser,
       });
     }
 
@@ -76,8 +92,6 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
     await req.session.save();
     res.json(user);
   } catch (error) {
-    console.log("error.message>>>", error.message);
-
     res.status(500).json({ message: (error as Error).message });
   }
 }
