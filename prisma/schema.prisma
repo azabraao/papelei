@@ -22,9 +22,22 @@ model User {
 }
 
 model Business {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
-  picture String?
-  userIDs String[] @db.ObjectId
-  users   User[]   @relation(fields: [userIDs], references: [id])
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  picture     String?
+  userIDs     String[]  @db.ObjectId
+  users       User[]    @relation(fields: [userIDs], references: [id])
+  productsIDs String[]  @db.ObjectId
+  products    Product[]
+}
+
+model Product {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  image       String?
+  name        String
+  description String?
+  archived    Boolean? @default(false)
+  price       Float
+  businessID  String
+  business    Business @relation(fields: [businessID], references: [id])
 }

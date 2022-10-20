@@ -31,3 +31,5 @@ yarn-error.log*
 .env
 
 /cypress/downloads
+
+/public/sw.js.map
