@@ -5,11 +5,10 @@ export const getProducts = async (): Promise<Product[]> => {
   const { data } = await api.get("products");
 
   const products = data.data.map((product) => {
-    const { archived, code, description, image, name, price } = product.data;
+    const { code, description, image, name, price } = product.data;
 
     return {
       objectID: code,
-      archived,
       code,
       description,
       image,

@@ -36,7 +36,6 @@ model Product {
   image       String?
   name        String
   description String?
-  archived    Boolean? @default(false)
   price       Float
   businessID  String
   business    Business @relation(fields: [businessID], references: [id])

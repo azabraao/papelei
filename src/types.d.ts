@@ -3,7 +3,6 @@ type Product = {
   image: string;
   name: string;
   description: string;
-  archived: boolean;
   price: number;
   business: Business;
 };
