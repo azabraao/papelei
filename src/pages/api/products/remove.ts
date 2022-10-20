@@ -5,18 +5,16 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-async function listProducts(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== "GET")
+async function deleteProduct(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== "DELETE")
     return res.status(500).json({ message: "wrong method" });
 
-  const { businessID, skip } = await req.body;
+  const { productID } = await req.body;
 
   try {
-    const product = await prisma.product.findMany({
-      skip,
-      take: 3,
+    const product = await prisma.product.delete({
       where: {
-        businessID,
+        id: productID,
       },
     });
 
@@ -26,4 +24,4 @@ async function listProducts(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default withIronSessionApiRoute(listProducts, sessionOptions);
+export default withIronSessionApiRoute(deleteProduct, sessionOptions);
