@@ -1,11 +1,12 @@
 import { PageHeader } from "components/atoms";
 import { BottomBar, Navbar } from "components/molecules";
-import useUser from "lib/useUser";
+import { ListProducts } from "components/organisms";
+// import useUser from "lib/useUser";
 import Head from "next/head";
 import { Fragment } from "react";
 
 export default function Config() {
-  useUser({ redirectTo: "/login" });
+  // useUser({ redirectTo: "/login" });
 
   return (
     <Fragment>
@@ -16,6 +17,7 @@ export default function Config() {
       <main>
         <Navbar />
         <PageHeader>Produtos</PageHeader>
+        <ListProducts />
       </main>
       <BottomBar />
     </Fragment>

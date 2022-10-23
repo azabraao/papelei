@@ -22,7 +22,7 @@ const BottomBar = () => {
               <UserIcon />
             </div>
           </ActiveLink>
-          <ActiveLink activeClassName="text-success" href="/config">
+          <ActiveLink activeClassName="text-success" href="/products">
             <div className="p-3 flex justify-center items-center">
               <ConfigIcon />
             </div>
