@@ -1,12 +1,15 @@
 import { Container } from "components/atoms";
 import { memo } from "react";
-import ErrorState from "./components/ErrorState";
+import LoadingState from "./components/LoadingState";
 
 const Products = () => {
   return (
-    <Container>
-      <ErrorState />
-    </Container>
+    <div className="pt-10">
+      <Container>
+        {/* <ErrorState /> */}
+        <LoadingState />
+      </Container>
+    </div>
   );
 };
 

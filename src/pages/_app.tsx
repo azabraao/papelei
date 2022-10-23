@@ -83,11 +83,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           },
         }}
       >
-        <SkeletonTheme
-          baseColor="#A4A4A6"
-          highlightColor="#E8E8E9"
-          borderRadius={4}
-        >
+        <SkeletonTheme borderRadius={4}>
           <CartProvider>
             <SearchProvider>
               <BudgetProposalProvider>

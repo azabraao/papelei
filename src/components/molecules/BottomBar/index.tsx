@@ -9,7 +9,7 @@ import {
 
 const BottomBar = () => {
   return (
-    <div className="fixed bottom-0 right-0 left-0 mx-auto py-4 w-full">
+    <div className="fixed z-10 bottom-0 right-0 left-0 mx-auto py-4 w-full">
       <Container>
         <div className="flex bg-white text-gray-700 justify-between items-center shadow-elevation-1 px-5 rounded-full">
           <ActiveLink activeClassName="text-success" href="/">
