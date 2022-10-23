@@ -16,7 +16,7 @@ export default function Config() {
       </Head>
       <main>
         <Navbar />
-        <PageHeader>Produtos</PageHeader>
+        <PageHeader>Adicione produtos</PageHeader>
         <ListProducts />
       </main>
       <BottomBar />

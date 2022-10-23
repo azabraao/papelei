@@ -8,7 +8,7 @@ const EmptyCartState = () => {
       testid="empty-cart"
       className="gap-4 flex flex-col items-start pt-3 pb-10"
     >
-      <img src={emptyBoxGif.src} alt="" />
+      <img src={emptyBoxGif.src} alt="Empty box animation" />
 
       <span className="text-base text-black-70">
         Nenhum produto selecionado
