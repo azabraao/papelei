@@ -9,14 +9,24 @@ async function listProducts(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET")
     return res.status(500).json({ message: "wrong method" });
 
-  const { businessID, skip } = await req.body;
+  const { businessID, skip } = req.query;
+
+  const isAllowed = req.session?.user?.business?.some(
+    (business) => businessID === business.id
+  );
+
+  if (!isAllowed) return res.status(401).json({ message: "not allowed" });
+
+  if (!businessID || !skip) {
+    return res.status(401).json({ message: "wrong params" });
+  }
 
   try {
     const product = await prisma.product.findMany({
-      skip,
+      skip: Number(skip),
       take: 3,
       where: {
-        businessID,
+        businessID: String(businessID),
       },
     });
 

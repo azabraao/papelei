@@ -1,29 +1,27 @@
-import { useQuery } from "react-query";
-import { api } from "utils";
+import fetchJson from "lib/fetchJson";
+import useSWR from "swr";
 
-export const getProducts = async (): Promise<Product[]> => {
-  const { data } = await api.get("products");
+interface getProductsProps {
+  businessID: string;
+  skip: number;
+}
 
-  const products = data.data.map((product) => {
-    const { code, description, image, name, price } = product.data;
+export const useProducts = ({ businessID, skip }: getProductsProps) => {
+  const fetcher = async (url) => {
+    const { product } = await fetchJson<{ product: Product[] }>(
+      `${url}?businessID=${businessID}&skip=${skip}`,
+      { method: "GET" }
+    );
 
-    return {
-      objectID: code,
-      code,
-      description,
-      image,
-      name,
-      price,
-    };
-  });
+    return product;
+  };
 
-  return products;
-};
+  const { data, error } = useSWR(
+    () => (businessID ? "api/products" : null),
+    fetcher
+  );
 
-const useProducts = () => {
-  return useQuery("products", getProducts, {
-    staleTime: 1000 * 5,
-  });
+  return { products: data, error };
 };
 
 export default useProducts;

@@ -1,3 +1,4 @@
+import { Container } from "components/atoms";
 import { memo } from "react";
 import Skeleton from "react-loading-skeleton";
 
@@ -14,10 +15,14 @@ const Card = () => (
 
 const LoadingState = () => {
   return (
-    <div className="flex flex-col gap-2">
-      <Card />
-      <Card />
-      <Card />
+    <div className="pt-10">
+      <Container>
+        <div className="flex flex-col gap-2">
+          <Card />
+          <Card />
+          <Card />
+        </div>
+      </Container>
     </div>
   );
 };
