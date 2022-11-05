@@ -67,6 +67,7 @@ const GoogleButton = ({ handleLogin }: GoogleButtonProps) => {
       ref={buttonRef}
       className="social-button google font-regular"
       disabled={isLoading || !buttonIsReady}
+      withShadow
     >
       Continuar com Google
     </Button>

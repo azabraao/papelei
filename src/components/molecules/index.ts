@@ -12,3 +12,4 @@ export { default as FacebookButton } from "./SocialLoginButtons/Facebook";
 export { default as BottomBar } from "./BottomBar";
 export { default as LogoUploader } from "./LogoUploader";
 export { default as Modal } from "./Modal";
+export { default as ImageUploader } from "./ImageUploader";

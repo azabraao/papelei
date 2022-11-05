@@ -7,7 +7,7 @@ import { withInputWrap } from "components/HOCs";
 interface TextInputProps extends InputProps {
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onIconRightClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
   onIconLeftClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
   autoFocus?: boolean;
@@ -15,6 +15,7 @@ interface TextInputProps extends InputProps {
   IconRight?: ReactNode;
   IconLeft?: ReactNode;
   testid?: string;
+  defaultValue?: string;
 }
 
 const TextInput = forwardRef(
@@ -35,6 +36,7 @@ const TextInput = forwardRef(
       onBlur,
       onIconRightClick,
       onIconLeftClick,
+      defaultValue,
     }: TextInputProps,
     ref: React.Ref<HTMLInputElement>
   ) => {
@@ -77,6 +79,7 @@ const TextInput = forwardRef(
           {...(isControlled && { value })}
           autoComplete="off"
           autoFocus={autoFocus}
+          defaultValue={defaultValue}
         />
 
         <div
@@ -107,6 +110,7 @@ TextInput.defaultProps = {
   onIconLeftClick: () => null,
   onIconRightClick: () => null,
   testid: "",
+  defaultValue: "",
 };
 
 export default memo(withInputWrap(TextInput));

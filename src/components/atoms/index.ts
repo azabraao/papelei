@@ -13,6 +13,7 @@ export { default as HomeIcon } from "./Icon/Home.svg";
 export { default as UserIcon } from "./Icon/User.svg";
 export { default as ConfigIcon } from "./Icon/Config.svg";
 export { default as ImageIcon } from "./Icon/Image.svg";
+export { default as SaveIcon } from "./Icon/Save.svg";
 export { default as Container } from "./Container";
 export { default as Button } from "./Button";
 export { default as Backdrop } from "./Backdrop";

@@ -14,6 +14,7 @@ interface ButtonProps {
   testid?: string;
   icon?: React.ReactNode;
   isRounded?: boolean;
+  withShadow?: boolean;
 }
 
 const Button = (
@@ -27,6 +28,7 @@ const Button = (
     className,
     testid,
     icon,
+    withShadow,
     isRounded,
     ...props
   }: ButtonProps,
@@ -48,8 +50,9 @@ const Button = (
             backgroundColor === "info" && !disabled,
           "bg-danger text-white hover:bg-danger-700 active:shadow-focus-shadow-success":
             backgroundColor === "danger" && !disabled,
-          "bg-white text-gray-700 active:shadow-focus-shadow-success shadow-elevation-1":
+          "bg-white text-gray-700 active:shadow-focus-shadow-success":
             backgroundColor === "white" && !disabled,
+          "shadow-elevation-1": withShadow,
           "w-full": fullWidth,
           "cursor-not-allowed": disabled,
           "bg-black-20 text-black-70": disabled,

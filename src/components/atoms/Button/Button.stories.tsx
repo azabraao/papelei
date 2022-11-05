@@ -42,3 +42,9 @@ Disabled.args = {
   ...defaultProps,
   disabled: true,
 };
+export const Transparent = Template.bind({});
+Transparent.args = {
+  ...defaultProps,
+  backgroundColor: "white",
+  icon: <GoogleIcon />,
+};
