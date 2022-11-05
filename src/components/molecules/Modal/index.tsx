@@ -1,6 +1,9 @@
 import { XSimpleIcon } from "components/atoms";
-import { memo } from "react";
-import SwipeToCloseModal from "react-swipe-to-close-modal";
+import dynamic from "next/dynamic";
+
+const SwipeToCloseModal = dynamic(() => import("react-swipe-to-close-modal"), {
+  ssr: false,
+});
 
 interface DragUpToRemoveOrSwipeToCloseProps {
   isOpen: boolean;
@@ -44,4 +47,4 @@ const Modal = ({
   );
 };
 
-export default memo(Modal);
+export default Modal;
