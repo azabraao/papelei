@@ -1,5 +1,5 @@
 import { Container } from "components/atoms";
-import { ProductCard } from "components/molecules";
+import { CartProductCard } from "components/molecules";
 import { useCart } from "contexts/cart";
 import { useCartScroll } from "contexts/cartScroll";
 import { memo, useCallback } from "react";
@@ -34,7 +34,7 @@ const Cart = () => {
       >
         <div className="px-4 lg:px-0 flex gap-4 w-fit py-1">
           {cartProducts.map((product: Product) => (
-            <ProductCard key={product.code} {...product} />
+            <CartProductCard key={product.objectID} {...product} />
           ))}
         </div>
       </div>

@@ -1,9 +1,18 @@
-import { PageHeader } from "components/atoms";
 import { BottomBar, Navbar } from "components/molecules";
-import { ListProducts } from "components/organisms";
+// import { CRUDProducts } from "components/organisms";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+
+const CRUDProducts = dynamic(
+  () => import("../components/organisms/CRUDProducts"),
+  { ssr: false }
+);
+
 // import useUser from "lib/useUser";
 import Head from "next/head";
 import { Fragment } from "react";
+import { PageHeader } from "components/atoms";
+import LoadingState from "components/organisms/CRUDProducts/components/LoadingState";
 
 export default function Config() {
   // useUser({ redirectTo: "/login" });
@@ -16,8 +25,16 @@ export default function Config() {
       </Head>
       <main>
         <Navbar />
-        <PageHeader>Adicione produtos</PageHeader>
-        <ListProducts />
+        <Suspense
+          fallback={
+            <>
+              <PageHeader>Produtos</PageHeader>
+              <LoadingState />
+            </>
+          }
+        >
+          <CRUDProducts />
+        </Suspense>
       </main>
       <BottomBar />
     </Fragment>

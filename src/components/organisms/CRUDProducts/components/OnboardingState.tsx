@@ -1,6 +1,6 @@
-import { memo } from "react";
 import emptyBoxGif from "assets/empty-box.gif";
 import { Container } from "components/atoms";
+import { memo } from "react";
 
 const OnboardingState = () => {
   return (
