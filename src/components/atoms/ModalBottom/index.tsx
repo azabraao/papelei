@@ -1,10 +1,10 @@
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Draggable from "@azabraao/react-draggable";
 import clsx from "clsx";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useCallbackRef } from "use-callback-ref";
 
-import { lockBodyScroll, unlockBodyScroll } from "utils";
 import dynamic from "next/dynamic";
+import { lockBodyScroll, unlockBodyScroll } from "utils";
 import Backdrop from "../Backdrop";
 
 interface ModalBottomProps {

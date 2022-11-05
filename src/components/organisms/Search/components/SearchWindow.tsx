@@ -1,17 +1,12 @@
-import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { ArrowLeftIcon, Backdrop, XSimpleIcon } from "components/atoms";
 import { TextInput } from "components/molecules";
-import {
-  ArrowLeftIcon,
-  Container,
-  Backdrop,
-  XSimpleIcon,
-} from "components/atoms";
-import LoadingState from "./LoadingState";
-import ErrorState from "./ErrorState";
-import NoProductsState from "./NoProductsState";
-import ListProducts from "./ListProducts";
 import { useSearch } from "contexts/search";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { lockBodyScroll, unlockBodyScroll } from "utils";
+import ErrorState from "./ErrorState";
+import ListProducts from "./ListProducts";
+import LoadingState from "./LoadingState";
+import NoProductsState from "./NoProductsState";
 
 const SearchWindow = () => {
   const {

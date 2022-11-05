@@ -1,24 +1,4 @@
-// <script>
-//   window.fbAsyncInit = function() {
-//     FB.init({
-//       appId      : '{your-app-id}',
-//       cookie     : true,
-//       xfbml      : true,
-//       version    : '{api-version}'
-//     });
-
-//     FB.AppEvents.logPageView();
-
-//   };
-
-//   (function(d, s, id){
-//      var js, fjs = d.getElementsByTagName(s)[0];
-//      if (d.getElementById(id)) {return;}
-//      js = d.createElement(s); js.id = id;
-//      js.src = "https://connect.facebook.net/en_US/sdk.js";
-//      fjs.parentNode.insertBefore(js, fjs);
-//    }(document, 'script', 'facebook-jssdk'));
-// </script>
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Button, FacebookIcon } from "components/atoms";
 import dynamic from "next/dynamic";
@@ -29,6 +9,7 @@ interface GoogleButtonProps {
 }
 
 type FacebookUser = {
+  id: string;
   email: string;
   name: string;
   facebookId: string;
@@ -38,7 +19,7 @@ type FacebookUser = {
 };
 
 const WebLoginButton = ({ handleLogin }: GoogleButtonProps) => {
-  const [facebookUser, setFacebookUser] = useState<FacebookUser>({});
+  const [facebookUser, setFacebookUser] = useState<FacebookUser>();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -48,9 +29,10 @@ const WebLoginButton = ({ handleLogin }: GoogleButtonProps) => {
         if (response.status === "connected") {
           window.FB.api(
             response.authResponse.userID,
-            "GET",
+            "get",
             { fields: "id, email, name, picture" },
-            (user) => setFacebookUser({ facebookId: user.id, ...user })
+            (user: FacebookUser) =>
+              setFacebookUser({ facebookId: user?.id, ...user })
           );
         }
       });
@@ -86,9 +68,10 @@ const WebLoginButton = ({ handleLogin }: GoogleButtonProps) => {
           if (response.status === "connected") {
             window.FB.api(
               response.authResponse.userID,
-              "GET",
+              "get",
               { fields: "id, email, name, picture" },
-              (user) => startLogin({ facebookId: user.id, ...user })
+              (user: FacebookUser) =>
+                startLogin({ facebookId: user.id, ...user })
             );
           } else {
             setIsLoading(false);

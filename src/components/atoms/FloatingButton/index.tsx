@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import clsx from "clsx";
-import search, { useSearch } from "contexts/search";
+import { useSearch } from "contexts/search";
 import { forwardRef, memo } from "react";
 import { Container, SearchIcon } from "..";
 

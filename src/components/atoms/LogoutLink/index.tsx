@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { memo } from "react";
 
 const LogoutLink = () => {
-  const { user, mutateUser } = useUser({ redirectTo: "/login" });
+  const { mutateUser } = useUser({ redirectTo: "/login" });
   const router = useRouter();
 
   return (

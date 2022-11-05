@@ -104,11 +104,11 @@ const PDF = ({ client, comments, cartTotal, cartProducts }: PDFProps) => {
             >
               <Text style={tw("text-sm w-[243px]")}>{product.name}</Text>
               <Text style={tw("text-sm w-[96px]")}>
-                {numberToMoney(product.price.sale.deferred)}
+                {numberToMoney(product.price)}
               </Text>
               <Text style={tw("text-sm w-[93px]")}>{product.quantity}</Text>
               <Text style={tw("text-sm")}>
-                {numberToMoney(product.price.sale.deferred * product.quantity)}
+                {numberToMoney(product.price * product.quantity)}
               </Text>
             </View>
           ))}

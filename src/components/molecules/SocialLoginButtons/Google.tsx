@@ -53,7 +53,7 @@ const GoogleButton = ({ handleLogin }: GoogleButtonProps) => {
             picture: profile.getBasicProfile().getImageUrl(),
             googleId: profile.getBasicProfile().getId(),
           }),
-        (err) => {
+        () => {
           setIsLoading(false);
         }
       );

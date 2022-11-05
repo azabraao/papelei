@@ -36,7 +36,7 @@ export const CartProvider = ({ children }: CartProps) => {
     if (cartProducts.length > 0) {
       setCartTotal(
         cartProducts.reduce((acc, curr) => {
-          return acc + curr.price.sale[paymentMethod] * curr.quantity;
+          return acc + curr.price * curr.quantity;
         }, 0)
       );
     } else {
@@ -63,7 +63,7 @@ export const CartProvider = ({ children }: CartProps) => {
         (cartProduct) => cartProduct.code === code
       );
       const newCartProducts = [...cartProducts];
-      newCartProducts[productIndex].price.sale[paymentMethod] = price;
+      newCartProducts[productIndex].price = price;
       newCartProducts[productIndex].isValid = !!price;
 
       setCartProducts(newCartProducts);
@@ -89,7 +89,7 @@ export const CartProvider = ({ children }: CartProps) => {
         {
           ...product,
           quantity: 1,
-          isValid: !!product.price.sale.deferred,
+          isValid: !!product.price,
         },
       ]);
     },

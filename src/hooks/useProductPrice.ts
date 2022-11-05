@@ -8,31 +8,31 @@ const useProductPrice = (productCode) => {
   const { price, quantity } = useCartItem(productCode);
 
   const priceByMethod = useMemo(() => {
-    if (paymentMethod === "cash") return price.sale.cash;
-    if (paymentMethod === "deferred") return price.sale.deferred;
-    return price.sale.cash;
-  }, [price.sale.cash, price.sale.deferred, paymentMethod]);
+    if (paymentMethod === "cash") return price;
+    if (paymentMethod === "deferred") return price;
+    return price;
+  }, [price, price, paymentMethod]);
 
   const noPrice = useMemo(() => {
-    if (paymentMethod === "cash" && !price.sale.cash) return true;
-    if (paymentMethod === "deferred" && !price.sale.deferred) return true;
+    if (paymentMethod === "cash" && !price) return true;
+    if (paymentMethod === "deferred" && !price) return true;
 
     return false;
-  }, [price.sale.cash, price.sale.deferred, paymentMethod]);
+  }, [price, price, paymentMethod]);
 
   const formattedPrice = useMemo(() => {
     if (noPrice) return null;
 
     const total = Number(priceByMethod) * quantity;
     return numberToMoney(total.toFixed(2));
-  }, [price.sale.cash, price.sale.deferred, noPrice, quantity]);
+  }, [price, price, noPrice, quantity]);
 
   const noFormattedPrice = useMemo(() => {
     if (noPrice) return null;
 
     const total = Number(priceByMethod) * quantity;
     return total.toFixed(2);
-  }, [price.sale.cash, price.sale.deferred, noPrice, quantity]);
+  }, [price, price, noPrice, quantity]);
 
   return {
     noPrice,

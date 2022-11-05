@@ -1,4 +1,5 @@
 type Product = {
+  code?: string;
   objectID: string;
   image: string;
   name: string;
@@ -35,3 +36,14 @@ type User = {
   business?: Business[];
   businessIDs?: string[];
 };
+
+declare global {
+  interface Window {
+    FB: {
+      login: VoidFunction;
+      api: VoidFunction;
+    };
+  }
+}
+
+window.FB = window.FB || {};

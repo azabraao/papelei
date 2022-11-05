@@ -26,7 +26,7 @@ const SearchListProduct = ({
   }, []);
 
   const noPrice = useMemo(() => {
-    return !product.price.sale.cash;
+    return !product.price;
   }, []);
 
   return (
@@ -55,7 +55,7 @@ const SearchListProduct = ({
           {product.name}
         </p>
         <p className="text-base">
-          {noPrice ? "Sem preço" : numberToMoney(product.price.sale.deferred)}
+          {noPrice ? "Sem preço" : numberToMoney(product.price)}
         </p>
       </div>
     </div>

@@ -4,6 +4,12 @@ import Card from "./index";
 
 describe("Card", () => {
   it("should render", () => {
-    expect(render(<Card />)).toBeTruthy();
+    expect(
+      render(
+        <Card>
+          <p></p>
+        </Card>
+      )
+    ).toBeTruthy();
   });
 });

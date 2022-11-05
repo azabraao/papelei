@@ -4,6 +4,6 @@ import Label from "./index";
 
 describe("Label", () => {
   it("should render", () => {
-    expect(render(<Label />)).toBeTruthy();
+    expect(render(<Label label="hi" />)).toBeTruthy();
   });
 });
