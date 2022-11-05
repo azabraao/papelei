@@ -19,7 +19,7 @@ type FacebookUser = {
 };
 
 const WebLoginButton = ({ handleLogin }: GoogleButtonProps) => {
-  const [facebookUser, setFacebookUser] = useState<FacebookUser>();
+  const [facebookUser, setFacebookUser] = useState<FacebookUser>({} as any);
 
   const [isLoading, setIsLoading] = useState(false);
 
