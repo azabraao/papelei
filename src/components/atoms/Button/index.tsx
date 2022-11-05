@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React, { memo } from "react";
 
 interface ButtonProps {
-  backgroundColor?: string;
+  backgroundColor?: "success" | "info" | "danger" | "white";
   children: React.ReactNode;
   fullWidth?: boolean;
   onClick?: (
