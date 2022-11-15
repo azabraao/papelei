@@ -47,3 +47,11 @@ declare global {
 }
 
 window.FB = window.FB || {};
+
+type theme =
+  | "primary"
+  | "secondary"
+  | "info"
+  | "success"
+  | "warning"
+  | "danger";
