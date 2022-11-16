@@ -19,6 +19,8 @@ model User {
   facebookId  String?
   businessIDs String[]   @db.ObjectId
   business    Business[] @relation(fields: [businessIDs], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Business {
@@ -29,6 +31,8 @@ model Business {
   users       User[]    @relation(fields: [userIDs], references: [id])
   productsIDs String[]  @db.ObjectId
   products    Product[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Product {
@@ -39,4 +43,7 @@ model Product {
   price       Float
   businessID  String
   business    Business @relation(fields: [businessID], references: [id])
+  deleteRequested Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -60,9 +60,12 @@ async function deleteProduct(req: NextApiRequest, res: NextApiResponse) {
   const { productID } = await req.body;
 
   try {
-    const product = await prisma.product.delete({
+    const product = await prisma.product.update({
       where: {
         id: productID,
+      },
+      data: {
+        deleteRequested: true,
       },
     });
 

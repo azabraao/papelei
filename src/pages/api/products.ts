@@ -27,6 +27,7 @@ async function listProducts(req: NextApiRequest, res: NextApiResponse) {
       take: Number(take),
       where: {
         businessID: String(businessID),
+        deleteRequested: false,
       },
     });
 
