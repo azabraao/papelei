@@ -1,7 +1,5 @@
-import { withIronSessionApiRoute } from "iron-session/next";
-import { sessionOptions } from "lib/session";
-import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
+import { NextApiRequest, NextApiResponse } from "next";
 
 const prisma = new PrismaClient();
 
@@ -43,4 +41,4 @@ async function periodicDelete(req: NextApiRequest, res: NextApiResponse) {
   return res.json(productsToDelete);
 }
 
-export default withIronSessionApiRoute(periodicDelete, sessionOptions);
+export default periodicDelete;
