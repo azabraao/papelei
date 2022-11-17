@@ -1,6 +1,7 @@
 type Product = {
   code?: string;
-  objectID: string;
+  objectID?: string;
+  id: string;
   image: string;
   name: string;
   description: string;

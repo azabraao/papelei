@@ -1,17 +1,49 @@
-import { Button, SaveIcon, TrashIcon } from "components/atoms";
+import { Button, SaveIcon, SpinnerIcon, TrashIcon } from "components/atoms";
+import fetchJson from "lib/fetchJson";
 import { memo, useState } from "react";
+import { useSWRConfig } from "swr";
 import { numberToMoney } from "utils";
 import MoneyInput from "../Form/MoneyInput";
 import TextInput from "../Form/TextInput";
 import ImageUploader from "../ImageUploader";
 import Modal from "../Modal";
+import UndoDeleteSnackbar from "./UndoDeleteSnackbar";
+
+const fetchDelete = (productID: string) => {
+  return fetchJson("/api/product", {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ productID }),
+  });
+};
 
 const ProductItem = (product: Product) => {
   const { name, image, price } = product;
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const { mutate } = useSWRConfig();
+  const [isRemoved, setIsRemoved] = useState<boolean>(false);
+  const [isRemoving, setIsRemoving] = useState<boolean>(false);
+
+  const handleRemove = async () => {
+    setIsRemoving(true);
+
+    await mutate("/api/product", fetchDelete(product.id));
+
+    closeModal();
+    setIsRemoved(true);
+    setIsRemoving(false);
+  };
 
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
+
+  if (isRemoved)
+    return (
+      <UndoDeleteSnackbar
+        product={product}
+        onUndo={() => setIsRemoved(false)}
+      />
+    );
 
   return (
     <>
@@ -34,9 +66,11 @@ const ProductItem = (product: Product) => {
 
           <div className="flex justify-between pt-6">
             <Button
-              icon={<TrashIcon />}
+              icon={isRemoving ? <SpinnerIcon /> : <TrashIcon />}
               backgroundColor="white"
+              onClick={handleRemove}
               className="text-danger"
+              disabled={isRemoving}
             >
               Remover
             </Button>
