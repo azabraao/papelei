@@ -33,3 +33,7 @@ yarn-error.log*
 /cypress/downloads
 
 /public/sw.js.map
+
+/dist
+public/workbox-*
+public/sw.js

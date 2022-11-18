@@ -7,9 +7,9 @@ type Product = {
   description: string;
   price: number;
   business: Business;
-  deleteRequested: boolean;
-  createdAt: string;
-  updatedAt: string;
+  deleteRequested?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 type Client = {
@@ -28,8 +28,8 @@ type Business = {
   picture?: string;
   User?: User;
   userId?: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 type User = {
@@ -41,8 +41,8 @@ type User = {
   facebookId?: string;
   business?: Business[];
   businessIDs?: string[];
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 declare global {

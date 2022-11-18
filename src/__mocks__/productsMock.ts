@@ -6,6 +6,7 @@ export const businessMock: Business = {
 
 export const productsMock: Product[] = [
   {
+    id: "1",
     objectID: "1",
     image: "https://fake-image.com",
     name: "fake-name",
@@ -14,6 +15,7 @@ export const productsMock: Product[] = [
     business: businessMock,
   },
   {
+    id: "2",
     objectID: "2",
     image: "https://fake-image.com",
     name: "fake-name",
@@ -22,6 +24,7 @@ export const productsMock: Product[] = [
     business: businessMock,
   },
   {
+    id: "3",
     objectID: "3",
     image: "https://fake-image.com",
     name: "fake-name",
