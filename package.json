@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@azabraao/react-draggable": "^4.4.7",
-    "@prisma/client": "^4.4.0",
-    "@react-pdf/renderer": "^2.2.0",
+    "@prisma/client": "^4.6.1",
+    "@react-pdf/renderer": "^2.3.0",
     "algoliasearch": "^4.13.1",
     "axios": "^0.27.2",
     "clsx": "^1.1.1",
