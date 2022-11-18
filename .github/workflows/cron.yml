@@ -9,4 +9,4 @@ jobs:
       - name: Call our API route
         run: |
           curl --request POST \
-          --url 'https://papelei.com.br/api/product/periodic-delete'
+          --url 'https://papelei.com/api/product/periodic-delete'
