@@ -29,7 +29,9 @@ const ButtonOpenSearch = () => {
         ref={ref}
         onClick={openSearch}
         testid="button-open-search"
-      />
+      >
+        <SearchIcon />
+      </FloatingButton>
     );
 
   return (

@@ -3,3 +3,4 @@ export { default as Cart } from "./Cart";
 export { default as FinishBudgetButton } from "./FinishBudgetButton";
 export { default as FinishBudgetProposal } from "./FinishBudgetProposal";
 export { default as CRUDProducts } from "./CRUDProducts";
+export { default as AddProduct } from "./AddProduct";

@@ -9,10 +9,10 @@ const CRUDProducts = dynamic(
 );
 
 // import useUser from "lib/useUser";
-import Head from "next/head";
-import { Fragment } from "react";
 import { PageHeader } from "components/atoms";
 import LoadingState from "components/organisms/CRUDProducts/components/LoadingState";
+import Head from "next/head";
+import { Fragment } from "react";
 
 export default function Config() {
   // useUser({ redirectTo: "/login" });

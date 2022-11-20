@@ -115,7 +115,7 @@ const ProductItem = (product: Product) => {
               name="price"
               placeholder="Valor"
               {...register("price", validationSchema.price)}
-              error={errors?.valor?.message as string}
+              error={errors?.price?.message as string}
             />
           </div>
 

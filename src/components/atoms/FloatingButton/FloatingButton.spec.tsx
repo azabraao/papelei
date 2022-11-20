@@ -6,7 +6,11 @@ const onClick = jest.fn();
 
 describe("FloatingButton", () => {
   it("should call onClick function passed in props", () => {
-    render(<FloatingButton onClick={onClick} testid="floating-button" />);
+    render(
+      <FloatingButton onClick={onClick} testid="floating-button">
+        fake-children
+      </FloatingButton>
+    );
 
     const button = screen.getByTestId("floating-button");
 

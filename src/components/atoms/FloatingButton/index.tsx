@@ -2,16 +2,17 @@
 import clsx from "clsx";
 import { useSearch } from "contexts/search";
 import { forwardRef, memo } from "react";
-import { Container, SearchIcon } from "..";
+import { Container } from "..";
 
 interface FloatingButtonProps {
   onClick: VoidFunction;
   testid?: string;
+  children: React.ReactNode;
 }
 
 const FloatingButton = forwardRef(
   (
-    { onClick, testid }: FloatingButtonProps,
+    { children, onClick, testid }: FloatingButtonProps,
     ref: React.Ref<HTMLButtonElement>
   ) => {
     const { searchIsOpen } = useSearch();
@@ -30,7 +31,7 @@ const FloatingButton = forwardRef(
             }
           )}
         >
-          <SearchIcon />
+          {children}
         </button>
       </Container>
     );
