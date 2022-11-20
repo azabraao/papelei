@@ -23,9 +23,11 @@ const fetchDelete = (productID: string) => {
 const fetchUpdate = (product: {
   name: string;
   image: string;
-  price: string;
+  price: number;
   productID: string;
 }) => {
+  console.log("product>>>", product);
+
   return fetchJson("/api/product", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -56,9 +58,9 @@ const ProductItem = (product: Product) => {
 
     await mutate("/api/product", fetchDelete(product.id));
 
-    closeModal();
     setIsRemoved(true);
     setIsRemoving(false);
+    closeModal();
   };
 
   const openModal = () => setModalIsOpen(true);
@@ -66,18 +68,19 @@ const ProductItem = (product: Product) => {
 
   const onSubmit = async (data) => {
     setIsSaving(true);
+
     await mutate(
       "/api/product",
       fetchUpdate({
         image: uploadedImage,
         name: data.name,
-        price: data.price,
+        price: parseFloat(data.price.replace(",", ".")),
         productID: product.id,
       })
     );
 
-    closeModal();
     setIsSaving(false);
+    closeModal();
   };
 
   if (isRemoved)
@@ -111,7 +114,7 @@ const ProductItem = (product: Product) => {
               initialValue={price.toString()}
               name="price"
               placeholder="Valor"
-              {...register("valor", validationSchema.price)}
+              {...register("price", validationSchema.price)}
               error={errors?.valor?.message as string}
             />
           </div>
@@ -122,7 +125,7 @@ const ProductItem = (product: Product) => {
               backgroundColor="white"
               onClick={handleRemove}
               className="text-danger"
-              disabled={isRemoving}
+              disabled={isRemoving || isSaving}
             >
               Remover
             </Button>
@@ -131,6 +134,7 @@ const ProductItem = (product: Product) => {
               backgroundColor="success"
               className="text-white"
               onClick={handleSubmit(onSubmit)}
+              disabled={isRemoving || isSaving}
             >
               Salvar
             </Button>
