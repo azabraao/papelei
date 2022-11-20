@@ -75,7 +75,7 @@ const FinishBudgetProposal = () => {
           name="customerName"
           testid="budget-modal-bottom-customer-name"
           {...register("customerName", validationSchema.customerName)}
-          error={errors?.customerName?.message}
+          error={errors?.customerName?.message as string}
         />
         <TextInput
           label="Endereço"
@@ -83,7 +83,7 @@ const FinishBudgetProposal = () => {
           name="customerAddress"
           testid="budget-modal-bottom-customer-address"
           {...register("customerAddress", validationSchema.customerAddress)}
-          error={errors?.customerAddress?.message}
+          error={errors?.customerAddress?.message as string}
         />
         <TextArea
           label="Observações"

@@ -1,6 +1,7 @@
 import { Button, SaveIcon, SpinnerIcon, TrashIcon } from "components/atoms";
 import fetchJson from "lib/fetchJson";
 import { memo, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useSWRConfig } from "swr";
 import { numberToMoney } from "utils";
 import MoneyInput from "../Form/MoneyInput";
@@ -8,6 +9,8 @@ import TextInput from "../Form/TextInput";
 import ImageUploader from "../ImageUploader";
 import Modal from "../Modal";
 import UndoDeleteSnackbar from "./UndoDeleteSnackbar";
+
+import { validationSchema } from "./validationSchema";
 
 const fetchDelete = (productID: string) => {
   return fetchJson("/api/product", {
@@ -17,12 +20,36 @@ const fetchDelete = (productID: string) => {
   });
 };
 
+const fetchUpdate = (product: {
+  name: string;
+  image: string;
+  price: string;
+  productID: string;
+}) => {
+  return fetchJson("/api/product", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(product),
+  });
+};
+
 const ProductItem = (product: Product) => {
   const { name, image, price } = product;
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const { mutate } = useSWRConfig();
   const [isRemoved, setIsRemoved] = useState<boolean>(false);
   const [isRemoving, setIsRemoving] = useState<boolean>(false);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+
+  const [uploadedImage, setUploadedImage] = useState<string>();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    reValidateMode: "onChange",
+  });
 
   const handleRemove = async () => {
     setIsRemoving(true);
@@ -37,6 +64,22 @@ const ProductItem = (product: Product) => {
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
 
+  const onSubmit = async (data) => {
+    setIsSaving(true);
+    await mutate(
+      "/api/product",
+      fetchUpdate({
+        image: uploadedImage,
+        name: data.name,
+        price: data.price,
+        productID: product.id,
+      })
+    );
+
+    closeModal();
+    setIsSaving(false);
+  };
+
   if (isRemoved)
     return (
       <UndoDeleteSnackbar
@@ -49,18 +92,27 @@ const ProductItem = (product: Product) => {
     <>
       <Modal isOpen={modalIsOpen} close={closeModal}>
         <div className="p-4 flex flex-col gap-6">
-          <ImageUploader defaultImage={image} onImageChange={console.log} />
+          <ImageUploader
+            defaultImage={image}
+            onImageChange={(dataImage) => setUploadedImage(dataImage)}
+          />
 
           <div className="flex flex-col gap-4">
             <TextInput
               label="Nome"
-              onChange={console.log}
+              name="name"
               defaultValue={name}
+              placeholder="Nome do produto"
+              {...register("name", validationSchema.name)}
+              error={errors?.name?.message as string}
             />
             <MoneyInput
               label="Valor"
-              onChange={console.log}
-              initialValue={price}
+              initialValue={price.toString()}
+              name="price"
+              placeholder="Valor"
+              {...register("valor", validationSchema.price)}
+              error={errors?.valor?.message as string}
             />
           </div>
 
@@ -75,9 +127,10 @@ const ProductItem = (product: Product) => {
               Remover
             </Button>
             <Button
-              icon={<SaveIcon />}
+              icon={isSaving ? <SpinnerIcon /> : <SaveIcon />}
               backgroundColor="success"
               className="text-white"
+              onClick={handleSubmit(onSubmit)}
             >
               Salvar
             </Button>

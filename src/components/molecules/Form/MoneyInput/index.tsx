@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from "react";
+import { forwardRef, memo, useCallback, useState } from "react";
 import clsx from "clsx";
 import { maskMoney } from "utils";
 import { withInputWrap } from "components/HOCs";
@@ -9,15 +9,18 @@ interface MoneyInputProps extends InputProps {
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
-const MoneyInput = ({
-  initialValue,
-  name,
-  error,
-  isSuccess,
-  placeholder,
-  onChange,
-  onBlur,
-}: MoneyInputProps) => {
+const MoneyInput = (
+  {
+    initialValue,
+    name,
+    error,
+    isSuccess,
+    placeholder,
+    onChange,
+    onBlur,
+  }: MoneyInputProps,
+  ref: React.Ref<HTMLInputElement>
+) => {
   const [inputValue, setInputValue] = useState(initialValue);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +49,7 @@ const MoneyInput = ({
         R$
       </div>
       <input
+        ref={ref}
         type="string"
         className="outline-none w-full text-black-70 h-6 px-4 py-2"
         placeholder={placeholder}
@@ -66,4 +70,10 @@ MoneyInput.defaultProps = {
   onBlur: () => null,
 };
 
-export default memo(withInputWrap(MoneyInput));
+const InputWithRef = (Component) => {
+  return withInputWrap<HTMLInputElement, MoneyInputProps>(
+    forwardRef(Component)
+  );
+};
+
+export default memo(InputWithRef(MoneyInput));

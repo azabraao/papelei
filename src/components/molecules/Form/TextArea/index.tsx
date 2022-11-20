@@ -9,49 +9,54 @@ interface TextAreaProps extends InputProps {
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-const TextArea = forwardRef(
-  (
-    { name, error, isSuccess, placeholder, onChange }: TextAreaProps,
-    ref: React.Ref<HTMLTextAreaElement>
-  ) => {
-    return (
-      <div
-        className={clsx(
-          "flex items-start px-4 py-2 justify-between bg-white rounded-lg border hover:shadow-on-hover-shadow placeholder-black-40 w-full overflow-hidden",
-          error &&
-            "border-danger focus-within:border-danger focus-within:shadow-none",
-          isSuccess &&
-            "border-success focus-within:border-success focus-within:shadow-none",
-          !error &&
-            !isSuccess &&
-            "border-black-20 focus-within:shadow-focus-shadow-info focus-within:border-info-300"
-        )}
-        data-testid={clsx(
-          error && "error-state",
-          isSuccess && "success-state",
-          !error && !isSuccess && "textarea"
-        )}
-      >
-        <TextareaAutosize
-          className="outline-none w-full resize-none text-black-70 h-auto "
-          placeholder={placeholder}
-          onChange={onChange}
-          minRows={3}
-          name={name}
-          id={name}
-          ref={ref}
-        />
+const TextArea = (
+  { name, error, isSuccess, placeholder, onChange }: TextAreaProps,
+  ref: React.Ref<HTMLTextAreaElement>
+) => {
+  return (
+    <div
+      className={clsx(
+        "flex items-start px-4 py-2 justify-between bg-white rounded-lg border hover:shadow-on-hover-shadow placeholder-black-40 w-full overflow-hidden",
+        error &&
+          "border-danger focus-within:border-danger focus-within:shadow-none",
+        isSuccess &&
+          "border-success focus-within:border-success focus-within:shadow-none",
+        !error &&
+          !isSuccess &&
+          "border-black-20 focus-within:shadow-focus-shadow-info focus-within:border-info-300"
+      )}
+      data-testid={clsx(
+        error && "error-state",
+        isSuccess && "success-state",
+        !error && !isSuccess && "textarea"
+      )}
+    >
+      <TextareaAutosize
+        className="outline-none w-full resize-none text-black-70 h-auto "
+        placeholder={placeholder}
+        onChange={onChange}
+        minRows={3}
+        name={name}
+        id={name}
+        ref={ref}
+      />
 
-        {error && <XIcon className="text-danger" />}
-        {isSuccess && <CheckedIcon className="text-success" />}
-      </div>
-    );
-  }
-);
+      {error && <XIcon className="text-danger" />}
+      {isSuccess && <CheckedIcon className="text-success" />}
+    </div>
+  );
+};
 
 TextArea.defaultProps = {
   error: "",
   isSuccess: false,
 };
 
-export default memo(withInputWrap(TextArea));
+const InputWithRef = (Component) => {
+  return withInputWrap<HTMLTextAreaElement, TextAreaProps>(
+    forwardRef(Component)
+  );
+};
+
+// export default memo(withInputWrap(InputWithRef(TextInput)));
+export default memo(InputWithRef(TextArea));

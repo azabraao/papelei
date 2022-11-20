@@ -1,5 +1,5 @@
 import { Label } from "components/atoms";
-import { ReactNode, memo } from "react";
+import { memo, ReactNode } from "react";
 
 interface InputWrapProps {
   label?: string;
