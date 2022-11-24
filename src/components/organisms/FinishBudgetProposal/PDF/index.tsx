@@ -1,12 +1,10 @@
-import React, { memo } from "react";
-import { Document, Page, Text, View, Image, Font } from "@react-pdf/renderer";
-import createTw from "react-pdf-tailwind";
+import { Document, Font, Page, Text, View } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
-import amdLogo from "assets/amd.png";
-import pixAMD from "assets/pix-amd.png";
+import { memo } from "react";
+import createTw from "react-pdf-tailwind";
 
+import useUser from "lib/useUser";
 import { numberToMoney } from "utils";
-import { AMD } from "utils/constants";
 
 const tw = createTw({
   theme: {
@@ -53,17 +51,25 @@ interface PDFProps {
 }
 
 const PDF = ({ client, comments, cartTotal, cartProducts }: PDFProps) => {
+  const { user } = useUser();
+
   return (
     <Document>
       <Page
         size="A4"
         style={{
-          ...tw("font-sans pt-10 pb-20 pr-10 pl-10 "),
+          ...tw("pt-10 pb-20 pr-10 pl-10"),
           color: "#605f63ff",
         }}
       >
         <View style={tw("flex flex-row w-full justify-between items-center")}>
-          <Image src={amdLogo.src} style={{ width: 96, height: 58.93 }} />
+          {/* <Image
+            src={businessImage || amdLogo.src}
+            style={{ width: 96, height: 58.93 }}
+          /> */}
+          <Text style={tw("text-lg font-bold uppercase")}>
+            {user?.business[0]?.name}
+          </Text>
           <Text style={tw("text-lg font-bold uppercase")}>Orçamento</Text>
         </View>
         <View style={tw("w-full h-8")} />
@@ -113,13 +119,13 @@ const PDF = ({ client, comments, cartTotal, cartProducts }: PDFProps) => {
             </View>
           ))}
         </View>
-        <View style={tw("pb-10 flex flex-row justify-between")}>
-          <View style={tw("flex flex-col")}>
+        <View style={tw("pb-10 flex flex-row justify-end")}>
+          {/* <View style={tw("flex flex-col")}>
             <Image src={pixAMD.src} style={{ width: 97, height: 97 }} />
             <Text style={{ ...tw("text-sm"), lineHeight: 1.6 }}>
               Pix: {AMD.PIX}
             </Text>
-          </View>
+          </View> */}
           <View style={tw("flex flex-col items-end")}>
             <Text style={tw("text-base font-bold")}>Formas de pagamento</Text>
             <View
@@ -141,18 +147,53 @@ const PDF = ({ client, comments, cartTotal, cartProducts }: PDFProps) => {
             </View>
           </View>
         </View>
+        {/* 
+        <View>
+          <Text style={tw("text-base font-bold")}>
+            {comments && "Observações"}
+          </Text>
+          <Text style={{ ...tw("text-sm") }}>{comments}</Text>
+          
+        </View> */}
 
         <View>
-          {comments && (
-            <Text style={tw("text-base font-bold")}>Observações</Text>
+          {comments ? (
+            <>
+              <Text style={tw("text-base font-bold")}>Observações</Text>
+              <Text style={tw("text-sm")}>{comments}</Text>
+            </>
+          ) : (
+            // TODO: improve this. This is a workaround for avoiding a huge blank space in the page.
+            <Text
+              style={{
+                color: "transparent",
+              }}
+            >
+              a
+            </Text>
           )}
-          {comments && <Text style={{ ...tw("text-sm") }}>{comments}</Text>}
         </View>
+
         <View style={tw("py-10")}>
-          <Text style={tw("text-sm")}>Roberval Oliveira</Text>
-          <Text style={tw("text-xs font-bold")}>Responsável</Text>
+          <Text style={tw("text-sm")}>{user?.name}</Text>
+          <Text style={{ ...tw("text-xs font-bold"), fontWeight: "bold" }}>
+            Responsável
+          </Text>
         </View>
-        <View
+      </Page>
+    </Document>
+  );
+};
+
+export default memo(
+  dynamic(() => Promise.resolve(PDF), {
+    ssr: false,
+  })
+);
+
+/* TODO: ALLOW USER TO GIVE THE BELOW INFORMATION ABOUT THE COMPANY */
+
+/* <View
           style={{
             position: "absolute",
             fontSize: 12,
@@ -169,14 +210,4 @@ const PDF = ({ client, comments, cartTotal, cartProducts }: PDFProps) => {
           <Text>
             Tel.: {AMD.TEL} | E-mail: {AMD.EMAIL}
           </Text>
-        </View>
-      </Page>
-    </Document>
-  );
-};
-
-export default memo(
-  dynamic(() => Promise.resolve(PDF), {
-    ssr: false,
-  })
-);
+        </View> */
