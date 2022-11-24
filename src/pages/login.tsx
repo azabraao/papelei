@@ -1,5 +1,5 @@
 import { Container } from "components/atoms";
-import { FacebookButton, GoogleButton } from "components/molecules";
+import { GoogleButton } from "components/molecules";
 import fetchJson from "lib/fetchJson";
 import useUser from "lib/useUser";
 import Head from "next/head";
@@ -36,7 +36,7 @@ export default function Auth() {
 
           <main className="flex flex-col gap-4">
             <GoogleButton handleLogin={handleLogin} />
-            <FacebookButton handleLogin={handleLogin} />
+            {/* <FacebookButton handleLogin={handleLogin} /> */}
           </main>
         </div>
       </Container>
