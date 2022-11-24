@@ -35,6 +35,8 @@ const UpdatePriceInput = () => {
   return (
     <div className="ml-4 mr-4" data-testid="update-price-input">
       <MoneyInput
+        name="price"
+        placeholder=""
         onBlur={handleInputBlur}
         error={error}
         onChange={handlePriceChange}

@@ -7,6 +7,7 @@ const defaultProps = {
   placeholder: "fake-placeholder",
   onChange: jest.fn(),
   name: "fake-name",
+  onValueChange: jest.fn(),
 };
 
 describe("QuantitySelector", () => {

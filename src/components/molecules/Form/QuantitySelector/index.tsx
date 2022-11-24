@@ -106,4 +106,6 @@ QuantitySelector.defaultProps = {
   onValueChange: () => null,
 };
 
-export default memo(withInputWrap(QuantitySelector));
+export default memo(
+  withInputWrap<HTMLInputElement, QuantitySelectorProps>(QuantitySelector)
+);

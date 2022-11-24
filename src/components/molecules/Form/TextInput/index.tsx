@@ -100,6 +100,7 @@ TextInput.defaultProps = {
   isSuccess: false,
   labelCentered: false,
   labelSize: "base",
+  label: "",
   IconRight: null,
   IconLeft: null,
   autoFocus: false,

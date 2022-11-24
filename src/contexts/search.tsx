@@ -1,3 +1,4 @@
+import useUser from "lib/useUser";
 import React, {
   createContext,
   memo,
@@ -9,7 +10,7 @@ import React, {
 import { algolia } from "utils";
 
 interface SearchContextValues {
-  performSearch: (query: string) => void;
+  performSearch: (query: string, businessID: string) => void;
   closeSearch: () => void;
   openSearch: () => void;
   clearSearchResults: () => void;
@@ -55,19 +56,27 @@ export const SearchProvider: React.FC<SearchProps> = ({ children }) => {
     setSearchIsOpen(false);
   }, []);
 
-  const performSearch = useCallback(async (value) => {
-    setIsLoading(true);
+  const performSearch = useCallback(
+    async (value: string, businessID: string) => {
+      setIsLoading(true);
 
-    try {
-      const results = await algolia.search(value);
-      setNoProductsFound(results.hits.length === 0);
-      setSearchResult(results.hits as Product[]);
-    } catch (error) {
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+      console.log("value, businessID>>>", value, businessID);
+
+      try {
+        // TODO: improve the search by using secured api key: algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/
+        const results = await algolia.search(value, {
+          filters: `visible_by:${businessID}`,
+        });
+        setNoProductsFound(results.hits.length === 0);
+        setSearchResult(results.hits as Product[]);
+      } catch (error) {
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    []
+  );
 
   return (
     <SearchContext.Provider

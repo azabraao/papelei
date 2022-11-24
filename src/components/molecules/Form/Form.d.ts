@@ -1,5 +1,5 @@
 interface InputProps {
-  label: string;
+  label?: string;
   name: string;
   placeholder: string;
   error?: string;

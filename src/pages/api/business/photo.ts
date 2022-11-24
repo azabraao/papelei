@@ -10,7 +10,7 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyAVpFpEMVxfd339rHYMtcPitKaYphR1HTg",
   authDomain: "pepelei.firebaseapp.com",
   projectId: "pepelei",

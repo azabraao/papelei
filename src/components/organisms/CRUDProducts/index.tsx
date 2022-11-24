@@ -3,6 +3,7 @@ import { PageHeader } from "components/atoms";
 import useUser from "lib/useUser";
 import { useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
+import AddProduct from "../AddProduct";
 import CRUD from "./components/CRUD";
 import ErrorState from "./components/ErrorState";
 import LoadingState from "./components/LoadingState";
@@ -59,6 +60,7 @@ const CRUDProducts = () => {
 
   return (
     <>
+      <AddProduct />
       <PageHeader>{isEmpty ? "Adicione produtos" : "Produtos"}</PageHeader>
       {isLoadingInitialData ? (
         <LoadingState />

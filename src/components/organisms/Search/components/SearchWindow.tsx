@@ -1,6 +1,7 @@
 import { ArrowLeftIcon, Backdrop, XSimpleIcon } from "components/atoms";
 import { TextInput } from "components/molecules";
 import { useSearch } from "contexts/search";
+import useUser from "lib/useUser";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { lockBodyScroll, unlockBodyScroll } from "utils";
 import ErrorState from "./ErrorState";
@@ -21,6 +22,7 @@ const SearchWindow = () => {
   } = useSearch();
   const inputRef = useRef(null);
   const [searchValue, setSearchValue] = useState<string | undefined>("");
+  const { user } = useUser();
 
   useEffect(() => {
     if (searchIsOpen) {
@@ -60,11 +62,14 @@ const SearchWindow = () => {
     }
   }, []);
 
-  const handleInputChange = useCallback(async (event) => {
-    const value = event.target.value;
-    setSearchValue(value);
-    performSearch(value);
-  }, []);
+  const handleInputChange = useCallback(
+    async (event) => {
+      const value = event.target.value;
+      setSearchValue(value);
+      performSearch(value, user?.business?.[0]?.id);
+    },
+    [user?.business?.[0]?.id]
+  );
 
   return (
     <div
@@ -80,6 +85,7 @@ const SearchWindow = () => {
         <div className={"flex flex-col px-4 pt-11 pb-4 gap-1"}>
           {searchIsOpen && (
             <TextInput
+              label=""
               isControlled
               name="search"
               onChange={handleInputChange}
