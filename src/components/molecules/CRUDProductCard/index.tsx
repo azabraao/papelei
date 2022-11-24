@@ -111,7 +111,7 @@ const ProductItem = (product: Product) => {
             />
             <MoneyInput
               label="Valor"
-              initialValue={price.toString()}
+              initialValue={price?.toString()}
               name="price"
               placeholder="Valor"
               {...register("price", validationSchema.price)}

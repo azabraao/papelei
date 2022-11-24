@@ -1,5 +1,4 @@
 import { BottomBar, Navbar } from "components/molecules";
-// import { CRUDProducts } from "components/organisms";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
@@ -8,14 +7,14 @@ const CRUDProducts = dynamic(
   { ssr: false }
 );
 
-// import useUser from "lib/useUser";
 import { PageHeader } from "components/atoms";
 import LoadingState from "components/organisms/CRUDProducts/components/LoadingState";
 import Head from "next/head";
 import { Fragment } from "react";
+import useUser from "lib/useUser";
 
 export default function Config() {
-  // useUser({ redirectTo: "/login" });
+  useUser({ redirectTo: "/login" });
 
   return (
     <Fragment>
@@ -32,9 +31,8 @@ export default function Config() {
               <LoadingState />
             </>
           }
-        >
-          <CRUDProducts />
-        </Suspense>
+        ></Suspense>
+        <CRUDProducts />
       </main>
       <BottomBar />
     </Fragment>

@@ -12,7 +12,7 @@ const CRUDProducts = ({ products }: CRUDProductsProps) => {
       <Container>
         <div className="flex flex-col gap-2">
           {products.map((item) => (
-            <CRUDProductCard key={item.objectID} {...item} />
+            <CRUDProductCard key={item?.id} {...item} />
           ))}
         </div>
       </Container>

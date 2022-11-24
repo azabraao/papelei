@@ -18,7 +18,7 @@ const CRUDProducts = () => {
 
   const { user } = useUser();
 
-  const businessID = user?.business[0].id;
+  const businessID = user?.business[0]?.id;
   const [shouldLoadMoreProducts, setShouldLoadMoreProducts] =
     useState<boolean>(false);
 
