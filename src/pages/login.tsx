@@ -34,7 +34,7 @@ export default function Auth() {
             <p className="text-lg ">Pra começar a vender!</p>
           </div>
 
-          <main className="flex flex-col gap-4">
+          <main className="flex flex-col gap-4 pb-10">
             <GoogleButton handleLogin={handleLogin} />
             {/* <FacebookButton handleLogin={handleLogin} /> */}
           </main>
