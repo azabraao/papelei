@@ -17,6 +17,7 @@ export { default as SaveIcon } from "./Icon/Save.svg";
 export { default as SpinnerIcon } from "./Icon/Spinner.svg";
 export { default as PlusIcon } from "./Icon/Plus.svg";
 export { default as EditIcon } from "./Icon/Edit.svg";
+export { default as ArrowRightIcon } from "./Icon/ArrowRight.svg";
 export { default as Container } from "./Container";
 export { default as Button } from "./Button";
 export { default as Backdrop } from "./Backdrop";

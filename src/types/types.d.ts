@@ -43,6 +43,7 @@ type User = {
   businessIDs?: string[];
   createdAt?: Date;
   updatedAt?: Date;
+  onBoarded?: boolean;
 };
 
 declare global {

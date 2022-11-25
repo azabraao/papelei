@@ -23,6 +23,7 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       picture: true,
       googleId: true,
       facebookId: true,
+      onBoarded: true,
       business: {
         select: {
           picture: true,

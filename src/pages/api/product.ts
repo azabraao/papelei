@@ -81,6 +81,15 @@ async function addProduct(req: NextApiRequest, res: NextApiResponse) {
         },
       });
 
+      await prisma.user.update({
+        where: {
+          id: req.session.user.id,
+        },
+        data: {
+          onBoarded: true,
+        },
+      });
+
       algolia.saveObject({
         objectID: product.id,
         visible_by: [businessID],
@@ -89,6 +98,9 @@ async function addProduct(req: NextApiRequest, res: NextApiResponse) {
         description,
         price,
       });
+
+      req.session.user.onBoarded = true;
+      await req.session.save();
 
       return res.json({ product });
     } catch (error) {

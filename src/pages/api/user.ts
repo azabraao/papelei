@@ -18,6 +18,7 @@ async function userRoute(req: NextApiRequest, res: NextApiResponse<User>) {
       googleId: null,
       facebookId: null,
       business: [],
+      onBoarded: null,
     });
   }
 }

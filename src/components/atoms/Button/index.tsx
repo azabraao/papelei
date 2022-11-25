@@ -15,6 +15,7 @@ interface ButtonProps {
   icon?: React.ReactNode;
   isRounded?: boolean;
   withShadow?: boolean;
+  iconToRight?: boolean;
 }
 
 const Button = (
@@ -30,6 +31,7 @@ const Button = (
     icon,
     withShadow,
     isRounded,
+    iconToRight,
     ...props
   }: ButtonProps,
   ref
@@ -63,8 +65,9 @@ const Button = (
       data-testid={testid}
       {...props}
     >
-      <div>{icon}</div>
+      {!iconToRight && <div>{icon}</div>}
       {children}
+      {iconToRight && <div>{icon}</div>}
     </button>
   );
 };

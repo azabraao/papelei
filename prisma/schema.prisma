@@ -20,7 +20,8 @@ model User {
   businessIDs String[]   @db.ObjectId
   business    Business[] @relation(fields: [businessIDs], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @updatedAt 
+  onBoarded Boolean @default(false)
 }
 
 model Business {
