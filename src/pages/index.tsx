@@ -34,8 +34,8 @@ export default function Home() {
               <div className="flex flex-col gap-2 ">
                 <h3 className="text-xl">Comece adicionando produtos</h3>
                 <p className="text-base">
-                  Assim que você tiver produtos para adicionar aos seus
-                  orçamentos, você poderá criar o orçamento nesta página.
+                  Assim que você tiver adicionado, o orçamento poderá ser criado
+                  nesta página.
                 </p>
               </div>
 
