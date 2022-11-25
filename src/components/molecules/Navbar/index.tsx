@@ -27,7 +27,7 @@ const Navbar = () => {
             }}
           />
         ) : (
-          <img src="./budget-generator.svg" alt="AMD Gesso" />
+          <img src="./papelei.svg" alt="Papelei" />
         )}
 
         {!cartIsEmpty && (

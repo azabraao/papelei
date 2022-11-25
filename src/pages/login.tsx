@@ -24,7 +24,7 @@ export default function Auth() {
   return (
     <Fragment>
       <Head>
-        <title>AMD Gesso | Login</title>
+        <title>Papelei | Login</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container>
