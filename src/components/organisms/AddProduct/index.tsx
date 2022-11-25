@@ -7,7 +7,7 @@ import {
 import { ImageUploader, MoneyInput, TextInput } from "components/molecules";
 import fetchJson from "lib/fetchJson";
 import useUser from "lib/useUser";
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSWRConfig } from "swr";
 
@@ -31,6 +31,7 @@ const AddProduct = () => {
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [isAddingProduct, setIsAddingProduct] = useState<boolean>(false);
   const { user } = useUser();
+  const [shouldResetForm, setShouldResetForm] = useState<boolean>(false);
 
   const [uploadedImage, setUploadedImage] = useState<string>();
 
@@ -43,8 +44,23 @@ const AddProduct = () => {
     reValidateMode: "onChange",
   });
 
+  useEffect(() => {
+    if (shouldResetForm) {
+      reset();
+      setUploadedImage(null);
+      setShouldResetForm(false);
+    }
+  }, [shouldResetForm]);
+
+  useEffect(() => {
+    if (!isAddingProduct) {
+      setShouldResetForm(true);
+    }
+  }, [isAddingProduct]);
+
   const onSubmit = async (data) => {
     setIsSaving(true);
+
     await mutate(
       "/api/product",
       fetchPost({
@@ -57,7 +73,7 @@ const AddProduct = () => {
 
     setIsSaving(false);
     setIsAddingProduct(false);
-    reset();
+    setShouldResetForm(true);
   };
 
   return (
@@ -69,11 +85,15 @@ const AddProduct = () => {
         isOpen={isAddingProduct}
         closeModalBottom={() => setIsAddingProduct(false)}
       >
-        <div className="py-4 flex flex-col gap-6">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="py-4 flex flex-col gap-6"
+        >
           <article>
             <p className="text-lg">Novo produto</p>
           </article>
           <ImageUploader
+            shouldReset={shouldResetForm}
             onImageChange={(dataImage) => setUploadedImage(dataImage)}
           />
 
@@ -91,6 +111,7 @@ const AddProduct = () => {
               placeholder="Valor"
               {...register("price", validationSchema.price)}
               error={errors?.price?.message as string}
+              shouldReset={shouldResetForm}
             />
           </div>
 
@@ -98,14 +119,13 @@ const AddProduct = () => {
             <Button
               backgroundColor="success"
               className="text-white"
-              onClick={handleSubmit(onSubmit)}
               disabled={isSaving}
               fullWidth
             >
               Salvar produto
             </Button>
           </div>
-        </div>
+        </form>
       </ModalBottom>
     </>
   );

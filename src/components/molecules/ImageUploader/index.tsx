@@ -1,17 +1,26 @@
 import clsx from "clsx";
 import { EditIcon, ImageIcon } from "components/atoms";
-import { memo, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 
 interface ImageUploaderProps {
   onImageChange: (dataImage: string) => void;
   defaultImage?: string;
+  shouldReset?: boolean;
 }
 
-const ImageUploader = ({ onImageChange, defaultImage }: ImageUploaderProps) => {
+const ImageUploader = ({
+  onImageChange,
+  defaultImage,
+  shouldReset,
+}: ImageUploaderProps) => {
   const [image, setImage] = useState<string>(defaultImage);
   const [imageOverLimit, setImageOverLimit] = useState<boolean>(false);
 
   const inputUploadRef = useRef(null);
+
+  useEffect(() => {
+    if (shouldReset) setImage(null);
+  }, [shouldReset]);
 
   const onChange = (event) => {
     setImage(null);
