@@ -18,7 +18,7 @@ const FloatingButton = forwardRef(
     const { searchIsOpen } = useSearch();
 
     return (
-      <Container className="fixed z-10 right-4 bottom-20 flex justify-end mx-auto left-0  pointer-events-none">
+      <Container className="fixed z-10 right-4 bottom-24 flex justify-end mx-auto left-0  pointer-events-none">
         <button
           ref={ref}
           onClick={onClick}

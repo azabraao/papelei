@@ -30,9 +30,9 @@ export default function Home() {
           </>
         ) : (
           <Container>
-            <article className="flex flex-col gap-4 py-12 items-start text-black-70">
+            <article className="flex flex-col gap-10 py-12 items-start text-black-70">
               <div className="flex flex-col gap-2 ">
-                <h3 className="text-xl">Comece adicionando produtos</h3>
+                <h3 className="text-base">Comece adicionando produtos</h3>
                 <p className="text-base">
                   Assim que você tiver adicionado, o orçamento poderá ser criado
                   nesta página.

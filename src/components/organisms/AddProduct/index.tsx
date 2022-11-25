@@ -53,6 +53,7 @@ const AddProduct = ({ reloadProducts }: AddProductProps) => {
       reset();
       setUploadedImage(null);
       setShouldResetForm(false);
+      setIsSaving(false);
     }
   }, [shouldResetForm]);
 

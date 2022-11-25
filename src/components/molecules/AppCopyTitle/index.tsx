@@ -10,7 +10,7 @@ const AppCopyTitle = () => {
   return (
     <div className="pt-10">
       <Container>
-        <h1 className="text-2xl text-black-70">
+        <h1 className="text-2xl text-black-70 font-bold">
           Crie seu orçamento em poucos cliques
         </h1>
       </Container>
