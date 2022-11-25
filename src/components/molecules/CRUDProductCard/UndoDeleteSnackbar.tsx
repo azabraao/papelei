@@ -1,6 +1,6 @@
 import { Snackbar } from "components/atoms";
 import fetchJson from "lib/fetchJson";
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import { useSWRConfig } from "swr";
 
 const fetchUndoDelete = (productID: string) => {
@@ -18,6 +18,11 @@ interface UndoDeleteSnackbarProps {
 
 const UndoDeleteSnackbar = ({ product, onUndo }: UndoDeleteSnackbarProps) => {
   const { mutate } = useSWRConfig();
+  const [isActive, setIsActive] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (isActive) setTimeout(() => setIsActive(false), 4000);
+  }, [isActive]);
 
   const handleUndoDelete = async () => {
     await mutate("/api/product/undo-delete", fetchUndoDelete(product.id));
@@ -27,7 +32,7 @@ const UndoDeleteSnackbar = ({ product, onUndo }: UndoDeleteSnackbarProps) => {
 
   return (
     <Snackbar
-      isActive
+      isActive={isActive}
       message="Produto removido"
       buttonMessage="Desfazer"
       theme="info"

@@ -19,7 +19,7 @@ const Snackbar = ({
   return (
     <div
       className={clsx(
-        "fixed transition-all flex items-center rounded-lg ml-auto mr-auto right-0 left-0 w-fit",
+        "fixed z-40 transition-all flex items-center rounded-lg ml-auto mr-auto right-0 left-0 w-fit",
         theme === "info" && "bg-blue-900 text-white",
         isActive ? "bottom-20" : "-bottom-20"
       )}
