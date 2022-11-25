@@ -10,7 +10,7 @@ const FinishBudgetButton = () => {
   if (cartIsEmpty) return null;
 
   return (
-    <Container className="fixed z-10 right-4 bottom-20 flex justify-start mx-auto left-0  pointer-events-none">
+    <Container className="fixed z-10 right-4 bottom-24 flex justify-start mx-auto left-0  pointer-events-none">
       <Button
         isRounded
         backgroundColor="success"
