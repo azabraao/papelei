@@ -177,3 +177,11 @@ async function productRoute(req: NextApiRequest, res: NextApiResponse) {
 }
 
 export default withIronSessionApiRoute(productRoute, sessionOptions);
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "4mb",
+    },
+  },
+};
