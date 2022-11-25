@@ -26,7 +26,11 @@ const fetchPost = (product: {
   });
 };
 
-const AddProduct = () => {
+interface AddProductProps {
+  reloadProducts: VoidFunction;
+}
+
+const AddProduct = ({ reloadProducts }: AddProductProps) => {
   const { mutate } = useSWRConfig();
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [isAddingProduct, setIsAddingProduct] = useState<boolean>(false);
@@ -71,6 +75,7 @@ const AddProduct = () => {
       })
     );
 
+    reloadProducts();
     setIsSaving(false);
     setIsAddingProduct(false);
     setShouldResetForm(true);

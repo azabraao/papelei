@@ -22,7 +22,7 @@ const CRUDProducts = () => {
   const [shouldLoadMoreProducts, setShouldLoadMoreProducts] =
     useState<boolean>(false);
 
-  const { data, error, size, setSize } = useSWRInfinite(
+  const { data, error, size, setSize, mutate } = useSWRInfinite(
     (index) =>
       `api/products?businessID=${businessID}&skip=${
         index * PAGE_SIZE
@@ -60,7 +60,7 @@ const CRUDProducts = () => {
 
   return (
     <>
-      <AddProduct />
+      <AddProduct reloadProducts={mutate} />
       <PageHeader>{isEmpty ? "Adicione produtos" : "Produtos"}</PageHeader>
       {isLoadingInitialData ? (
         <LoadingState />
