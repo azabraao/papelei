@@ -27,7 +27,7 @@ const BottomBar = () => {
           <ActiveLink activeClassName="text-success" href="/products">
             <div className="p-3 flex flex-col justify-center items-center">
               <PackageIcon />
-              <span>NEGÓCIO</span>
+              <span>PRODUTOS</span>
             </div>
           </ActiveLink>
         </div>
