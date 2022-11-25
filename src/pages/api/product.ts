@@ -47,48 +47,58 @@ products.forEach((product) => {
 
 const prisma = new PrismaClient();
 
+const handleUploadImage = async (image: string, businessID: string) => {
+  const storageRef = ref(storage, businessID);
+
+  const snapshot = await uploadString(storageRef, image, "data_url");
+  const downloadURL = getDownloadURL(snapshot.ref);
+
+  return downloadURL;
+};
+
 async function addProduct(req: NextApiRequest, res: NextApiResponse) {
   const { image, name, description, price, businessID } = await req.body;
 
-  const storageRef = ref(storage, businessID);
-
   try {
-    uploadString(storageRef, image, "data_url").then((snapshot) => {
-      getDownloadURL(snapshot.ref).then(async (downloadURL) => {
-        try {
-          const product = await prisma.product.create({
-            data: {
-              image: downloadURL,
-              name,
-              description,
-              price,
-              business: {
-                connect: {
-                  id: businessID,
-                },
-              },
+    let imageURL;
+
+    if (image) {
+      imageURL = await handleUploadImage(image, businessID);
+    }
+
+    try {
+      const product = await prisma.product.create({
+        data: {
+          image: imageURL,
+          name,
+          description,
+          price,
+          business: {
+            connect: {
+              id: businessID,
             },
-          });
-
-          algolia.saveObject({
-            objectID: product.id,
-            visible_by: [businessID],
-            image: downloadURL,
-            name,
-            description,
-            price,
-          });
-
-          return res.json({ product });
-        } catch (error) {
-          return res.status(500).json({ message: (error as Error).message });
-        }
+          },
+        },
       });
-    });
+
+      algolia.saveObject({
+        objectID: product.id,
+        visible_by: [businessID],
+        image: imageURL,
+        name,
+        description,
+        price,
+      });
+
+      return res.json({ product });
+    } catch (error) {
+      return res.status(500).json({ message: (error as Error).message });
+    }
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
   } finally {
     prisma.$disconnect();
+    res.status(200);
   }
 }
 

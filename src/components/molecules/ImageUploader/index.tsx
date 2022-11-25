@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ImageIcon } from "components/atoms";
+import { EditIcon, ImageIcon } from "components/atoms";
 import { memo, useRef, useState } from "react";
 
 interface ImageUploaderProps {
@@ -9,9 +9,15 @@ interface ImageUploaderProps {
 
 const ImageUploader = ({ onImageChange, defaultImage }: ImageUploaderProps) => {
   const [image, setImage] = useState<string>(defaultImage);
+  const [imageOverLimit, setImageOverLimit] = useState<boolean>(false);
+
   const inputUploadRef = useRef(null);
 
   const onChange = (event) => {
+    setImage(null);
+    setImageOverLimit(false);
+    onImageChange(null);
+
     const input = event.target;
     const uploadWasCanceled = !input?.files[0];
     if (uploadWasCanceled) return;
@@ -25,6 +31,12 @@ const ImageUploader = ({ onImageChange, defaultImage }: ImageUploaderProps) => {
     };
 
     const imageFile = input.files[0];
+
+    const fileSize = input.files[0].size / 1024 / 1024;
+    const isOver1MB = fileSize > 1;
+
+    if (isOver1MB) return setImageOverLimit(true);
+
     const hasImage = !!imageFile;
 
     if (hasImage) reader.readAsDataURL(input.files[0]);
@@ -50,17 +62,22 @@ const ImageUploader = ({ onImageChange, defaultImage }: ImageUploaderProps) => {
         />
 
         <ImageIcon className={clsx(image && "opacity-0")} />
-        <p className={clsx(image && "opacity-0")}>Carregue</p>
+        <p className={clsx(image && "opacity-0")}>Carregue uma imagem</p>
+
         {image && (
           <div
             onClick={openImageSelector}
-            className="absolute left-0 underline -bottom-7 flex gap-2 items-center text-gray-700"
+            className="absolute -right-8 underline my-auto top-0 bottom-0 flex gap-2 items-center text-gray-700"
           >
-            <ImageIcon />
-            <p>Atualizar</p>
+            <EditIcon />
           </div>
         )}
       </div>
+      {imageOverLimit && (
+        <p className="text-danger">
+          Imagem muito pesada. Use uma com menos de 1Mb.
+        </p>
+      )}
     </div>
   );
 };

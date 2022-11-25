@@ -3,9 +3,6 @@ import {
   FloatingButton,
   ModalBottom,
   PlusIcon,
-  SaveIcon,
-  SpinnerIcon,
-  TrashIcon,
 } from "components/atoms";
 import { ImageUploader, MoneyInput, TextInput } from "components/molecules";
 import fetchJson from "lib/fetchJson";
@@ -13,7 +10,6 @@ import useUser from "lib/useUser";
 import { memo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSWRConfig } from "swr";
-import { numberToMoney } from "utils";
 
 import { validationSchema } from "./validationSchema";
 
@@ -34,7 +30,6 @@ const AddProduct = () => {
   const { mutate } = useSWRConfig();
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [isAddingProduct, setIsAddingProduct] = useState<boolean>(false);
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const { user } = useUser();
 
   const [uploadedImage, setUploadedImage] = useState<string>();
@@ -74,7 +69,7 @@ const AddProduct = () => {
         isOpen={isAddingProduct}
         closeModalBottom={() => setIsAddingProduct(false)}
       >
-        <div className="p-4 flex flex-col gap-6">
+        <div className="py-4 flex flex-col gap-6">
           <article>
             <p className="text-lg">Novo produto</p>
           </article>
