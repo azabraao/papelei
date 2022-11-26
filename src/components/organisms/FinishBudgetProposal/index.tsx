@@ -6,6 +6,7 @@ import { memo, useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { numberToMoney } from "utils";
 import DownloadButton from "./DownloadButton";
+import PDF from "./PDF";
 import SubmitButton from "./SubmitButton";
 import { validationSchema } from "./validationSchema";
 
@@ -19,7 +20,8 @@ const FinishBudgetProposal = () => {
     setShouldDownload,
     addComments,
   } = useBudgetProposal();
-  const { cartTotal } = useCart();
+  const { client, comments } = useBudgetProposal();
+  const { cartTotal, cartProducts } = useCart();
 
   const {
     register,

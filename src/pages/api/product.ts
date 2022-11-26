@@ -91,6 +91,7 @@ async function addProduct(req: NextApiRequest, res: NextApiResponse) {
       });
 
       algolia.saveObject({
+        code: product.id,
         objectID: product.id,
         visible_by: [businessID],
         image: imageURL,

@@ -11,9 +11,9 @@ import React, {
 interface CartContextValues {
   addToCart: (product: Product) => void;
   setPaymentMethod: (method: "cash" | "deferred") => void;
-  updateCartItemPrice: (code: string, price: number) => void;
-  updateCartItemQuantity: (code: string, quantity: number) => void;
-  removeFromCart: (code: string) => void;
+  updateCartItemPrice: (id: string, price: number) => void;
+  updateCartItemQuantity: (id: string, quantity: number) => void;
+  removeFromCart: (id: string) => void;
   cartProducts: CartProduct[];
   cartIsEmpty: boolean;
   paymentMethod: string;
@@ -45,9 +45,9 @@ export const CartProvider = ({ children }: CartProps) => {
   }, [cartProducts]);
 
   const updateCartItemQuantity = useCallback(
-    (code: string, quantity: number) => {
+    (id: string, quantity: number) => {
       const productIndex = cartProducts.findIndex(
-        (cartProduct) => cartProduct.code === code
+        (cartProduct) => cartProduct.objectID === id
       );
       const newCartProducts = [...cartProducts];
       newCartProducts[productIndex].quantity = quantity;
@@ -58,9 +58,9 @@ export const CartProvider = ({ children }: CartProps) => {
   );
 
   const updateCartItemPrice = useCallback(
-    (code: string, price: number) => {
+    (id: string, price: number) => {
       const productIndex = cartProducts.findIndex(
-        (cartProduct) => cartProduct.code === code
+        (cartProduct) => cartProduct.objectID === id
       );
       const newCartProducts = [...cartProducts];
       newCartProducts[productIndex].price = price;
@@ -73,13 +73,15 @@ export const CartProvider = ({ children }: CartProps) => {
 
   const addToCart = useCallback(
     (product: Product) => {
+      console.log("cartProduct>>>", cartProducts);
+
       const productIsInCart = cartProducts.find(
-        (cartProduct) => cartProduct.code === product.code
+        (cartProduct) => cartProduct.objectID === product.objectID
       );
 
       if (productIsInCart) {
         return updateCartItemQuantity(
-          product.code,
+          product.objectID,
           productIsInCart.quantity + 1
         );
       }
@@ -97,9 +99,9 @@ export const CartProvider = ({ children }: CartProps) => {
   );
 
   const removeFromCart = useCallback(
-    (code) => {
+    (id) => {
       setCartProducts((cartProducts) =>
-        cartProducts.filter((cartProduct) => cartProduct.code !== code)
+        cartProducts.filter((cartProduct) => cartProduct.objectID !== id)
       );
     },
     [cartProducts]
@@ -135,14 +137,14 @@ export const useCart = (): CartContextValues => {
   return context;
 };
 
-export const useCartItem = (productCode: string): CartProduct => {
+export const useCartItem = (productId: string): CartProduct => {
   const context = useContext(CartContext);
   if (!context) throw new Error("useCart must be used within a CartProvider");
 
   const { cartProducts } = context;
 
   const cartItem = cartProducts.find(
-    (cartProduct) => cartProduct.code === productCode
+    (cartProduct) => cartProduct.objectID === productId
   );
 
   return cartItem;

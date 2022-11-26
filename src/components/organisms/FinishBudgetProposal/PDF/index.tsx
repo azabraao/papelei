@@ -1,10 +1,11 @@
-import { Document, Font, Page, Text, View } from "@react-pdf/renderer";
+import { Document, Font, Image, Page, Text, View } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import createTw from "react-pdf-tailwind";
-
+import papeleiLogo from "assets/logo.png";
 import useUser from "lib/useUser";
 import { numberToMoney } from "utils";
+import axios from "axios";
 
 const tw = createTw({
   theme: {
@@ -52,6 +53,36 @@ interface PDFProps {
 
 const PDF = ({ client, comments, cartTotal, cartProducts }: PDFProps) => {
   const { user } = useUser();
+  // const [image, setImage] = useState<string>(null);
+
+  const businessImage = user?.business?.[0].picture;
+
+  useEffect(() => {
+    if (businessImage) {
+      // fetch(businessImage).then((response) => {
+      //   console.log("response>>>", response);
+      //   response.arrayBuffer().then((image) => {
+      //     setImage(image);
+      //   });
+      //   // response
+      //   //   .json()
+      //   //   .then((image) =>
+      //   //   );
+      //   // setImage(Buffer.from(response.body.getReader(), "binary").toString("base64"))
+      // });
+      // axios
+      //   .get(businessImage, {
+      //     responseType: "arraybuffer",
+      //     headers: {
+      //       origin: "*",
+      //       maxAgeSeconds: 3600,
+      //     },
+      //   })
+      //   .then((response) =>
+      //     setImage(Buffer.from(response.data, "binary").toString("base64"))
+      //   );
+    }
+  }, [businessImage]);
 
   return (
     <Document>
@@ -62,14 +93,44 @@ const PDF = ({ client, comments, cartTotal, cartProducts }: PDFProps) => {
           color: "#605f63ff",
         }}
       >
-        <View style={tw("flex flex-row w-full justify-between items-center")}>
+        {/* <View style={tw("flex flex-row w-full justify-between items-center")}> */}
+        <View>
           {/* <Image
-            src={businessImage || amdLogo.src}
+            // src={image || papeleiLogo.src}
+            src={image}
+            cache={false}
             style={{ width: 96, height: 58.93 }}
+            source={{
+              uri: businessImage,
+              method: "GET",
+              body: {},
+              headers: {},
+            }}
+
+            
           /> */}
-          <Text style={tw("text-lg font-bold uppercase")}>
+
+          <Image
+            // src={businessImage}
+            cache={false}
+            style={{ width: 96, height: 58.93 }}
+            src={{
+              uri: businessImage,
+              method: "GET",
+              headers: {},
+              body: "",
+            }}
+          />
+          {/* 
+          <Image
+            style={{ width: 96, height: 58.93 }}
+            // src={newImgage.src}
+            src={image}
+            cache={false}
+          /> */}
+          {/* <Text style={tw("text-lg font-bold uppercase")}>
             {user?.business[0]?.name}
-          </Text>
+          </Text> */}
           <Text style={tw("text-lg font-bold uppercase")}>Orçamento</Text>
         </View>
         <View style={tw("w-full h-8")} />
