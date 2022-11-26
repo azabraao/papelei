@@ -39,7 +39,9 @@ export default function Home() {
                 </p>
               </div>
 
-              <Link href="/products">
+              <Link
+                href={{ pathname: "/products", query: { addProduct: true } }}
+              >
                 <Button
                   icon={<ArrowRightIcon />}
                   iconToRight

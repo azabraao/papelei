@@ -10,6 +10,7 @@ import useUser from "lib/useUser";
 import { memo, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSWRConfig } from "swr";
+import { useRouter } from "next/router";
 
 import { validationSchema } from "./validationSchema";
 
@@ -33,7 +34,10 @@ interface AddProductProps {
 const AddProduct = ({ reloadProducts }: AddProductProps) => {
   const { mutate } = useSWRConfig();
   const [isSaving, setIsSaving] = useState<boolean>(false);
-  const [isAddingProduct, setIsAddingProduct] = useState<boolean>(false);
+  const router = useRouter();
+  const [isAddingProduct, setIsAddingProduct] = useState<boolean>(
+    !!router.query.addProduct
+  );
   const { user } = useUser();
   const [shouldResetForm, setShouldResetForm] = useState<boolean>(false);
 
