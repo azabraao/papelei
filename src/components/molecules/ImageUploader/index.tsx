@@ -54,8 +54,8 @@ const ImageUploader = ({
   const openImageSelector = () => inputUploadRef.current.click();
 
   return (
-    <div className="flex flex-col gap-2">
-      <p className="text-gray-700">Carregue uma imagem</p>
+    <div className="flex flex-col gap-2 text-gray-700">
+      <p className={clsx(image && "opacity-0")}>Carregue uma imagem</p>
       <div
         className="relative items-center justify-center flex p-4 gap-4 text-gray-700 border border-gray-700 rounded-lg w-fit bg-gray-100 cursor-pointer bg-cover bg-center "
         style={{
