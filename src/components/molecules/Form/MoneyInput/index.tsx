@@ -23,7 +23,7 @@ const MoneyInput = (
   }: MoneyInputProps,
   ref: React.Ref<HTMLInputElement>
 ) => {
-  const [inputValue, setInputValue] = useState(initialValue);
+  const [inputValue, setInputValue] = useState(initialValue || "0,00");
 
   useEffect(() => {
     if (shouldReset) setInputValue(null);

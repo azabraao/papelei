@@ -37,6 +37,13 @@ const fetchUpdate = (product: {
 
 const ProductItem = (product: Product) => {
   const { name, image, price } = product;
+
+  const [updatedProduct, setUpdatedProduct] = useState<{
+    name: string;
+    image: string;
+    price: number;
+  }>({} as never);
+
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const { mutate } = useSWRConfig();
   const [isRemoved, setIsRemoved] = useState<boolean>(false);
@@ -69,15 +76,21 @@ const ProductItem = (product: Product) => {
   const onSubmit = async (data) => {
     setIsSaving(true);
 
+    const newProduct = {
+      image: uploadedImage,
+      name: data.name,
+      price: parseFloat(data.price.replace(",", ".")),
+    };
+
     await mutate(
       "/api/product",
       fetchUpdate({
-        image: uploadedImage,
-        name: data.name,
-        price: parseFloat(data.price.replace(",", ".")),
+        ...newProduct,
         productID: product.id,
       })
     );
+
+    setUpdatedProduct(newProduct);
 
     setIsSaving(false);
     closeModal();
@@ -147,17 +160,17 @@ const ProductItem = (product: Product) => {
         className="cursor-pointer p-4 flex items-center gap-4 rounded-lg shadow-card-effect-soft text-black-70 bg-white"
       >
         <img
-          src={image}
+          src={updatedProduct.image || image}
           alt={name}
           width={80}
           height={80}
           className="rounded-lg h-20 w-20"
         />
         <div className="flex flex-col gap-2 w-full">
-          <span className="text-base">{name}</span>
+          <span className="text-base">{updatedProduct.name || name}</span>
           <div className="flex gap-2 flex-wrap justify-between w-full">
             <strong className="text-xl flex-1 flex items-center">
-              {numberToMoney(price)}
+              {numberToMoney(updatedProduct.price || price)}
             </strong>
           </div>
         </div>

@@ -7,7 +7,7 @@ import { useProductCard } from "..";
 
 const UpdatePriceInput = () => {
   const { code } = useProductCard();
-  const { noFormattedPrice } = useProductPrice(code);
+  const { formattedPrice } = useProductPrice(code);
   const [error, setError] = useState<string>("");
   const { updateCartItemPrice } = useCart();
 
@@ -40,7 +40,7 @@ const UpdatePriceInput = () => {
         onBlur={handleInputBlur}
         error={error}
         onChange={handlePriceChange}
-        initialValue={noFormattedPrice?.replace(".", ",")}
+        initialValue={formattedPrice}
         label="Mudar preço"
       />
     </div>

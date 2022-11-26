@@ -1,10 +1,16 @@
-const maskMoney = (value: string): string => {
-  return value
-    .replace(/[\D]+/g, "")
-    .replace(/(\d{2})$/g, ",$1")
-    .replace(/(\d{3}),(\d{2})$/g, "$1,$2")
-    .replace(/(\d{3}).(\d{3})/g, "$1.$2")
-    .replace(/(\d{3}).(\d{3})/g, "$1.$2");
+export const moneyMask = (value: string) => {
+  if (!value) return;
+
+  value = value.replace(".", "").replace(",", "").replace(/\D/g, "");
+
+  const options = { minimumFractionDigits: 2 };
+  const result = new Intl.NumberFormat("pt-BR", options).format(
+    parseFloat(value) / 100
+  );
+
+  console.log(result);
+
+  return result;
 };
 
-export default maskMoney;
+export default moneyMask;
