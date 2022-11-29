@@ -48,7 +48,9 @@ products.forEach((product) => {
 const prisma = new PrismaClient();
 
 const handleUploadImage = async (image: string, businessID: string) => {
-  const storageRef = ref(storage, businessID);
+  // TODO: use uuuid instead?
+  const uniqueIdentifier = new Date().getTime() + Math.random();
+  const storageRef = ref(storage, businessID + uniqueIdentifier);
 
   const snapshot = await uploadString(storageRef, image, "data_url");
   const downloadURL = getDownloadURL(snapshot.ref);
