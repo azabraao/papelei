@@ -121,15 +121,21 @@ async function updateProduct(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "PUT")
     return res.status(500).json({ message: "wrong method" });
 
-  const { image, name, price, productID } = await req.body;
+  const { image, name, price, productID, businessID } = await req.body;
 
   try {
+    let imageURL;
+
+    if (image) {
+      imageURL = await handleUploadImage(image, businessID);
+    }
+
     const product = await prisma.product.update({
       where: {
         id: productID,
       },
       data: {
-        image,
+        image: imageURL,
         name,
         price,
       },

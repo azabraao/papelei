@@ -1,5 +1,6 @@
 import { Button, SaveIcon, SpinnerIcon, TrashIcon } from "components/atoms";
 import fetchJson from "lib/fetchJson";
+import useUser from "lib/useUser";
 import { memo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSWRConfig } from "swr";
@@ -25,9 +26,8 @@ const fetchUpdate = (product: {
   image: string;
   price: number;
   productID: string;
+  businessID: string;
 }) => {
-  console.log("product>>>", product);
-
   return fetchJson("/api/product", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -49,7 +49,7 @@ const ProductItem = (product: Product) => {
   const [isRemoved, setIsRemoved] = useState<boolean>(false);
   const [isRemoving, setIsRemoving] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
-
+  const { user } = useUser();
   const [uploadedImage, setUploadedImage] = useState<string>();
 
   const {
@@ -87,6 +87,7 @@ const ProductItem = (product: Product) => {
       fetchUpdate({
         ...newProduct,
         productID: product.id,
+        businessID: user?.business?.[0].id,
       })
     );
 
