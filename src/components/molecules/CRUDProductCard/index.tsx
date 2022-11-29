@@ -4,7 +4,7 @@ import useUser from "lib/useUser";
 import { memo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSWRConfig } from "swr";
-import { numberToMoney } from "utils";
+import { moneyToNumber, numberToMoney } from "utils";
 import MoneyInput from "../Form/MoneyInput";
 import TextInput from "../Form/TextInput";
 import ImageUploader from "../ImageUploader";
@@ -79,7 +79,7 @@ const ProductItem = (product: Product) => {
     const newProduct = {
       image: uploadedImage,
       name: data.name,
-      price: parseFloat(data.price.replace(",", ".")),
+      price: moneyToNumber(data.price),
     };
 
     await mutate(

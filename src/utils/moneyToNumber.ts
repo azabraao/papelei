@@ -1,4 +1,5 @@
 export const moneyToNumber = (money: string): number => {
-  const [, number] = money.split(" ");
-  return Number(number);
+  const cleanMoney = money.replace("R$", "").trim();
+  const number = parseFloat(cleanMoney.replaceAll(".", "").replace(",", "."));
+  return number;
 };

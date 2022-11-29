@@ -1,7 +1,10 @@
-export const numberToMoney = (number: number | string): string => {
+export const numberToMoney = (
+  number: number | string,
+  showMoneySign = true
+): string => {
   number = Number(number);
   return Intl.NumberFormat("pt-BR", {
-    style: "currency",
+    style: showMoneySign ? "currency" : undefined,
     currency: "BRL",
     minimumFractionDigits: 2,
   }).format(number);

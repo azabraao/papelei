@@ -1,6 +1,6 @@
 import { forwardRef, memo, useCallback, useEffect, useState } from "react";
 import clsx from "clsx";
-import { maskMoney } from "utils";
+import { maskMoney, moneyToNumber, numberToMoney } from "utils";
 import { withInputWrap } from "components/HOCs";
 
 interface MoneyInputProps extends InputProps {
@@ -23,7 +23,9 @@ const MoneyInput = (
   }: MoneyInputProps,
   ref: React.Ref<HTMLInputElement>
 ) => {
-  const [inputValue, setInputValue] = useState(initialValue || "0,00");
+  initialValue = initialValue ? numberToMoney(initialValue, false) : "0,00";
+
+  const [inputValue, setInputValue] = useState(initialValue);
 
   useEffect(() => {
     if (shouldReset) setInputValue(null);

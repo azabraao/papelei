@@ -13,6 +13,7 @@ import { useSWRConfig } from "swr";
 import { useRouter } from "next/router";
 
 import { validationSchema } from "./validationSchema";
+import { moneyToNumber } from "utils";
 
 const fetchPost = (product: {
   name: string;
@@ -75,7 +76,7 @@ const AddProduct = ({ reloadProducts }: AddProductProps) => {
       fetchPost({
         image: uploadedImage,
         name: data.name,
-        price: parseFloat(data.price.replace(",", ".")),
+        price: moneyToNumber(data.price),
         businessID: user.business[0].id,
       })
     );
