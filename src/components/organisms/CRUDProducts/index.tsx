@@ -70,9 +70,9 @@ const CRUDProducts = () => {
         <OnboardingState />
       ) : (
         <>
-          <CRUD products={products} />
+          <CRUD products={products} isLoadingMoreProducts={isLoadingMore} />
           {isLoadingMore && (
-            <div className="flex justify-between items-center py-5">
+            <div className="flex justify-between items-center pb-24">
               <Spinner width={80} height={80} />
             </div>
           )}
