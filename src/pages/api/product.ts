@@ -141,6 +141,13 @@ async function updateProduct(req: NextApiRequest, res: NextApiResponse) {
       },
     });
 
+    algolia.partialUpdateObject({
+      objectID: productID,
+      ...(image && { image: imageURL }),
+      ...(name && { name }),
+      ...(price && { price }),
+    });
+
     res.json({ product });
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
