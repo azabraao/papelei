@@ -42,7 +42,7 @@ const Button = (
       type={type}
       onClick={onClick}
       className={clsx(
-        "py-2 px-4 text-sm transition-color duration-200 flex",
+        "py-2 px-4 text-sm transition-color duration-200 flex justify-normal",
         icon ? "gap-4 items-center" : "justify-center",
         isRounded ? "rounded-full" : "rounded-lg",
         {
