@@ -65,6 +65,7 @@ const Button = (
       data-testid={testid}
       {...props}
     >
+      prefixo
       {!iconToRight && <div>{icon}</div>}
       {children}
       {iconToRight && <div>{icon}</div>}
